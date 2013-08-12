@@ -155,27 +155,27 @@ hint = "400"
             Next
         End If
     Else
-        Dashboard = Dashboard & CR & "<div class=""ccError"" style=""padding: 20px;"">In order to run the dashboard, this site needs to be running Contensive version 3.4.060 or higher. Currently it is running version " & Main.SiteProperty_BuildVersion & ".</div>"
+        Dashboard = Dashboard & cr & "<div class=""ccError"" style=""padding: 20px;"">In order to run the dashboard, this site needs to be running Contensive version 3.4.060 or higher. Currently it is running version " & Main.SiteProperty_BuildVersion & ".</div>"
     End If
     '
     ' Add JQuery UI dropable to desktop
     '
     GlobalJS = GlobalJS _
-        & CR & "var iconZIndexTop=" & IconZIndex & ";" _
-        & CR & "var nodeCnt=" & NodePtr & ";" _
-        & CR & "$(""#desktop"").droppable({" _
+        & cr & "var iconZIndexTop=" & IconZIndex & ";" _
+        & cr & "var nodeCnt=" & NodePtr & ";" _
+        & cr & "$(""#desktop"").droppable({" _
             & "tolerance: 'fit'" _
         & "});"
     '
     ' Assemble final page
     '
     GetContent = "" _
-        & CR & "<div id=""dashBoardWrapper"" class=""dashBoardWrapper"">" _
+        & cr & "<div id=""dashBoardWrapper"" class=""dashBoardWrapper"">" _
         & kmaIndent("&nbsp;" & Dashboard) _
-        & CR & "</div>" _
-        & CR & "<script type=""text/javascript"">" _
+        & cr & "</div>" _
+        & cr & "<script type=""text/javascript"">" _
         & kmaIndent(GlobalJS) _
-        & CR & "</script>"
+        & cr & "</script>"
 
     Exit Function
 ErrorTrap:
