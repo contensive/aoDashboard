@@ -6,7 +6,7 @@ Imports System.Collections.Generic
 Imports System.Text
 Imports Contensive.BaseClasses
 
-Namespace Contensive.Addons.aoDashbaord
+Namespace Contensive.Addons.aoDashboard
     '
     ' Sample Vb2005 addon
     '
@@ -42,26 +42,26 @@ Namespace Contensive.Addons.aoDashbaord
 
 
 
-        Private Main As Object
+        Private cp as cpbaseclass
         Private CSV As Object
         '
         '
         '
-        Public Function Execute(CSVObject As Object, MainObject As Object, optionString As String, FilterInput As String) As String
+        Public Function Execute(CSVObject As Object, cpObject As Object, optionString As String, FilterInput As String) As String
             On Error GoTo ErrorTrap
-    '
-    Set Main = MainObject
-    Set CSV = CSVObject
-    
-    Dim Stream As String
-            Dim objXML As New MSXML2.DOMDocument60
+            '
+            '
+            '
+
+            Dim Stream As String
+            Dim objXML As New XmlDocument
             'Dim objFSO As New kmaFileSystem3.FileSystemClass
 
-            Dim Node As IXMLDOMElement
+            Dim Node As xmlNode
 
             Dim Config As String
-            Dim NodeCount As Long
-            Dim Counter As Long
+            Dim NodeCount As Integer
+            Dim Counter As Integer
 
             Dim AddonGuid As String
             Dim ContentGuid As String
@@ -74,52 +74,52 @@ Namespace Contensive.Addons.aoDashbaord
             Dim SizeX As String
             Dim SizeY As String
             Dim Options As String
-            Dim AttrCount As Long
-            Dim WrapperID As Long
+            Dim AttrCount As Integer
+            Dim WrapperID As Integer
             Dim DefaultConfigfilename As String
             Dim UserConfigFilename As String
             Dim ItemID As String
-            Dim NodeAttribute As IXMLDOMAttribute
+            Dim NodeAttribute As xmlattribute
             Dim Copy As String
-            Dim common As New commonClass
+            'Dim common As New genericController
             '
-            Dim NodePtr As Long
+            Dim NodePtr As Integer
             '
             ' store path to config file in a site property so defaults can be customized (like Realestate Sites, etc)
             '
-            Dim objFSO As Object
-    Set objFSO = CreateObject("kmaFileSystem3.FileSystemClass")
-    '
-    Set objXML = common.LoadConfig(Main)
-    'DefaultConfigfilename = "upload\dashboard\dashconfig.xml"
-    'DefaultConfigfilename = Main.GetSiteProperty("Dashboard Default Config Content Filename", DefaultConfigfilename)
-    'DefaultConfigfilename = Main.PhysicalFilePath & DefaultConfigfilename
-    'UserConfigFilename = Main.PhysicalFilePath & "upload\dashboard\dashconfig." & Main.memberID & ".xml"
-    'Config = objFSO.ReadFile(UserConfigFilename)
-    'If Config = "" Then
-    '    Config = objFSO.ReadFile(DefaultConfigfilename)
-    '    Call objFSO.SaveFile(UserConfigFilename, Config)
-    'End If
-    'objXML.loadXML (Config)
-    WrapperID = 0
+            'Dim objFSO As Object
+            objFSO = CreateObject("kmaFileSystem3.FileSystemClass")
+            '
+            objXML = Controllers.genericController.LoadConfig(cp)
+            'DefaultConfigfilename = "upload\dashboard\dashconfig.xml"
+            'DefaultConfigfilename = cp.site.gettext("Dashboard Default Config Content Filename", DefaultConfigfilename)
+            'DefaultConfigfilename = cp.Site.physicalFilePath & DefaultConfigfilename
+            'UserConfigFilename = cp.Site.physicalFilePath & "upload\dashboard\dashconfig." & cp.User.id & ".xml"
+            'Config = cp.File.Read(UserConfigFilename)
+            'If Config = "" Then
+            '    Config = cp.File.Read(DefaultConfigfilename)
+            '    Call cp.File.Save(UserConfigFilename, Config)
+            'End If
+            'objXML.loadXML (Config)
+            WrapperID = 0
             If objXML.hasChildNodes Then
-                NodePtr = Main.GetStreamInteger("ptr")
-        Set Node = objXML.documentElement.childNodes(NodePtr)
-        If Not (Node Is Nothing) Then
-                    If Node.nodeName = "node" Then
-                        Copy = Main.GetStreamText("x")
+                NodePtr = cp.DOC.GETINTEGER("ptr")
+                Node = objXML.documentElement.childNodes(NodePtr)
+                If Not (Node Is Nothing) Then
+                    If Node.name = "node" Then
+                        Copy = cp.GetStreamText("x")
                         Copy = Replace(Copy, "px", "")
                         If IsNumeric(Copy) Then
                             Call Node.setAttribute("x", Copy)
                         End If
-                        Copy = Main.GetStreamText("y")
+                        Copy = cp.GetStreamText("y")
                         Copy = Replace(Copy, "px", "")
                         If IsNumeric(Copy) Then
                             Call Node.setAttribute("y", Copy)
                         End If
-                        Call common.SaveConfig(Main, objXML)
+                        Call Controllers.genericController.SaveConfig(cp, objXML)
                         'Config = objXML.xml
-                        'Call objFSO.SaveFile(UserConfigFilename, Config)
+                        'Call cp.File.Save(UserConfigFilename, Config)
                     End If
                 End If
             End If
@@ -131,21 +131,21 @@ ErrorTrap:
         '
         '
         '
-        Private Function GetXMLAttribute(Node As IXMLDOMNode, Name As String) As String
+        Private Function GetXMLAttribute(Node As xmlnode, Name As String) As String
             On Error GoTo ErrorTrap
 
-            Dim NodeAttribute As IXMLDOMAttribute
-            Dim ResultNode As IXMLDOMNode
+            Dim NodeAttribute As xmlattribute
+            Dim ResultNode As xmlnode
             Dim UcaseName As String
             Dim Found As Boolean
 
             Found = False
             If Not (Node.Attributes Is Nothing) Then
-    Set ResultNode = Node.Attributes.getNamedItem(Name)
-    If (ResultNode Is Nothing) Then
+                ResultNode = Node.Attributes.getNamedItem(Name)
+                If (ResultNode Is Nothing) Then
                     UcaseName = UCase(Name)
                     For Each NodeAttribute In Node.Attributes
-                        If UCase(NodeAttribute.nodeName) = UcaseName Then
+                        If UCase(NodeAttribute.name) = UcaseName Then
                             GetXMLAttribute = NodeAttribute.nodeValue
                             Found = True
                             Exit For

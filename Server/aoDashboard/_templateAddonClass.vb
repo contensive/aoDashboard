@@ -6,7 +6,7 @@ Imports System.Collections.Generic
 Imports System.Text
 Imports Contensive.BaseClasses
 
-Namespace Contensive.Addons.aoDashbaord
+Namespace Contensive.Addons.aoDashboard
     '
     ' Sample Vb2005 addon
     '

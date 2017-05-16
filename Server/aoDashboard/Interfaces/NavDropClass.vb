@@ -6,7 +6,7 @@ Imports System.Collections.Generic
 Imports System.Text
 Imports Contensive.BaseClasses
 
-Namespace Contensive.Addons.aoDashbaord
+Namespace Contensive.Addons.aoDashboard
     '
     ' Sample Vb2005 addon
     '
@@ -39,37 +39,37 @@ Namespace Contensive.Addons.aoDashbaord
         ' legacy code
         '=====================================================================================
         '
-        Private Main As Object
+        Private cp as cpbaseclass
         Private CSV As Object
         '
         '
         '
-        Public Function Execute(CSVObject As Object, MainObject As Object, optionString As String, FilterInput As String) As String
+        Public Function Execute(CSVObject As Object, cpObject As Object, optionString As String, FilterInput As String) As String
             On Error GoTo ErrorTrap
             '
-            Dim IconZIndex As Long
+            Dim IconZIndex As Integer
             Dim ItemHtmlID As String
             Dim GuidGenerator As New GuidGenerator
             'Dim Name As String
             Dim ShortcutHref As String
-            Dim e As IXMLDOMElement
+            Dim e As xmlElement
             Dim RequiredJS As String
-            Dim common As New commonClass
+            'Dim common As New genericController
             Dim UserConfigFilename As String
-            Dim CS As Long
-            Dim AddonID As Long
-    Set Main = MainObject
-    Set CSV = CSVObject
-    
-    Dim Stream As String
-            Dim objXML As New MSXML2.DOMDocument60
+            Dim CS As Integer
+            Dim AddonID As Integer
+            '
+            '
+
+            Dim Stream As String
+            Dim objXML As New XmlDocument
             'Dim objFSO As New kmaFileSystem3.FileSystemClass
 
-            Dim Node As IXMLDOMElement
+            Dim Node As xmlNode
 
             Dim Config As String
-            Dim NodeCount As Long
-            Dim Counter As Long
+            Dim NodeCount As Integer
+            Dim Counter As Integer
 
             Dim AddonName As String
             Dim AddonGuid As String
@@ -77,38 +77,38 @@ Namespace Contensive.Addons.aoDashbaord
             Dim ContentName As String
             Dim SettingGUID As String
             Dim Title As String
-            Dim SrcX As Long
-            Dim SrcY As Long
+            Dim SrcX As Integer
+            Dim SrcY As Integer
             Dim State As String
-            Dim SizeX As Long
-            Dim SizeY As Long
+            Dim SizeX As Integer
+            Dim SizeY As Integer
             Dim Options As String
-            Dim AttrCount As Long
-            Dim WrapperID As Long
+            Dim AttrCount As Integer
+            Dim WrapperID As Integer
             Dim DefaultConfigfilename As String
             Dim ItemID As String
-            Dim NodeAttribute As IXMLDOMAttribute
+            Dim NodeAttribute As xmlattribute
             Dim Copy As String
-            Dim NodePtr As Long
+            Dim NodePtr As Integer
             Dim SrcID As String
             Dim IconFileName As String
-            Dim IconWidth As Long
-            Dim IconHeight As Long
-            Dim IconSprites As Long
+            Dim IconWidth As Integer
+            Dim IconHeight As Integer
+            Dim IconSprites As Integer
             '
-            SrcID = Main.GetStreamText("id")
-            SrcX = Main.GetStreamInteger("x")
-            SrcY = Main.GetStreamInteger("y")
+            SrcID = cp.GetStreamText("id")
+            SrcX = cp.DOC.GETINTEGER("x")
+            SrcY = cp.DOC.GETINTEGER("y")
             '
-            Dim objFSO As Object
-    Set objFSO = CreateObject("kmaFileSystem3.FileSystemClass")
-    '
-    Select Case LCase(Left(SrcID, 1))
+            'Dim objFSO As Object
+            objFSO = CreateObject("kmaFileSystem3.FileSystemClass")
+            '
+            Select Case LCase(Left(SrcID, 1))
                 Case "a"
                     '
                     ' An Addon was dragged onto the desktop
                     '
-                    AddonID = kmaEncodeInteger(Mid(SrcID, 2))
+                    AddonID = cp.utils.encodeInteger(Mid(SrcID, 2))
                     If AddonID = 0 Then
                         '
                         ' Bad ID - ignore call and send 'kill' back
@@ -117,14 +117,14 @@ Namespace Contensive.Addons.aoDashbaord
                         '
                         '
                         '
-                        CS = Main.OpenCSContentRecord("Add-ons", AddonID)
-                        If Not Main.IsCSOK(CS) Then
+                        CS = cp.OpenCSContentRecord("Add-ons", AddonID)
+                        If Not cp.IsCSOK(CS) Then
                             '
                             ' Bad ID - ignore call and send 'kill' back
                             '
                         Else
-                            AddonName = Main.GetCSText(CS, "name")
-                            IconFileName = Main.GetCSText(CS, "IconFilename")
+                            AddonName = cp.GetCSText(CS, "name")
+                            IconFileName = cp.GetCSText(CS, "IconFilename")
                             If IconFileName = "" Then
                                 '
                                 ' Default Icon
@@ -137,45 +137,45 @@ Namespace Contensive.Addons.aoDashbaord
                                 '
                                 ' Custom Icon
                                 '
-                                IconWidth = Main.GetCSInteger(CS, "IconWidth")
-                                IconHeight = Main.GetCSInteger(CS, "IconHeight")
-                                IconSprites = Main.GetCSInteger(CS, "IconSprites")
+                                IconWidth = cp.GetCSInteger(CS, "IconWidth")
+                                IconHeight = cp.GetCSInteger(CS, "IconHeight")
+                                IconSprites = cp.GetCSInteger(CS, "IconSprites")
                             End If
-                            AddonGuid = Main.GetCSText(CS, "ccguid")
+                            AddonGuid = cp.GetCSText(CS, "ccguid")
                             If AddonGuid = "" Then
                                 AddonGuid = GuidGenerator.CreateGUID("")
-                                Call Main.SetCS(CS, "ccguid", AddonGuid)
+                                Call cp.SetCS(CS, "ccguid", AddonGuid)
                             End If
-                            ShortcutHref = Main.ServerPage & "?addonid=" & AddonID
-                    '
-                    ' Add this add-on to the config and return the Icon
-                    '
-                    Set objXML = common.LoadConfig(Main)
-                    If objXML.hasChildNodes Then
+                            ShortcutHref = cp.ServerPage & "?addonid=" & AddonID
+                            '
+                            ' Add this add-on to the config and return the Icon
+                            '
+                            objXML = Controllers.genericController.LoadConfig(cp)
+                            If objXML.hasChildNodes Then
                                 '
                                 ' Find defaultwrapper
                                 '
                                 Dim DefaultWrapperGUID As String
                                 For Each Node In objXML.documentElement.childNodes
-                                    If LCase(Node.baseName) = "defaultwrapper" Then
+                                    If LCase(Node.name) = "defaultwrapper" Then
                                         DefaultWrapperGUID = Node.getAttribute("guid")
-                                        CS = Main.OpenCSContent("wrappers", "ccguid=" & KmaEncodeSQLText(DefaultWrapperGUID))
-                                        If Main.IsCSOK(CS) Then
-                                            WrapperID = Main.GetCSInteger(CS, "id")
+                                        CS = cp.OpenCSContent("wrappers", "ccguid=" & KmaEncodeSQLText(DefaultWrapperGUID))
+                                        If cp.IsCSOK(CS) Then
+                                            WrapperID = cp.GetCSInteger(CS, "id")
                                         End If
-                                        Call Main.CloseCS(CS)
+                                        Call cp.CloseCS(CS)
                                         Exit For
                                     End If
                                 Next
-                        '
-                        ' Create the new dodad node
-                        '
-                        Set e = objXML.documentElement
-                        NodePtr = e.childNodes.length
+                                '
+                                ' Create the new dodad node
+                                '
+                                e = objXML.documentElement
+                                NodePtr = e.childNodes.length
                                 IconZIndex = NodePtr
                                 ItemHtmlID = "dashnode" & NodePtr
-                        Set Node = objXML.createElement("node")
-                        Call Node.setAttribute("addonGUID", AddonGuid)
+                                Node = objXML.createElement("node")
+                                Call Node.setAttribute("addonGUID", AddonGuid)
                                 Call Node.setAttribute("title", AddonName)
                                 Call Node.setAttribute("x", Int(SrcX))
                                 Call Node.setAttribute("y", Int(SrcY))
@@ -184,20 +184,20 @@ Namespace Contensive.Addons.aoDashbaord
                                 Call Node.setAttribute("sizey", 300)
                                 Call Node.setAttribute("optionstring", "")
                                 Call e.appendChild(Node)
-                                Call common.SaveConfig(Main, objXML)
+                                Call Controllers.genericController.SaveConfig(cp, objXML)
                                 ContentGuid = ""
                                 ContentName = ""
-                                Execute = common.GetDodad(Main, AddonGuid, ContentGuid, ContentName, AddonName, SrcX, SrcY, "closed", 77, 77, "", WrapperID, NodePtr, RequiredJS, IconZIndex)
+                                Execute = Controllers.genericController.GetDodad(cp, AddonGuid, ContentGuid, ContentName, AddonName, SrcX, SrcY, "closed", 77, 77, "", WrapperID, NodePtr, RequiredJS, IconZIndex)
                             End If
                         End If
-                        Call Main.CloseCS(CS)
+                        Call cp.CloseCS(CS)
                     End If
                 Case "c"
                     '
                     ' A content link was dragged onto the desktop
                     '
-                    Dim ContentID As Long
-                    ContentID = kmaEncodeInteger(Mid(SrcID, 2))
+                    Dim ContentID As Integer
+                    ContentID = cp.utils.encodeInteger(Mid(SrcID, 2))
                     If ContentID = 0 Then
                         '
                         ' Bad ID - ignore call and send 'kill' back
@@ -206,13 +206,13 @@ Namespace Contensive.Addons.aoDashbaord
                         '
                         '
                         '
-                        CS = Main.OpenCSContentRecord("Content", ContentID)
-                        If Not Main.IsCSOK(CS) Then
+                        CS = cp.OpenCSContentRecord("Content", ContentID)
+                        If Not cp.IsCSOK(CS) Then
                             '
                             ' Bad ID - ignore call and send 'kill' back
                             '
                         Else
-                            'IconFileName = Main.GetCSText(CS, "IconFilename")
+                            'IconFileName = cp.GetCSText(CS, "IconFilename")
                             If IconFileName = "" Then
                                 '
                                 ' Default Icon
@@ -225,26 +225,26 @@ Namespace Contensive.Addons.aoDashbaord
                                 '
                                 ' Custom Icon
                                 '
-                                IconWidth = Main.GetCSInteger(CS, "IconWidth")
-                                IconHeight = Main.GetCSInteger(CS, "IconHeight")
-                                IconSprites = Main.GetCSInteger(CS, "IconSprites")
+                                IconWidth = cp.GetCSInteger(CS, "IconWidth")
+                                IconHeight = cp.GetCSInteger(CS, "IconHeight")
+                                IconSprites = cp.GetCSInteger(CS, "IconSprites")
                             End If
-                            ContentGuid = Main.GetCSText(CS, "ccguid")
+                            ContentGuid = cp.GetCSText(CS, "ccguid")
                             SizeX = 77
                             SizeY = 77
-                            ShortcutHref = Main.ServerPage & "?cid=" & ContentID
-                            ContentName = Main.GetCSText(CS, "name")
-                    '
-                    ' Add this add-on to the config and return the Icon
-                    '
-                    Set objXML = common.LoadConfig(Main)
-                    If objXML.hasChildNodes Then
-                        Set e = objXML.documentElement
-                        NodePtr = e.childNodes.length
+                            ShortcutHref = cp.ServerPage & "?cid=" & ContentID
+                            ContentName = cp.GetCSText(CS, "name")
+                            '
+                            ' Add this add-on to the config and return the Icon
+                            '
+                            objXML = Controllers.genericController.LoadConfig(cp)
+                            If objXML.hasChildNodes Then
+                                e = objXML.documentElement
+                                NodePtr = e.childNodes.length
                                 IconZIndex = NodePtr
                                 ItemHtmlID = "dashnode" & NodePtr
-                        Set Node = objXML.createElement("node")
-                        Call Node.setAttribute("contentName", ContentName)
+                                Node = objXML.createElement("node")
+                                Call Node.setAttribute("contentName", ContentName)
                                 Call Node.setAttribute("contentGUID", ContentGuid)
                                 Call Node.setAttribute("title", ContentName)
                                 Call Node.setAttribute("x", SrcX)
@@ -254,12 +254,12 @@ Namespace Contensive.Addons.aoDashbaord
                                 Call Node.setAttribute("sizey", SizeY)
                                 Call Node.setAttribute("optionstring", "")
                                 Call e.appendChild(Node)
-                                Call common.SaveConfig(Main, objXML)
-                                Execute = common.GetDodad(Main, 0, "", ContentName, ContentName, SrcX, SrcY, "closed", SizeX, SizeY, "", 0, NodePtr, RequiredJS, IconZIndex)
-                                'Execute = common.GetDodadContent(Main, 0, "", "", "closed", IconSprites, Name, IconFileName, IconWidth, IconHeight, Main.ServerFilePath, WrapperID, SizeX, SizeY, ShortcutHref)
+                                Call Controllers.genericController.SaveConfig(cp, objXML)
+                                Execute = Controllers.genericController.GetDodad(cp, 0, "", ContentName, ContentName, SrcX, SrcY, "closed", SizeX, SizeY, "", 0, NodePtr, RequiredJS, IconZIndex)
+                                'Execute = Controllers.genericController.GetDodadContent(cp, 0, "", "", "closed", IconSprites, Name, IconFileName, IconWidth, IconHeight, cp.ServerFilePath, WrapperID, SizeX, SizeY, ShortcutHref)
                             End If
                         End If
-                        Call Main.CloseCS(CS)
+                        Call cp.CloseCS(CS)
                     End If
                 Case Else
                     Execute = "<!-- no object found for this id -->"
@@ -269,9 +269,9 @@ Namespace Contensive.Addons.aoDashbaord
             '
             If RequiredJS <> "" Then
                 Execute = Execute _
-            & CR & "<script type=""text/javascript"">" _
-            & kmaIndent(RequiredJS) _
-            & CR & "</script>"
+            & "<script type=""text/javascript"">" _
+            & (RequiredJS) _
+            & "</script>"
             End If
             Exit Function
 ErrorTrap:
@@ -280,21 +280,21 @@ ErrorTrap:
         '
         '
         '
-        Private Function GetXMLAttribute(Node As IXMLDOMNode, Name As String) As String
+        Private Function GetXMLAttribute(Node As xmlnode, Name As String) As String
             On Error GoTo ErrorTrap
 
-            Dim NodeAttribute As IXMLDOMAttribute
-            Dim ResultNode As IXMLDOMNode
+            Dim NodeAttribute As xmlattribute
+            Dim ResultNode As xmlnode
             Dim UcaseName As String
             Dim Found As Boolean
 
             Found = False
             If Not (Node.Attributes Is Nothing) Then
-    Set ResultNode = Node.Attributes.getNamedItem(Name)
-    If (ResultNode Is Nothing) Then
+                ResultNode = Node.Attributes.getNamedItem(Name)
+                If (ResultNode Is Nothing) Then
                     UcaseName = UCase(Name)
                     For Each NodeAttribute In Node.Attributes
-                        If UCase(NodeAttribute.nodeName) = UcaseName Then
+                        If UCase(NodeAttribute.name) = UcaseName Then
                             GetXMLAttribute = NodeAttribute.nodeValue
                             Found = True
                             Exit For
