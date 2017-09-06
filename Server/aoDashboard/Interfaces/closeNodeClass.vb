@@ -45,17 +45,17 @@ Namespace Interfaces
                             Node.Attributes("state").Value = "closed"
                             Config = objXML.OuterXml
                             Call Controllers.genericController.SaveConfig(cp, objXML)
-                            AddonGuid = Controllers.genericController.GetXMLAttribute(Node, "addonGUID")
-                            ContentGuid = Controllers.genericController.GetXMLAttribute(Node, "contentGUID")
-                            ContentName = Controllers.genericController.GetXMLAttribute(Node, "contentName")
-                            SettingGUID = Controllers.genericController.GetXMLAttribute(Node, "settingGUID")
-                            Title = Controllers.genericController.GetXMLAttribute(Node, "title")
-                            PosX = cp.Utils.EncodeInteger(Controllers.genericController.GetXMLAttribute(Node, "x"))
-                            PosY = cp.Utils.EncodeInteger(Controllers.genericController.GetXMLAttribute(Node, "y"))
-                            State = Controllers.genericController.GetXMLAttribute(Node, "state")
-                            SizeX = cp.Utils.EncodeInteger(Controllers.genericController.GetXMLAttribute(Node, "sizex"))
-                            SizeY = cp.Utils.EncodeInteger(Controllers.genericController.GetXMLAttribute(Node, "sizey"))
-                            Options = Controllers.genericController.GetXMLAttribute(Node, "optionstring")
+                            AddonGuid = Controllers.genericController.getAttribute(cp, Node, "addonGUID")
+                            ContentGuid = Controllers.genericController.getAttribute(cp, Node, "contentGUID")
+                            ContentName = Controllers.genericController.getAttribute(cp, Node, "contentName")
+                            SettingGUID = Controllers.genericController.getAttribute(cp, Node, "settingGUID")
+                            Title = Controllers.genericController.getAttribute(cp, Node, "title")
+                            PosX = cp.Utils.EncodeInteger(Controllers.genericController.getAttribute(cp, Node, "x"))
+                            PosY = cp.Utils.EncodeInteger(Controllers.genericController.getAttribute(cp, Node, "y"))
+                            State = Controllers.genericController.getAttribute(cp, Node, "state")
+                            SizeX = cp.Utils.EncodeInteger(Controllers.genericController.getAttribute(cp, Node, "sizex"))
+                            SizeY = cp.Utils.EncodeInteger(Controllers.genericController.getAttribute(cp, Node, "sizey"))
+                            Options = Controllers.genericController.getAttribute(cp, Node, "optionstring")
                             result = Controllers.genericController.GetDodad(cp, AddonGuid, ContentGuid, ContentName, Title, PosX, PosY, State, SizeX, SizeY, Options, WrapperID, NodePtr, RequiredJS, IconZIndex)
                             '
                             ' Add in javascript

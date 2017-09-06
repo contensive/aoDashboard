@@ -305,9 +305,6 @@ Namespace Controllers
             Return result
         End Function
 
-        Private Shared Function CR() As String
-            Throw New NotImplementedException()
-        End Function
 
         Public Shared Function GetGridWrapper(cp As CPBaseClass, Title As String, Content As String, Width As Integer, Height As Integer) As String
             Dim result As String = ""
@@ -367,30 +364,16 @@ Namespace Controllers
         '
         '
         '
-        Public Shared Function GetXMLAttribute(Node As XmlNode, Name As String) As String
-            Return Node.Attributes(Name).Value
-        End Function
-        '
-        '
-        '
         Public Shared Function LoadConfig(cp As CPBaseClass) As XmlDocument
             Dim result As New System.Xml.XmlDocument
             Try
-                '
-                Dim Config As String
-                Dim DefaultConfigfilename As String
-                Dim UserConfigFilename As String
-                'Dim objFSO As Object
-                'Dim objFSO As New kmaFileSystem3.FileSystemClass
-                Dim hint As String
-                '
-                DefaultConfigfilename = "upload\dashboard\dashconfig.xml"
-                DefaultConfigfilename = cp.Site.GetText("Dashboard Default Config Content Filename", DefaultConfigfilename)
-                DefaultConfigfilename = cp.Site.PhysicalFilePath & DefaultConfigfilename
-                UserConfigFilename = "upload\dashboard\dashconfig." & cp.User.Id & ".xml"
-                Config = cp.File.ReadVirtual(UserConfigFilename)
+                Dim UserConfigFilename As String = "upload\dashboard\dashconfig." & cp.User.Id & ".xml"
+                Dim Config As String = cp.File.ReadVirtual(UserConfigFilename)
                 If Config = "" Then
-                    hint = "600"
+                    Dim DefaultConfigfilename As String
+                    DefaultConfigfilename = "upload\dashboard\dashconfig.xml"
+                    DefaultConfigfilename = cp.Site.GetText("Dashboard Default Config Content Filename", DefaultConfigfilename)
+                    DefaultConfigfilename = cp.Site.PhysicalFilePath & DefaultConfigfilename
                     Config = cp.File.Read(DefaultConfigfilename)
                     Call cp.File.Save(UserConfigFilename, Config)
                 End If
@@ -398,6 +381,7 @@ Namespace Controllers
             Catch ex As Exception
                 cp.Site.ErrorReport(ex)
             End Try
+            Return result
         End Function
         '
         '
@@ -593,6 +577,20 @@ Namespace Controllers
                 GetIconSprite = GetIconSprite & " ACInstanceID=""" & ACInstanceID & """"
             End If
             GetIconSprite = GetIconSprite & " style=""" & ImgStyle & """>"
+        End Function
+        '
+        ' -- getAttribute
+        Friend Shared Function getAttribute(cp As CPBaseClass, node As XmlNode, attrName As String) As String
+            Dim result As String = ""
+            Try
+                Dim attr As XmlAttribute = node.Attributes(attrName)
+                If (attr IsNot Nothing) Then
+                    result = attr.Value
+                End If
+            Catch ex As Exception
+                cp.Site.ErrorReport(ex)
+            End Try
+            Return result
         End Function
         '
         ' -- build an attribute

@@ -16,17 +16,11 @@ Namespace Interfaces
             Try
                 Dim DefaultWrapperGUID As String
                 Dim Content As String
-                'Dim Config As String
                 Dim objXML As New XmlDocument
                 Dim Node As XmlNode
-                'Dim common As New genericController
                 Dim NodePtr As Integer
                 Dim IconZIndex As Integer
                 Dim RequiredJS As String
-                Dim Stream As String
-                Dim ParentNode As XmlNode
-                Dim NodeCount As Integer
-                Dim Counter As Integer
                 Dim AddonGuid As String
                 Dim ContentGuid As String
                 Dim ContentName As String
@@ -38,13 +32,7 @@ Namespace Interfaces
                 Dim SizeX As Integer
                 Dim SizeY As Integer
                 Dim Options As String
-                Dim AttrCount As Integer
                 Dim WrapperID As Integer
-                Dim DefaultConfigfilename As String
-                Dim UserConfigFilename As String
-                Dim ItemID As String
-                Dim CS As String
-                ''Dim objFSO As Object
                 Dim wrapperDict As Dictionary(Of String, Models.wrapperModel) = Models.wrapperModel.getGuidDictionary(CP)
                 '
                 objXML = Controllers.genericController.LoadConfig(CP)
@@ -73,17 +61,17 @@ Namespace Interfaces
                             Node.Attributes.Append(Controllers.genericController.createAttribute(objXML, "state", "open"))
                             'Config = objXML.xml
                             Call Controllers.genericController.SaveConfig(CP, objXML)
-                            AddonGuid = Controllers.genericController.GetXMLAttribute(Node, "addonGUID")
-                            ContentGuid = Controllers.genericController.GetXMLAttribute(Node, "contentGUID")
-                            ContentName = Controllers.genericController.GetXMLAttribute(Node, "contentName")
-                            SettingGUID = Controllers.genericController.GetXMLAttribute(Node, "settingGUID")
-                            Title = Controllers.genericController.GetXMLAttribute(Node, "title")
-                            PosX = CP.Utils.EncodeInteger(Controllers.genericController.GetXMLAttribute(Node, "x"))
-                            PosY = CP.Utils.EncodeInteger(Controllers.genericController.GetXMLAttribute(Node, "y"))
-                            State = Controllers.genericController.GetXMLAttribute(Node, "state")
-                            SizeX = CP.Utils.EncodeInteger(Controllers.genericController.GetXMLAttribute(Node, "sizex"))
-                            SizeY = CP.Utils.EncodeInteger(Controllers.genericController.GetXMLAttribute(Node, "sizey"))
-                            Options = Controllers.genericController.GetXMLAttribute(Node, "optionstring")
+                            AddonGuid = Controllers.genericController.getAttribute(CP, Node, "addonGUID")
+                            ContentGuid = Controllers.genericController.getAttribute(CP, Node, "contentGUID")
+                            ContentName = Controllers.genericController.getAttribute(CP, Node, "contentName")
+                            SettingGUID = Controllers.genericController.getAttribute(CP, Node, "settingGUID")
+                            Title = Controllers.genericController.getAttribute(CP, Node, "title")
+                            PosX = CP.Utils.EncodeInteger(Controllers.genericController.getAttribute(CP, Node, "x"))
+                            PosY = CP.Utils.EncodeInteger(Controllers.genericController.getAttribute(CP, Node, "y"))
+                            State = Controllers.genericController.getAttribute(CP, Node, "state")
+                            SizeX = CP.Utils.EncodeInteger(Controllers.genericController.getAttribute(CP, Node, "sizex"))
+                            SizeY = CP.Utils.EncodeInteger(Controllers.genericController.getAttribute(CP, Node, "sizey"))
+                            Options = Controllers.genericController.getAttribute(CP, Node, "optionstring")
                             Content = Controllers.genericController.GetDodad(CP, AddonGuid, ContentGuid, ContentName, Title, PosX, PosY, State, SizeX, SizeY, Options, WrapperID, NodePtr, RequiredJS, IconZIndex)
                             returnHtml = "" _
                     & Content _
