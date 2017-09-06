@@ -7,40 +7,19 @@ Imports System.Text
 Imports Contensive.BaseClasses
 Imports System.Xml
 
-Namespace Contensive.Addons.aoDashboard
-    '
-    ' Sample Vb2005 addon
-    '
+Namespace Interfaces
     Public Class dashboardClass
         Inherits AddonBaseClass
-        '
-        ' - update references to your installed version of cpBase
-        ' - Verify project root name space is empty
-        ' - Change the namespace to the collection name
-        ' - Change this class name to the addon name
-        ' - Create a Contensive Addon record with the namespace apCollectionName.ad
-        ' - add reference to CPBase.DLL, typically installed in c:\program files\kma\contensive\
-        '
-        '=====================================================================================
-        ' addon api
-        '=====================================================================================
-        '
         Public Overrides Function Execute(ByVal cp As CPBaseClass) As Object
             Dim returnHtml As String = ""
             Try
                 returnHtml = legacyAddon(cp)
             Catch ex As Exception
-                errorReport(cp, ex, "execute")
+                cp.Site.ErrorReport(ex)
             End Try
             Return returnHtml
         End Function
         '
-        '=====================================================================================
-        ' legacy code
-        '=====================================================================================
-        '
-        'Private cp as cpbaseclass
-        'Private CSV As Object
         Private GlobalJS As String
         '
         Private Function legacyAddon(cp As CPBaseClass) As String
@@ -48,8 +27,8 @@ Namespace Contensive.Addons.aoDashboard
             Try
                 '
                 Dim hint As String
-                Dim CS as integer
-                Dim IconZIndex as integer
+                Dim CS As Integer
+                Dim IconZIndex As Integer
                 Dim RequiredJS As String
                 Dim Dashboard As String
                 Dim objXML As New Xml.XmlDocument
@@ -57,31 +36,31 @@ Namespace Contensive.Addons.aoDashboard
                 Dim Node As XmlNode
                 Dim ParentNode As XmlNode
                 Dim Config As String
-                Dim NodeCount as integer
-                Dim Counter as integer
+                Dim NodeCount As Integer
+                Dim Counter As Integer
                 Dim AddonGuid As String
                 Dim ContentGuid As String = ""
                 Dim ContentName As String = ""
                 Dim SettingGUID As String
                 Dim Title As String
-                Dim PosX as integer
-                Dim PosY as integer
+                Dim PosX As Integer
+                Dim PosY As Integer
                 Dim State As String
-                Dim SizeX as integer
-                Dim SizeY as integer
+                Dim SizeX As Integer
+                Dim SizeY As Integer
                 Dim Options As String
-                Dim AttrCount as integer
-                Dim WrapperID as integer
+                Dim AttrCount As Integer
+                Dim WrapperID As Integer
                 Dim DefaultWrapperGUID As String
                 Dim DefaultConfigfilename As String
                 Dim UserConfigFilename As String
                 Dim ItemID As String
-                Dim NodePtr as Integer
+                Dim NodePtr As Integer
                 'Dim common As New genericController
                 Dim ConfigChanged As Boolean
                 '
                 WrapperID = 0
-                If objXML.hasChildNodes Then
+                If objXML.HasChildNodes Then
                     '
                     ' review values, remove deleted nodes and get settings
                     '
@@ -119,11 +98,11 @@ Namespace Contensive.Addons.aoDashboard
                                         ConfigChanged = True
                                     Else
                                         If cp.Utils.EncodeInteger(element.GetAttribute("x")) < 0 Then
-                                            Call element.SetAttribute("x", 0)
+                                            Call element.SetAttribute("x", "0")
                                             ConfigChanged = True
                                         End If
                                         If cp.Utils.EncodeInteger(element.GetAttribute("y")) < 0 Then
-                                            Call element.SetAttribute("y", 0)
+                                            Call element.SetAttribute("y", "0")
                                             ConfigChanged = True
                                         End If
                                     End If
@@ -138,7 +117,7 @@ Namespace Contensive.Addons.aoDashboard
                     ' draw the nodes that are left
                     '
                     NodePtr = 0
-                    For Each Node In objXML.documentElement.ChildNodes
+                    For Each Node In objXML.DocumentElement.ChildNodes
                         Dim element As Xml.XmlElement = Nothing
                         If Node Is GetType(Xml.XmlElement) Then
                             element = DirectCast(Node, Xml.XmlElement)
@@ -188,20 +167,5 @@ Namespace Contensive.Addons.aoDashboard
             Return result
         End Function
 
-
-        '
-        '=====================================================================================
-        ' common report for this class
-        '=====================================================================================
-        '
-        Private Sub errorReport(ByVal cp As CPBaseClass, ByVal ex As Exception, ByVal method As String)
-            Try
-                cp.Site.ErrorReport(ex, "Unexpected error in sampleClass." & method)
-            Catch exLost As Exception
-                '
-                ' stop anything thrown from cp errorReport
-                '
-            End Try
-        End Sub
     End Class
 End Namespace

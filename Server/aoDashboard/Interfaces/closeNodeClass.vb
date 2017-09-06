@@ -7,8 +7,7 @@ Imports System.Text
 Imports Contensive.BaseClasses
 Imports System.Xml
 
-Namespace Contensive.Addons.aoDashboard
-    '
+Namespace Interfaces
     Public Class closeNodeClass
         Inherits AddonBaseClass
         '
@@ -77,3 +76,4 @@ Namespace Contensive.Addons.aoDashboard
         End Function
     End Class
 End Namespace
+

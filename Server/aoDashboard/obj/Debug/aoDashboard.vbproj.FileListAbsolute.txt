@@ -1,3 +1,10 @@
-C:\Users\jay\OneDrive\Documents\git\aoDashboard\Server\aoDashboard\obj\Debug\aoDashboard.vbprojResolveAssemblyReference.cache
-C:\Users\jay\OneDrive\Documents\git\aoDashboard\Server\aoDashboard\obj\Debug\Resources.resources
+C:\Users\jay\OneDrive\Documents\git\aoDashboard\Server\aoDashboard\obj\Debug\Contensive.Addons.aoDashboard.Resources.resources
 C:\Users\jay\OneDrive\Documents\git\aoDashboard\Server\aoDashboard\obj\Debug\aoDashboard.vbproj.GenerateResource.Cache
+C:\Users\jay\OneDrive\Documents\git\aoDashboard\Server\aoDashboard\obj\Debug\aeDashboard.xml
+C:\Users\jay\OneDrive\Documents\git\aoDashboard\Server\aoDashboard\bin\Debug\aeDashboard.dll
+C:\Users\jay\OneDrive\Documents\git\aoDashboard\Server\aoDashboard\bin\Debug\aeDashboard.pdb
+C:\Users\jay\OneDrive\Documents\git\aoDashboard\Server\aoDashboard\bin\Debug\aeDashboard.xml
+C:\Users\jay\OneDrive\Documents\git\aoDashboard\Server\aoDashboard\bin\Debug\CPBase.dll
+C:\Users\jay\OneDrive\Documents\git\aoDashboard\Server\aoDashboard\obj\Debug\aoDashboard.vbprojResolveAssemblyReference.cache
+C:\Users\jay\OneDrive\Documents\git\aoDashboard\Server\aoDashboard\obj\Debug\aeDashboard.dll
+C:\Users\jay\OneDrive\Documents\git\aoDashboard\Server\aoDashboard\obj\Debug\aeDashboard.pdb

@@ -7,38 +7,24 @@ Imports System.Text
 Imports System.Xml
 Imports Contensive.BaseClasses
 
-Namespace Contensive.Addons.aoDashboard
-    '
-    ' Sample Vb2005 addon
-    '
+Namespace Interfaces
     Public Class OpenNodeClass
         Inherits AddonBaseClass
-        '
-        ' - update references to your installed version of cpBase
-        ' - Verify project root name space is empty
-        ' - Change the namespace to the collection name
-        ' - Change this class name to the addon name
-        ' - Create a Contensive Addon record with the namespace apCollectionName.ad
-        ' - add reference to CPBase.DLL, typically installed in c:\program files\kma\contensive\
-        '
-        '=====================================================================================
-        ' addon api
-        '=====================================================================================
         '
         Public Overrides Function Execute(ByVal CP As CPBaseClass) As Object
             Dim returnHtml As String = ""
             Try
                 Dim DefaultWrapperGUID As String
                 Dim Content As String
-                Dim Config As String
+                'Dim Config As String
                 Dim objXML As New XmlDocument
-                Dim Node As xmlNode
+                Dim Node As XmlNode
                 'Dim common As New genericController
                 Dim NodePtr As Integer
                 Dim IconZIndex As Integer
                 Dim RequiredJS As String
                 Dim Stream As String
-                Dim ParentNode As xmlNode
+                Dim ParentNode As XmlNode
                 Dim NodeCount As Integer
                 Dim Counter As Integer
                 Dim AddonGuid As String
@@ -59,20 +45,23 @@ Namespace Contensive.Addons.aoDashboard
                 Dim ItemID As String
                 Dim CS As String
                 ''Dim objFSO As Object
-                Dim wrapperDict As Dictionary(Of String, Models.wrappersModel) = Models.wrappersModel.getObjectGuidDictionary(CP)
+                Dim wrapperDict As Dictionary(Of String, Models.wrapperModel) = Models.wrapperModel.getGuidDictionary(CP)
                 '
                 objXML = Controllers.genericController.LoadConfig(CP)
-                If objXML.hasChildNodes Then
+                If objXML.HasChildNodes Then
                     '
                     ' Find defaultwrapper
                     '
 
-                    For Each Node In objXML.documentElement.ChildNodes
+                    For Each Node In objXML.DocumentElement.ChildNodes
                         If LCase(Node.Name) = "defaultwrapper" Then
-                            DefaultWrapperGUID = Node.GetAttribute("guid")
-                            Dim wrapper As Models.wrappersModel = wrapperDict(DefaultWrapperGUID)
-                            If (wrapper IsNot Nothing) Then
-                                WrapperID = wrapper.id
+                            Dim attr As XmlAttribute = Node.Attributes("guid")
+                            If (attr IsNot Nothing) Then
+                                DefaultWrapperGUID = attr.Value
+                                Dim wrapper As Contensive.Addons.aoDashboard.Models.wrapperModel = wrapperDict(DefaultWrapperGUID)
+                                If (wrapper IsNot Nothing) Then
+                                    WrapperID = wrapper.id
+                                End If
                             End If
                         End If
                     Next
@@ -81,19 +70,19 @@ Namespace Contensive.Addons.aoDashboard
                     Node = objXML.DocumentElement.ChildNodes(NodePtr)
                     If Not (Node Is Nothing) Then
                         If Node.Name = "node" Then
-                            Call Node.SetAttribute("state", "open")
-                            Config = objXML.xml
+                            Node.Attributes.Append(Controllers.genericController.createAttribute(objXML, "state", "open"))
+                            'Config = objXML.xml
                             Call Controllers.genericController.SaveConfig(CP, objXML)
                             AddonGuid = Controllers.genericController.GetXMLAttribute(Node, "addonGUID")
                             ContentGuid = Controllers.genericController.GetXMLAttribute(Node, "contentGUID")
                             ContentName = Controllers.genericController.GetXMLAttribute(Node, "contentName")
                             SettingGUID = Controllers.genericController.GetXMLAttribute(Node, "settingGUID")
                             Title = Controllers.genericController.GetXMLAttribute(Node, "title")
-                            PosX = cp.utils.encodeInteger(Controllers.genericController.GetXMLAttribute(Node, "x"))
-                            PosY = cp.utils.encodeInteger(Controllers.genericController.GetXMLAttribute(Node, "y"))
+                            PosX = CP.Utils.EncodeInteger(Controllers.genericController.GetXMLAttribute(Node, "x"))
+                            PosY = CP.Utils.EncodeInteger(Controllers.genericController.GetXMLAttribute(Node, "y"))
                             State = Controllers.genericController.GetXMLAttribute(Node, "state")
-                            SizeX = cp.utils.encodeInteger(Controllers.genericController.GetXMLAttribute(Node, "sizex"))
-                            SizeY = cp.utils.encodeInteger(Controllers.genericController.GetXMLAttribute(Node, "sizey"))
+                            SizeX = CP.Utils.EncodeInteger(Controllers.genericController.GetXMLAttribute(Node, "sizex"))
+                            SizeY = CP.Utils.EncodeInteger(Controllers.genericController.GetXMLAttribute(Node, "sizey"))
                             Options = Controllers.genericController.GetXMLAttribute(Node, "optionstring")
                             Content = Controllers.genericController.GetDodad(CP, AddonGuid, ContentGuid, ContentName, Title, PosX, PosY, State, SizeX, SizeY, Options, WrapperID, NodePtr, RequiredJS, IconZIndex)
                             returnHtml = "" _

@@ -6,9 +6,8 @@ Imports System.Collections.Generic
 Imports System.Text
 Imports System.Xml
 Imports Contensive.BaseClasses
-Imports Contensive.Addons.aoDashboard.Models
 
-Namespace Contensive.Addons.aoDashboard.Controllers
+Namespace Controllers
     Public Class genericController
         '
         '=====================================================================================
@@ -58,9 +57,9 @@ Namespace Contensive.Addons.aoDashboard.Controllers
                 WrapperHeight = 77
                 If (AddonIdOrGuid <> "") And (AddonIdOrGuid <> "0") Then
                     If IsNumeric(AddonIdOrGuid) And Len(AddonIdOrGuid) < 10 Then
-                        addon = addonModel.create(cp, CInt(AddonIdOrGuid))
+                        addon = Models.addonModel.create(cp, CInt(AddonIdOrGuid))
                     Else
-                        addon = addonModel.create(cp, AddonIdOrGuid)
+                        addon = Models.addonModel.create(cp, AddonIdOrGuid)
                     End If
                     '
                     ' Node is an Add-on
@@ -82,7 +81,7 @@ Namespace Contensive.Addons.aoDashboard.Controllers
                             ToolBar = "" _
                                 & "<a alt=""Minimize"" title=""Minimize"" href=""#"" onClick=""Return False;"" Class=""opacity50""><img border=0 src=""/cclib/images/opendown1313.gif"" width=""13"" height=""13""></a>" _
                                 & "<a alt=""Run In window"" title=""Run In Window"" href=""#"" onClick=""dashOpenNode('" & NodePtr & "','" & ItemHtmlID & "');return false;""><img border=0 src=""/cclib/images/box1313.gif"" width=""13"" height=""13""></a>" _
-                                & "<a alt=""Run full size"" title=""Run full size""  href=""?addonguid=" & addon.guid & """><img border=0 src=""/cclib/images/openup1313.gif"" width=""13"" height=""13""></a>" _
+                                & "<a alt=""Run full size"" title=""Run full size""  href=""?addonguid=" & addon.ccguid & """><img border=0 src=""/cclib/images/openup1313.gif"" width=""13"" height=""13""></a>" _
                                 & "<a alt=""Remove from dashboard"" title=""Remove from dashboard"" href=""#"" onClick=""dashDeleteNode('" & NodePtr & "','" & ItemHtmlID & "');return false;""><img border=0 src=""/cclib/images/closex1313.gif"" width=""13"" height=""13""></a>" _
                                 & ""
                         Else
@@ -99,7 +98,7 @@ Namespace Contensive.Addons.aoDashboard.Controllers
                     & "<div style=""float:left"">" & Title & "</div>" _
                     & "<a alt=""Minimize"" title=""Minimize"" href=""#"" onClick=""closeNode('" & NodePtr & "','" & ItemHtmlID & "');return false;""><img border=0 src=""/cclib/images/opendown1313.gif"" width=""13"" height=""13""></a>" _
                     & "<a alt=""Run in window"" title=""Run in Window"" href=""#"" class=""opacity50"" onClick=""return false;""><img border=0 src=""/cclib/images/box1313.gif"" width=""13"" height=""13""></a>" _
-                    & "<a alt=""Run full size"" title=""Run full size""  href=""?addonguid=" & addon.guid & """><img border=0 src=""/cclib/images/openup1313.gif"" width=""13"" height=""13""></a>" _
+                    & "<a alt=""Run full size"" title=""Run full size""  href=""?addonguid=" & addon.ccguid & """><img border=0 src=""/cclib/images/openup1313.gif"" width=""13"" height=""13""></a>" _
                     & "<a alt=""Remove from dashboard"" title=""Remove from dashboard"" href=""#"" onClick=""dashDeleteNode('" & NodePtr & "','" & ItemHtmlID & "');return false;""><img border=0 src=""/cclib/images/closex1313.gif"" width=""13"" height=""13""></a>" _
                     & ""
                         End If
@@ -112,7 +111,7 @@ Namespace Contensive.Addons.aoDashboard.Controllers
                     IsIcon = True
                     ItemHTMLClass = "iconNode"
                     If (ContentGuid <> "") Then
-                        content = Models.contentModel.createByGuid(cp, ContentGuid)
+                        content = Contensive.Addons.aoDashboard.Models.contentModel.create(cp, ContentGuid)
                     Else
                         content = Models.contentModel.createByName(cp, ContentName)
                     End If
@@ -176,7 +175,7 @@ Namespace Contensive.Addons.aoDashboard.Controllers
                     ' from Csvr
                     '
                     ' Const ContextAdmin = 2
-                    DoDadContent = cp.Utils.ExecuteAddon(addon.guid)
+                    DoDadContent = cp.Utils.ExecuteAddon(addon.ccguid)
                 End If
                 '
                 'DoDadContent = GetDodadContent(cp, Addon.ID, AddonGuid, AddonOptions, State, IconSprites, Title, IconFileName, IconWidth, IconHeight, cp.ServerFilePath, WrapperID, 0, 0, ShortcutHref)
@@ -306,6 +305,10 @@ Namespace Contensive.Addons.aoDashboard.Controllers
             Return result
         End Function
 
+        Private Shared Function CR() As String
+            Throw New NotImplementedException()
+        End Function
+
         Public Shared Function GetGridWrapper(cp As CPBaseClass, Title As String, Content As String, Width As Integer, Height As Integer) As String
             Dim result As String = ""
             Try
@@ -315,9 +318,9 @@ Namespace Contensive.Addons.aoDashboard.Controllers
                 Dim InsideWidth As Integer
                 Dim InsideHeight As Integer
 
-                SpacerHeight = cp.utils.encodeInteger(Height) - 38
-                InsideWidth = cp.utils.encodeInteger(Width)
-                InsideHeight = cp.utils.encodeInteger(Height) - 70
+                SpacerHeight = cp.Utils.EncodeInteger(Height) - 38
+                InsideWidth = cp.Utils.EncodeInteger(Width)
+                InsideHeight = cp.Utils.EncodeInteger(Height) - 70
 
                 Stream = Stream & "<table cellpadding=""0"" cellspacing=""0"" border=""0"">"
 
@@ -590,6 +593,13 @@ Namespace Contensive.Addons.aoDashboard.Controllers
                 GetIconSprite = GetIconSprite & " ACInstanceID=""" & ACInstanceID & """"
             End If
             GetIconSprite = GetIconSprite & " style=""" & ImgStyle & """>"
+        End Function
+        '
+        ' -- build an attribute
+        Friend Shared Function createAttribute(doc As XmlDocument, attrName As String, attrValue As String) As XmlAttribute
+            Dim returnAttr As XmlAttribute = doc.CreateAttribute(attrName)
+            returnAttr.Value = attrValue
+            Return returnAttr
         End Function
     End Class
 

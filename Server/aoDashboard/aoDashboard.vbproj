@@ -7,9 +7,8 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{D965230D-4C94-4635-84E0-C50E7206EA63}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>
-    </RootNamespace>
-    <AssemblyName>AddonSamples</AssemblyName>
+    <RootNamespace>Contensive.Addons.aoDashboard</RootNamespace>
+    <AssemblyName>aeDashboard</AssemblyName>
     <MyType>Windows</MyType>
     <SccProjectName>
     </SccProjectName>
@@ -33,7 +32,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>AddonSamples.xml</DocumentationFile>
+    <DocumentationFile>aeDashboard.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -42,7 +41,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>AddonSamples.xml</DocumentationFile>
+    <DocumentationFile>aeDashboard.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -76,19 +75,19 @@
     <Import Include="System.Diagnostics" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="constants.vb" />
     <Compile Include="Interfaces\dashboardClass.vb" />
     <Compile Include="Interfaces\DashDragStopClass.vb" />
     <Compile Include="Interfaces\DelNodeClass.vb" />
     <Compile Include="Interfaces\NavDropClass.vb" />
     <Compile Include="Interfaces\OpenNodeClass.vb" />
     <Compile Include="Interfaces\ResizeClass.vb" />
-    <Compile Include="Models\wrappersModels.vb" />
+    <Compile Include="Models\baseModel.vb" />
+    <Compile Include="Models\personModel.vb" />
     <Compile Include="Models\addonModel.vb" />
-    <Compile Include="Models\contentModel.vb" />
     <Compile Include="Models\wrapperModel.vb" />
+    <Compile Include="Models\contentModel.vb" />
     <Compile Include="Models\_blankModel.vb" />
-    <Compile Include="_templateAddonClass.vb" />
-    <Compile Include="Class1.vb" />
     <Compile Include="Controllers\genericController.vb" />
     <Compile Include="Interfaces\closeNodeClass.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -127,7 +126,9 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Models\modelData.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
