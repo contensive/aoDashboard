@@ -22,7 +22,7 @@ Namespace Controllers
         '           ControlWrapper = the absolute positioned wrapper that contains all drag/drop/resize/toolbar features
         '
         '
-        Public Shared Function GetDodad(cp As CPBaseClass, AddonIdOrGuid As String, ContentGuid As String, ContentName As String, Title As String, PosX As Integer, PosY As Integer, State As String, SizeX As Integer, SizeY As Integer, AddonOptions As String, WrapperID As Integer, NodePtr As Integer, Return_RequiredJS As String, IconZIndex As Integer) As String
+        Public Shared Function GetDodad(cp As CPBaseClass, AddonIdOrGuid As String, ContentGuid As String, ContentName As String, Title As String, PosX As Integer, PosY As Integer, State As String, SizeX As Integer, SizeY As Integer, AddonOptions As String, WrapperID As Integer, NodePtr As Integer, ByRef Return_RequiredJS As String, IconZIndex As Integer) As String
             Dim result As String = ""
             Try
                 Dim DodadWrappedContent As String
@@ -262,35 +262,35 @@ Namespace Controllers
                         & "})"
                     HandleJS = ",handle: '#" & ToolBarHTMLId & "'"
                 End If
-                Return_RequiredJS = Return_RequiredJS _
-                    & CR _
-                    & "/* alert('draggable and resizable being added');*/" _
-                    & "$(function(){" _
-                    & "$('#" & ItemHtmlID & "').draggable({" _
-                    & "stop: function(event, ui){" _
-                    & "var e=document.getElementById('" & ItemHtmlID & "');" _
-                    & "cj.ajax.addonCallback('dashboarddragstop','ptr=" & NodePtr & "&x='+e.style.left+'&y='+e.style.top,dashResize);" _
-                    & "}" _
-                    & ",start: function(event, ui){" _
-                    & "var e=document.getElementById('" & ItemHtmlID & "');" _
-                    & "e.style.zIndex=iconZIndexTop++;" _
-                    & "$('#" & ItemHtmlID & "').draggable('option', 'zIndex', iconZIndexTop );" _
-                    & "}" _
-                    & ",revert: 'invalid'" _
-                    & ",zIndex: " & IconZIndex & "" _
-                    & ",hoverClass: '" & DroppableHoverClass & "'" _
-                    & ",opacity: 0.50" _
+                Return_RequiredJS &= "" _
+                    & CR & "//" _
+                    & CR & "// -- add droppable to desktop" _
+                    & CR & "jQuery(function(){" _
+                    & CR2 & "jQuery('#" & ItemHtmlID & "').draggable({" _
+                    & CR2 & "stop: function(event, ui){" _
+                    & CR2 & "var e=document.getElementById('" & ItemHtmlID & "');" _
+                    & CR2 & "cj.ajax.addonCallback('dashboarddragstop','ptr=" & NodePtr & "&x='+e.style.left+'&y='+e.style.top,dashResize);" _
+                    & CR2 & "}" _
+                    & CR2 & ",start: function(event, ui){" _
+                    & CR2 & "var e=document.getElementById('" & ItemHtmlID & "');" _
+                    & CR2 & "e.style.zIndex=iconZIndexTop++;" _
+                    & CR2 & "jQuery('#" & ItemHtmlID & "').draggable('option', 'zIndex', iconZIndexTop );" _
+                    & CR2 & "}" _
+                    & CR2 & ",revert: 'invalid'" _
+                    & CR2 & ",zIndex: " & IconZIndex & "" _
+                    & CR2 & ",hoverClass: '" & DroppableHoverClass & "'" _
+                    & CR2 & ",opacity: 0.50" _
                     & HandleJS _
-                    & ",cursor: 'move'" _
-                    & "})" & ResizeableJS & ";" _
-                    & "});"
+                    & CR2 & ",cursor: 'move'" _
+                    & CR2 & "})" & ResizeableJS & ";" _
+                    & CR & "});"
                 '
                 ' make this item droppable greedy
                 '
                 Return_RequiredJS = Return_RequiredJS _
                     & CR _
-                    & "$(function(){" _
-                        & "$('#" & ItemHtmlID & "').droppable({" _
+                    & "jQuery(function(){" _
+                        & "jQuery('#" & ItemHtmlID & "').droppable({" _
                             & "hoverClass: '" & DroppableHoverClass & "'," _
                             & "greedy: true" _
                         & "});" _

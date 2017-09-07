@@ -1,11 +1,68 @@
-<Collection name="Dashboard" guid="{B470C25F-DDBC-4593-8161-1A2FD4A35690}" system="Yes">
+<?xml version="1.0" encoding="windows-1252"?>
+<Collection name="Dashboard" guid="{B470C25F-DDBC-4593-8161-1A2FD4A35690}" system="No" updatable="Yes" blockNavigatorNode="No">
+	<HelpLink></HelpLink>
 	<Help></Help>
-	<ImportCollection name="JQuery UI">{1D3B0D90-5C61-449F-B1AF-47688C5E97D1}</ImportCollection>
+	<Addon name="_oninstall" guid="{361DB5F8-8C00-40E6-8407-E54A09A35F8C}" type="Add-on">
+		<Copy></Copy>
+		<CopyText></CopyText>
+		<ActiveXProgramID></ActiveXProgramID>
+		<DotNetClass></DotNetClass>
+		<ArgumentList></ArgumentList>
+		<AsAjax>No</AsAjax>
+		<Filter>No</Filter>
+		<Help></Help>
+		<HelpLink></HelpLink>
+		<Icon Link="" width="0" height="0" sprites="0" />
+		<InIframe>No</InIframe>
+		<BlockEditTools>No</BlockEditTools>
+		<FormXML></FormXML>
+		<IsInline>No</IsInline>
+		<JavascriptOnLoad></JavascriptOnLoad>
+		<JavascriptInHead></JavascriptInHead>
+		<JavascriptBodyEnd></JavascriptBodyEnd>
+		<MetaDescription></MetaDescription>
+		<OtherHeadTags></OtherHeadTags>
+		<Content>No</Content>
+		<Template>No</Template>
+		<Email>No</Email>
+		<Admin>No</Admin>
+		<OnPageEndEvent>No</OnPageEndEvent>
+		<OnPageStartEvent>No</OnPageStartEvent>
+		<OnBodyStart>No</OnBodyStart>
+		<OnBodyEnd>No</OnBodyEnd>
+		<RemoteMethod>No</RemoteMethod>
+		<ProcessRunOnce>Yes</ProcessRunOnce>
+		<ProcessInterval>0</ProcessInterval>
+		<PageTitle></PageTitle>
+		<RemoteAssetLink></RemoteAssetLink>
+		<Styles></Styles>
+		<Scripting Language="" EntryPoint="" Timeout="5000">
+			<Code><![CDATA[function m
+dim fileList,files,filePtr,col,filename,content,filePath
+fileList = cp.file.fileList( cp.site.physicalFilePath & "upload\dashboard\" )
+if fileList<>"" then
+  files = split( fileList, vbcrlf )
+  for filePtr = 0 to ubound( files )
+    col = split( files( filePtr ), "," )
+    filename = col(0)
+    if instr( 1, filename, "dashconfig." ) then
+      filePath = cp.site.physicalFilePath & "upload\dashboard\" & filename
+      content = cp.file.read( filePath )
+      content = replace( content, "ContensiveNews", "Contensive" )
+      'm = m & "<br>" & filename & "=" & filePath
+      'm = m & "<br>" & filename & "=" & replace( content, "<", "&lt;" )
+      call cp.file.save( filepath, content )
+    end if
+  next
+end if
+end function]]></Code>
+		</Scripting>
+	</Addon>
 	<Addon name="Dashboard" guid="{4BA7B4A2-ED6C-46C5-9C7B-8CE251FC8FF5}" type="Add-on">
 		<Copy></Copy>
 		<CopyText></CopyText>
-		<ActiveXProgramID><![CDATA[aoDashboard.DashboardClass]]></ActiveXProgramID>
-		<DotNetClass></DotNetClass>
+		<ActiveXProgramID></ActiveXProgramID>
+		<DotNetClass><![CDATA[Contensive.Addons.aoDashboard.Interfaces.dashboardClass]]></DotNetClass>
 		<ArgumentList></ArgumentList>
 		<AsAjax>No</AsAjax>
 		<Filter>No</Filter>
@@ -13,127 +70,140 @@
 		<HelpLink></HelpLink>
 		<Icon Link="/upload/dashboard/iconDashboard.png" width="57" height="59" sprites="4" />
 		<InIframe>No</InIframe>
-		<BlockEditTools>Yes</BlockEditTools>
+		<BlockEditTools>No</BlockEditTools>
 		<FormXML></FormXML>
 		<IncludeAddon name="JQuery UI" guid="{840B9AEF-9470-4599-BD47-7EC0C9298614}"/>
 		<IsInline>No</IsInline>
-		<JavascriptOnLoad><![CDATA[dashResize()]]></JavascriptOnLoad>
-		<JavascriptInHead><![CDATA[function dashResize() {
-			var i,n,nodeTop,nodeBottom,desktopBottom=0;
-			for (i=0;i<=nodeCnt;i++){
-				n=document.getElementById('dashnode'+i)
-				if(n){
-					nodeTop=n.style.top;
-					nodeTop=parseInt(nodeTop.replace('px',''));
-					nodeBottom=nodeTop+n.scrollHeight;
-					if(nodeBottom>desktopBottom){desktopBottom=nodeBottom}
-				}
-			}
-			if(desktopBottom!=0){
-				n=document.getElementById('dashBoardWrapper');
-				if(n){n.style.height=desktopBottom}
-			}
+		<JavascriptOnLoad></JavascriptOnLoad>
+		<JavascriptInHead><![CDATA[//
+// -- initialize
+jQuery(document).ready(function(){
+	dashResize();
+})
+//
+// -- event to resize dash
+function dashResize() {
+	console.log('dashResize, nodeCnt['+nodeCnt+']');
+	var i,n,nodeTop,nodeBottom,desktopBottom=0;
+	for (i=0;i<=nodeCnt;i++){
+		n=document.getElementById('dashnode'+i)
+		if(n){
+			console.log('dashResize, initialize node['+i+']');
+			nodeTop=n.style.top;
+			nodeTop=parseInt(nodeTop.replace('px',''));
+			nodeBottom=nodeTop+n.scrollHeight;
+			if(nodeBottom>desktopBottom){desktopBottom=nodeBottom}
+		}
+	}
+	if(desktopBottom!=0){
+		n=document.getElementById('dashBoardWrapper');
+		if(n){n.style.height=desktopBottom}
+	}
 }
+//
+// -- mouse over body
 function overBody(toolsId){
-					e=document.getElementById(toolsId);
-					showTools(e);
-					e.overBody=true;
-					if(e.t) clearTimeout(e.t);
+	e=document.getElementById(toolsId);
+	showTools(e);
+	e.overBody=true;
+	if(e.t) clearTimeout(e.t);
 }
+//
+// -- mouse out of body
 function outBody(toolsId){
-					e=document.getElementById(toolsId);
-					e.overBody=false;
-					if(e.oTools){
-						if(e.oTools==false){
-							e.t=setTimeout("hideTools('"+e.id+"')",3000);
-						}
-					} else {
-						e.t=setTimeout("hideTools('"+e.id+"')",3000);
-					}
+	e=document.getElementById(toolsId);
+	e.overBody=false;
+	if(e.oTools){
+		if(e.oTools==false){
+			e.t=setTimeout("hideTools('"+e.id+"')",3000);
+		}
+	} else {
+		e.t=setTimeout("hideTools('"+e.id+"')",3000);
+	}
 }
 function overTools(e){
-					showTools(e);
-					e.oTools=true;
-					if(e.t) clearTimeout(e.t);
+	showTools(e);
+	e.oTools=true;
+	if(e.t) clearTimeout(e.t);
 }
 function outTools(e){
-					e.oTools=false;
-					if(e.overBody){
-						if(e.overBody==false){
-							e.t=setTimeout("hideTools('"+e.id+"')",3000);	
-						}
-					} else {
-						e.t=setTimeout("hideTools('"+e.id+"')",3000);	
-					}
+	e.oTools=false;
+	if(e.overBody){
+		if(e.overBody==false){
+			e.t=setTimeout("hideTools('"+e.id+"')",3000);	
+		}
+	} else {
+		e.t=setTimeout("hideTools('"+e.id+"')",3000);	
+	}
 }
 function showTools(e){
-					if(e){
-						if(e.style.visibility!='visible'){
-							e.style.visibility='visible';
-						}
-					}
+	if(e){
+		if(e.style.visibility!='visible'){
+			e.style.visibility='visible';
+		}
+	}
 }
 function hideTools(toolsId){
-					var e=document.getElementById(toolsId);
-					if(e) e.style.visibility='hidden';
+	var e=document.getElementById(toolsId);
+	if(e) e.style.visibility='hidden';
 }
 function dashDeleteNode( nodePtr, HTMLId ) {
-					var c=document.getElementById(HTMLId);
-					var p=c.parentNode;
-					p.removeChild(c);
-					cj.ajax.addon('dashboarddelnode','ptr='+nodePtr);
-					dashResize();
+	var c=document.getElementById(HTMLId);
+	var p=c.parentNode;
+	p.removeChild(c);
+	cj.ajax.addon('dashboarddelnode','ptr='+nodePtr);
+	dashResize();
 }
 function dashOpenNodeCallback(response,callbackArg) {
 //alert('dashOpenNodeCallback');
-					var hId='dashhelper'+nodeCnt++;
-					navMakeHelper(hId);
-					var e=document.getElementById(hId);
-					e.innerHTML=response;
-					dashResize();
+	var hId='dashhelper'+nodeCnt++;
+	navMakeHelper(hId);
+	var e=document.getElementById(hId);
+	e.innerHTML=response;
+	dashResize();
 }
 function dashOpenNode( nodePtr, HTMLId ) {
 //alert('dashOpenNode');
-					var c,p,hId;
-					c=document.getElementById(HTMLId);
-					p=c.parentNode;
-					p.removeChild(c);
-					cj.ajax.addonCallback('dashboardopennode','ptr='+nodePtr,dashOpenNodeCallback,'test');
+	var c,p,hId;
+	c=document.getElementById(HTMLId);
+	p=c.parentNode;
+	p.removeChild(c);
+	cj.ajax.addonCallback('dashboardopennode','ptr='+nodePtr,dashOpenNodeCallback,'test');
 }
 function closeNode( nodePtr, HTMLId ) {
-					var c,p,hId;
-					c=document.getElementById(HTMLId);
-					var p=c.parentNode;
-					p.removeChild(c);
-					hId='dashhelper'+nodeCnt++;
-					navMakeHelper(hId);
-					cj.ajax.addon('dashboardclosenode','ptr='+nodePtr,'',hId);
-					dashResize();
+	var c,p,hId;
+	c=document.getElementById(HTMLId);
+	var p=c.parentNode;
+	p.removeChild(c);
+	hId='dashhelper'+nodeCnt++;
+	navMakeHelper(hId);
+	cj.ajax.addon('dashboardclosenode','ptr='+nodePtr,'',hId);
+	dashResize();
 }
 function navMakeHelper( iconId ) {
-					var w=document.getElementById('dashBoardWrapper');
-					var e=document.createElement('div');
-					e.setAttribute('id',iconId);
-					e.setAttribute('style','position:absolute;top:0;left:0;');
-					w.appendChild(e);
+	var w=document.getElementById('dashBoardWrapper');
+	var e=document.createElement('div');
+	e.setAttribute('id',iconId);
+	e.setAttribute('style','position:absolute;top:0;left:0;');
+	w.appendChild(e);
 }
 function navDropCallback(response,iconId){
-					var e=document.getElementById(iconId);
-					e.innerHTML=response;
-					dashResize();
+	var e=document.getElementById(iconId);
+	e.innerHTML=response;
+	dashResize();
 }
 function navDrop(id,x,y){
-					var iconId='dashhelper'+nodeCnt++;
-					var w=document.getElementById('dashBoardWrapper');
-					var e=document.createElement('div');
-					var posX=(x-getPageOffsetLeft(w));
-					var posY=(y-37-getPageOffsetTop(w));
-					e.setAttribute('id',iconId);
-					e.setAttribute('style','position:absolute;top:0;left:0;');
-					w.appendChild(e);
-					cj.ajax.addonCallback('dashboardnavdrop','id='+id+'&x='+posX+'&y='+posY,navDropCallback,iconId);
-					// cj.ajax.addon('dashboardnavdrop','id='+id+'&x='+posX+'&y='+posY,'',iconId);
-					// dashResize();
+	var iconId='dashhelper'+nodeCnt++;
+	var w=document.getElementById('dashBoardWrapper');
+	var e=document.createElement('div');
+	var posX=(x-getPageOffsetLeft(w));
+	var posY=(y-37-getPageOffsetTop(w));
+	e.setAttribute('id',iconId);
+	e.setAttribute('style','position:absolute;top:0;left:0;');
+	w.appendChild(e);
+	cj.ajax.addonCallback('dashboardnavdrop','id='+id+'&x='+posX+'&y='+posY,navDropCallback,iconId);
+	// cj.ajax.addon('dashboardnavdrop','id='+id+'&x='+posX+'&y='+posY,'',iconId);
+	// dashResize();
 }
 ]]></JavascriptInHead>
 		<JavascriptBodyEnd></JavascriptBodyEnd>
@@ -143,6 +213,7 @@ function navDrop(id,x,y){
 ]]></OtherHeadTags>
 		<Content>Yes</Content>
 		<Template>Yes</Template>
+		<Email>No</Email>
 		<Admin>No</Admin>
 		<OnPageEndEvent>No</OnPageEndEvent>
 		<OnPageStartEvent>No</OnPageStartEvent>
@@ -153,9 +224,7 @@ function navDrop(id,x,y){
 		<ProcessInterval>0</ProcessInterval>
 		<PageTitle><![CDATA[Administration Site]]></PageTitle>
 		<RemoteAssetLink></RemoteAssetLink>
-		<Styles><![CDATA[
-
-.ccBodyAdmin {
+		<Styles><![CDATA[.ccBodyAdmin {
 	background-color:#C8C8C8; 
 }
 
@@ -263,6 +332,7 @@ function navDrop(id,x,y){
 		<OtherHeadTags></OtherHeadTags>
 		<Content>No</Content>
 		<Template>No</Template>
+		<Email>No</Email>
 		<Admin>No</Admin>
 		<OnPageEndEvent>No</OnPageEndEvent>
 		<OnPageStartEvent>No</OnPageStartEvent>
@@ -298,6 +368,7 @@ function navDrop(id,x,y){
 		<OtherHeadTags></OtherHeadTags>
 		<Content>No</Content>
 		<Template>No</Template>
+		<Email>No</Email>
 		<Admin>No</Admin>
 		<OnPageEndEvent>No</OnPageEndEvent>
 		<OnPageStartEvent>No</OnPageStartEvent>
@@ -333,6 +404,7 @@ function navDrop(id,x,y){
 		<OtherHeadTags></OtherHeadTags>
 		<Content>No</Content>
 		<Template>No</Template>
+		<Email>No</Email>
 		<Admin>No</Admin>
 		<OnPageEndEvent>No</OnPageEndEvent>
 		<OnPageStartEvent>No</OnPageStartEvent>
@@ -368,6 +440,7 @@ function navDrop(id,x,y){
 		<OtherHeadTags></OtherHeadTags>
 		<Content>No</Content>
 		<Template>No</Template>
+		<Email>No</Email>
 		<Admin>No</Admin>
 		<OnPageEndEvent>No</OnPageEndEvent>
 		<OnPageStartEvent>No</OnPageStartEvent>
@@ -403,6 +476,7 @@ function navDrop(id,x,y){
 		<OtherHeadTags></OtherHeadTags>
 		<Content>No</Content>
 		<Template>No</Template>
+		<Email>No</Email>
 		<Admin>No</Admin>
 		<OnPageEndEvent>No</OnPageEndEvent>
 		<OnPageStartEvent>No</OnPageStartEvent>
@@ -438,6 +512,7 @@ function navDrop(id,x,y){
 		<OtherHeadTags></OtherHeadTags>
 		<Content>No</Content>
 		<Template>No</Template>
+		<Email>No</Email>
 		<Admin>No</Admin>
 		<OnPageEndEvent>No</OnPageEndEvent>
 		<OnPageStartEvent>No</OnPageStartEvent>
@@ -451,47 +526,10 @@ function navDrop(id,x,y){
 		<Styles></Styles>
 		<Scripting Language="" EntryPoint="" Timeout="5000"/>
 	</Addon>
-	<data>
-		<record content="wrappers" guid="{9182DCA4-F88B-4593-A5A0-D9151A7FF342}" name="Dashboard Green Border">
-			<field name="ACTIVE">True</field>
-			<field name="SORTORDER"></field>
-			<field name="copytext"><![CDATA[<div class="wrapperGreen">fpo</div>]]></field>
-			<field name="targetstring"><![CDATA[fpo]]></field>
-			<field name="javascriptonload"></field>
-			<field name="javascriptinhead"></field>
-			<field name="JSFilename"></field>
-			<field name="javascriptbodyend"></field>
-			<field name="OtherHeadTags"></field>
-			<field name="stylesfilename"><![CDATA[.wrapperGreen {
-			padding:5px;
-			border:2px solid green;
-			-moz-border-radius:5px;
-			background-color:white;
-}]]></field>
-		</record>
-	</data>
-	<ImportCollection name="Site Usage">{BB12E536-21FC-4C86-97A0-7579405EB173}</ImportCollection>
-	<ImportCollection name="Twitter">{EADB8DAF-CC49-404E-AEDE-71AEE9C9BFEC}</ImportCollection>
-	<ImportCollection name="Visit Charts">{D5B7BA7F-6B78-4625-8B23-232AC6574130}</ImportCollection>
 	<ImportCollection name="Whos Online">{F7A1CB55-369B-462A-B5D9-6C1A57EFE4BF}</ImportCollection>
-	<Resource name="dashconfig.xml" type="content" path="upload/dashboard" />
-	<Resource name="container.png" type="content" path="upload/dashboard" />
-	<Resource name="container_01.png" type="content" path="upload/dashboard" />
-	<Resource name="container_02.png" type="content" path="upload/dashboard" />
-	<Resource name="container_03.png" type="content" path="upload/dashboard" />
-	<Resource name="container_04.png" type="content" path="upload/dashboard" />
-	<Resource name="container_05.png" type="content" path="upload/dashboard" />
-	<Resource name="container_06.png" type="content" path="upload/dashboard" />
-	<Resource name="container_07.png" type="content" path="upload/dashboard" />
-	<Resource name="container_08.png" type="content" path="upload/dashboard" />
-	<Resource name="container_09.png" type="content" path="upload/dashboard" />
-	<Resource name="desktoplogo.gif" type="content" path="upload/dashboard" />
-	<Resource name="grid.gif" type="content" path="upload/dashboard" />
-	<Resource name="iconclient.png" type="content" path="upload/dashboard" />
-	<Resource name="trashcan.png" type="content" path="upload/dashboard" />
-	<Resource name="icondashboard.png" type="content" path="upload/dashboard" />
-	<Resource name="icongoogle.png" type="content" path="upload/dashboard" />
-	<Resource name="jquery.scale9grid.js" type="content" path="upload/dashboard" />
-	<Resource name="whosonline.png" type="content" path="upload/dashboard" />
-	<Resource name="aoDashboard.dll" type="executable" path="" />
+	<ImportCollection name="Visit Charts">{D5B7BA7F-6B78-4625-8B23-232AC6574130}</ImportCollection>
+	<ImportCollection name="Twitter">{EADB8DAF-CC49-404E-AEDE-71AEE9C9BFEC}</ImportCollection>
+	<ImportCollection name="Site Usage">{BB12E536-21FC-4C86-97A0-7579405EB173}</ImportCollection>
+	<ImportCollection name="JQuery UI">{1D3B0D90-5C61-449F-B1AF-47688C5E97D1}</ImportCollection>
+	<Resource name="aodashboard.dll" type="executable" path="" />
 </Collection>

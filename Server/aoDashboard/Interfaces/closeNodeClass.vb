@@ -19,7 +19,6 @@ Namespace Interfaces
                 Dim objXML As New XmlDocument
                 Dim Node As XmlNode
                 Dim NodePtr As Integer
-                Dim RequiredJS As String
                 Dim AddonGuid As String
                 Dim ContentGuid As String
                 Dim ContentName As String
@@ -56,6 +55,7 @@ Namespace Interfaces
                             SizeX = cp.Utils.EncodeInteger(Controllers.genericController.getAttribute(cp, Node, "sizex"))
                             SizeY = cp.Utils.EncodeInteger(Controllers.genericController.getAttribute(cp, Node, "sizey"))
                             Options = Controllers.genericController.getAttribute(cp, Node, "optionstring")
+                            Dim RequiredJS As String = ""
                             result = Controllers.genericController.GetDodad(cp, AddonGuid, ContentGuid, ContentName, Title, PosX, PosY, State, SizeX, SizeY, Options, WrapperID, NodePtr, RequiredJS, IconZIndex)
                             '
                             ' Add in javascript

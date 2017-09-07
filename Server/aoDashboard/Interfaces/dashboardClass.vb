@@ -1,3 +1,4 @@
+
 Option Explicit On
 Option Strict On
 
@@ -117,12 +118,11 @@ Namespace Interfaces
                 '
                 ' Add JQuery UI dropable to desktop
                 '
-                GlobalJS = GlobalJS _
-                    & "var iconZIndexTop=" & IconZIndex & ";" _
-                    & "var nodeCnt=" & NodePtr & ";" _
-                    & "$(""#desktop"").droppable({" _
-                        & "tolerance: 'fit'" _
-                    & "});"
+                GlobalJS &= "" _
+                    & CR & "//" _
+                    & CR & "// -- add droppable to desktop" _
+                    & CR & "var iconZIndexTop=" & IconZIndex & ";" _
+                    & CR & "var nodeCnt=" & NodePtr & ";jQuery(""#desktop"").droppable({tolerance: 'fit'});"
                 '
                 ' Assemble final page
                 '
@@ -130,9 +130,7 @@ Namespace Interfaces
                     & "<div id=""dashBoardWrapper"" class=""dashBoardWrapper"">" _
                     & ("&nbsp;" & Dashboard) _
                     & "</div>" _
-                    & "<script type=""text/javascript"">" _
-                    & (GlobalJS) _
-                    & "</script>"
+                    & "<script type=""text/javascript"">" & GlobalJS & "</script>"
             Catch ex As Exception
                 cp.Site.ErrorReport(ex)
             End Try

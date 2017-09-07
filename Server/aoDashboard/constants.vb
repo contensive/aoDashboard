@@ -5,6 +5,8 @@ Option Strict On
 Public Module constants
     '
     Public Const CR As String = vbCrLf & vbTab
+    Public Const CR2 As String = vbCrLf & vbTab & vbTab
+    Public Const CR3 As String = vbCrLf & vbTab & vbTab & vbTab
     '
     ' -- errors for resultErrList
     Public Enum resultErrorEnum
