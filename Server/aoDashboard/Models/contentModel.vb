@@ -20,28 +20,27 @@ Namespace Models
         '
         '====================================================================================================
         ' -- instance properties
-        Public Property AdminOnly As Boolean
-        Public Property AllowAdd As Boolean
-        Public Property AllowContentChildTool As Boolean
-        Public Property AllowContentTracking As Boolean
-        Public Property AllowDelete As Boolean
-        Public Property AllowMetaContent As Boolean
-        Public Property AllowTopicRules As Boolean
-        Public Property AllowWorkflowAuthoring As Boolean
-        Public Property AuthoringTableID As Integer
-        Public Property ContentCategoryID As Integer
-        Public Property ContentTableID As Integer
-        Public Property DefaultSortMethodID As Integer
-        Public Property DeveloperOnly As Boolean
-        Public Property DropDownFieldList As String
-        Public Property EditorGroupID As Integer
+        'Public Property AdminOnly As Boolean
+        'Public Property AllowAdd As Boolean
+        'Public Property AllowContentChildTool As Boolean
+        'Public Property AllowContentTracking As Boolean
+        'Public Property AllowDelete As Boolean
+        'Public Property AllowTopicRules As Boolean
+        'Public Property AllowWorkflowAuthoring As Boolean
+        'Public Property AuthoringTableID As Integer
+        'Public Property ContentCategoryID As Integer
+        'Public Property ContentTableID As Integer
+        'Public Property DefaultSortMethodID As Integer
+        'Public Property DeveloperOnly As Boolean
+        'Public Property DropDownFieldList As String
+        'Public Property EditorGroupID As Integer
         Public Property IconHeight As Integer
         Public Property IconLink As String
         Public Property IconSprites As Integer
         Public Property IconWidth As Integer
-        Public Property InstalledByCollectionID As Integer
-        Public Property IsBaseContent As Boolean
-        Public Property ParentID As Integer
+        'Public Property InstalledByCollectionID As Integer
+        'Public Property IsBaseContent As Boolean
+        'Public Property ParentID As Integer
         '
         '====================================================================================================
         Public Overloads Shared Function add(cp As CPBaseClass) As contentModel

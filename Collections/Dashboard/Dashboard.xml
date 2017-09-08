@@ -36,27 +36,7 @@
 		<PageTitle></PageTitle>
 		<RemoteAssetLink></RemoteAssetLink>
 		<Styles></Styles>
-		<Scripting Language="" EntryPoint="" Timeout="5000">
-			<Code><![CDATA[function m
-dim fileList,files,filePtr,col,filename,content,filePath
-fileList = cp.file.fileList( cp.site.physicalFilePath & "upload\dashboard\" )
-if fileList<>"" then
-  files = split( fileList, vbcrlf )
-  for filePtr = 0 to ubound( files )
-    col = split( files( filePtr ), "," )
-    filename = col(0)
-    if instr( 1, filename, "dashconfig." ) then
-      filePath = cp.site.physicalFilePath & "upload\dashboard\" & filename
-      content = cp.file.read( filePath )
-      content = replace( content, "ContensiveNews", "Contensive" )
-      'm = m & "<br>" & filename & "=" & filePath
-      'm = m & "<br>" & filename & "=" & replace( content, "<", "&lt;" )
-      call cp.file.save( filepath, content )
-    end if
-  next
-end if
-end function]]></Code>
-		</Scripting>
+		<Scripting Language="" EntryPoint="" Timeout="5000"/>
 	</Addon>
 	<Addon name="Dashboard" guid="{4BA7B4A2-ED6C-46C5-9C7B-8CE251FC8FF5}" type="Add-on">
 		<Copy></Copy>
@@ -224,7 +204,8 @@ function navDrop(id,x,y){
 		<ProcessInterval>0</ProcessInterval>
 		<PageTitle><![CDATA[Administration Site]]></PageTitle>
 		<RemoteAssetLink></RemoteAssetLink>
-		<Styles><![CDATA[.ccBodyAdmin {
+		<Styles><![CDATA[
+.ccBodyAdmin {
 	background-color:#C8C8C8; 
 }
 
@@ -313,8 +294,8 @@ function navDrop(id,x,y){
 	<Addon name="dashboardclosenode" guid="{6DEC632B-C8DF-44EB-ABCB-12B362660708}" type="Add-on">
 		<Copy></Copy>
 		<CopyText></CopyText>
-		<ActiveXProgramID><![CDATA[aoDashboard.CloseNodeClass]]></ActiveXProgramID>
-		<DotNetClass></DotNetClass>
+		<ActiveXProgramID></ActiveXProgramID>
+		<DotNetClass><![CDATA[Contensive.Addons.aoDashboard.Interfaces.closeNodeClass]]></DotNetClass>
 		<ArgumentList></ArgumentList>
 		<AsAjax>No</AsAjax>
 		<Filter>No</Filter>
@@ -349,8 +330,8 @@ function navDrop(id,x,y){
 	<Addon name="DashboardDelNode" guid="{058EAF9D-6347-43D9-82B1-ACF56A3C23E0}" type="Add-on">
 		<Copy></Copy>
 		<CopyText></CopyText>
-		<ActiveXProgramID><![CDATA[aoDashboard.DelNodeClass]]></ActiveXProgramID>
-		<DotNetClass></DotNetClass>
+		<ActiveXProgramID></ActiveXProgramID>
+		<DotNetClass><![CDATA[Contensive.Addons.aoDashboard.Interfaces.delNodeClass]]></DotNetClass>
 		<ArgumentList></ArgumentList>
 		<AsAjax>No</AsAjax>
 		<Filter>No</Filter>
@@ -385,8 +366,8 @@ function navDrop(id,x,y){
 	<Addon name="DashboardDragStop" guid="{E6334477-2772-4C5B-87ED-144E8A7DD009}" type="Add-on">
 		<Copy></Copy>
 		<CopyText></CopyText>
-		<ActiveXProgramID><![CDATA[aoDashboard.DragStopClass]]></ActiveXProgramID>
-		<DotNetClass></DotNetClass>
+		<ActiveXProgramID></ActiveXProgramID>
+		<DotNetClass><![CDATA[Contensive.Addons.aoDashboard.Interfaces.dashDragStopClass]]></DotNetClass>
 		<ArgumentList></ArgumentList>
 		<AsAjax>No</AsAjax>
 		<Filter>No</Filter>
@@ -421,8 +402,8 @@ function navDrop(id,x,y){
 	<Addon name="DashboardNavDrop" guid="{C9141C65-32E7-45D4-9EBB-D312F3754BC8}" type="Add-on">
 		<Copy></Copy>
 		<CopyText></CopyText>
-		<ActiveXProgramID><![CDATA[aoDashboard.NavDropClass]]></ActiveXProgramID>
-		<DotNetClass></DotNetClass>
+		<ActiveXProgramID></ActiveXProgramID>
+		<DotNetClass><![CDATA[Contensive.Addons.aoDashboard.Interfaces.navDropClass]]></DotNetClass>
 		<ArgumentList></ArgumentList>
 		<AsAjax>No</AsAjax>
 		<Filter>No</Filter>
@@ -457,8 +438,8 @@ function navDrop(id,x,y){
 	<Addon name="DashboardOpenNode" guid="{CF0D4F7A-BE09-4DA4-9036-C7CBD2D01E28}" type="Add-on">
 		<Copy></Copy>
 		<CopyText></CopyText>
-		<ActiveXProgramID><![CDATA[aoDashboard.OpenNodeClass]]></ActiveXProgramID>
-		<DotNetClass></DotNetClass>
+		<ActiveXProgramID></ActiveXProgramID>
+		<DotNetClass><![CDATA[Contensive.Addons.aoDashboard.Interfaces.openNodeClass]]></DotNetClass>
 		<ArgumentList></ArgumentList>
 		<AsAjax>No</AsAjax>
 		<Filter>No</Filter>
@@ -493,8 +474,8 @@ function navDrop(id,x,y){
 	<Addon name="DashboardResize" guid="{4E220430-213A-45FF-988D-6D1C30CBDC0D}" type="Add-on">
 		<Copy></Copy>
 		<CopyText></CopyText>
-		<ActiveXProgramID><![CDATA[aoDashboard.ResizeClass]]></ActiveXProgramID>
-		<DotNetClass></DotNetClass>
+		<ActiveXProgramID></ActiveXProgramID>
+		<DotNetClass><![CDATA[Contensive.Addons.aoDashboard.Interfaces.ResizeClass]]></DotNetClass>
 		<ArgumentList></ArgumentList>
 		<AsAjax>No</AsAjax>
 		<Filter>No</Filter>

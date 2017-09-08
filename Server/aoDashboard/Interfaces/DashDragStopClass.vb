@@ -27,7 +27,7 @@ Namespace Interfaces
                                 Node.Attributes.Append(Controllers.genericController.createAttribute(objXML, "x", xValue))
                             End If
                             Dim yValue As String = CP.Doc.GetText("y")
-                            yValue = Replace(xValue, "px", "")
+                            yValue = Replace(yValue, "px", "")
                             If IsNumeric(yValue) Then
                                 Node.Attributes.Append(Controllers.genericController.createAttribute(objXML, "y", yValue))
                             End If

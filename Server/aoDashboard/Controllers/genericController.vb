@@ -30,7 +30,6 @@ Namespace Controllers
                 Dim ResizeableJS As String
                 Dim WrapperWidth As Integer
                 Dim WrapperHeight As Integer
-                Dim DoDadContent As String
                 Dim IconWidth As Integer
                 Dim IconHeight As Integer
                 Dim IconSprites As Integer
@@ -136,6 +135,7 @@ Namespace Controllers
                 End If
                 '
                 ' Build inner content of icon or addon
+                Dim DoDadContent As String = ""
                 If LCase(State) = "closed" Then
                     '
                     ' Icon Shortcut (Content or Addon)
@@ -167,14 +167,9 @@ Namespace Controllers
                     DoDadContent = "" _
                         & vbCrLf & vbTab & vbTab & "<a class=""shortcut"" href=""" & ShortcutHref & """>" & IconImg & "<br>" & Title & "</a>" _
                         & ""
-                Else
+                ElseIf (addon IsNot Nothing) Then
                     '
-                    ' Addon in a wrapper
-                    '
-                    '
-                    ' from Csvr
-                    '
-                    ' Const ContextAdmin = 2
+                    ' -- execute the addon
                     DoDadContent = cp.Utils.ExecuteAddon(addon.ccguid)
                 End If
                 '
@@ -373,9 +368,8 @@ Namespace Controllers
                     Dim DefaultConfigfilename As String
                     DefaultConfigfilename = "upload\dashboard\dashconfig.xml"
                     DefaultConfigfilename = cp.Site.GetText("Dashboard Default Config Content Filename", DefaultConfigfilename)
-                    DefaultConfigfilename = cp.Site.PhysicalFilePath & DefaultConfigfilename
-                    Config = cp.File.Read(DefaultConfigfilename)
-                    Call cp.File.Save(UserConfigFilename, Config)
+                    Config = cp.File.ReadVirtual(DefaultConfigfilename)
+                    Call cp.File.SaveVirtual(UserConfigFilename, Config)
                 End If
                 result.LoadXml(Config)
             Catch ex As Exception

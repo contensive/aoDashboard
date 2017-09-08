@@ -23,14 +23,14 @@ Namespace Models
         Public Property Admin As Boolean
         Public Property ArgumentList As String
         Public Property AsAjax As Boolean
-        Public Property BlockDefaultStyles As Boolean
+        'Public Property BlockDefaultStyles As Boolean
         Public Property BlockEditTools As Boolean
         Public Property CollectionID As Integer
         Public Property Content As Boolean
         Public Property ContentCategoryID As Integer
         Public Property Copy As String
         Public Property CopyText As String
-        Public Property CustomStylesFilename As String
+        'Public Property CustomStylesFilename As String
         Public Property DotNetClass As String
         Public Property Email As Boolean
         Public Property Filter As Boolean
@@ -42,7 +42,7 @@ Namespace Models
         Public Property IconSprites As Integer
         Public Property IconWidth As Integer
         Public Property InFrame As Boolean
-        Public Property inlineScript As String
+        'Public Property inlineScript As String
         Public Property IsInline As Boolean
         Public Property JavaScriptBodyEnd As String
         Public Property JavaScriptOnLoad As String
