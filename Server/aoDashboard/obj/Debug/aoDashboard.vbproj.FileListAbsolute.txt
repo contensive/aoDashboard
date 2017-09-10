@@ -6,3 +6,4 @@ C:\Users\jay\OneDrive\Documents\git\aoDashboard\Server\aoDashboard\obj\Debug\aoD
 C:\Users\jay\OneDrive\Documents\git\aoDashboard\Server\aoDashboard\obj\Debug\aeDashboard.dll
 C:\Users\jay\OneDrive\Documents\git\aoDashboard\Server\aoDashboard\obj\Debug\aeDashboard.xml
 C:\Users\jay\OneDrive\Documents\git\aoDashboard\Server\aoDashboard\obj\Debug\aeDashboard.pdb
+C:\Users\jay\OneDrive\Documents\git\aoDashboard\Server\aoDashboard\obj\Debug\aoDashboard.vbprojResolveAssemblyReference.cache
