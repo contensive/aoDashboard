@@ -550,7 +550,6 @@ function navDrop(id,x,y){
 	<ImportCollection name="Visit Charts">{D5B7BA7F-6B78-4625-8B23-232AC6574130}</ImportCollection>
 	<ImportCollection name="Twitter">{EADB8DAF-CC49-404E-AEDE-71AEE9C9BFEC}</ImportCollection>
 	<ImportCollection name="Site Usage">{BB12E536-21FC-4C86-97A0-7579405EB173}</ImportCollection>
-	<ImportCollection name="jQuery-ui-legacyCollection">{1D3B0D90-5C61-449F-B1AF-47688C5E97D1}</ImportCollection>
 	<Resource name="container.png" type="content" path="upload/dashboard" />
 	<Resource name="container_01.png" type="content" path="upload/dashboard" />
 	<Resource name="container_02.png" type="content" path="upload/dashboard" />
