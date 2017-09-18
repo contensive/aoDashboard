@@ -50,7 +50,7 @@
 		<HelpLink></HelpLink>
 		<Icon Link="/upload/dashboard/iconDashboard.png" width="57" height="59" sprites="4" />
 		<InIframe>No</InIframe>
-		<BlockEditTools>No</BlockEditTools>
+		<BlockEditTools>yes</BlockEditTools>
 		<FormXML></FormXML>
 		<IncludeAddon name="JQuery UI" guid="{840B9AEF-9470-4599-BD47-7EC0C9298614}"/>
 		<IsInline>No</IsInline>
@@ -545,7 +545,7 @@ function navDrop(id,x,y){
 		<Styles></Styles>
 		<Scripting Language="" EntryPoint="" Timeout="5000"/>
 	</Addon>
-	<ImportCollection name="jQuery">{A435BF70-041B-43D1-8A8D-5D9D59A7FCD0} </ImportCollection>
+	<ImportCollection name="jQuery">{A435BF70-041B-43D1-8A8D-5D9D59A7FCD0}</ImportCollection>
 	<ImportCollection name="Whos Online">{F7A1CB55-369B-462A-B5D9-6C1A57EFE4BF}</ImportCollection>
 	<ImportCollection name="Visit Charts">{D5B7BA7F-6B78-4625-8B23-232AC6574130}</ImportCollection>
 	<ImportCollection name="Twitter">{EADB8DAF-CC49-404E-AEDE-71AEE9C9BFEC}</ImportCollection>
