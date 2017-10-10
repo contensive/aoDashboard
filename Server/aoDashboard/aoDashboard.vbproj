@@ -138,7 +138,7 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>copy "$(TargetDir)*.dll" "%25programfiles%25\kma\Contensive\Addons"
+    <PostBuildEvent>copy "$(TargetDir)*.dll" "c:\program files (x86)\kma\Contensive\Addons"
 copy "$(TargetDir)*.dll" "C:\ProgramData\Contensive\AddonAssemblyBypass"
 </PostBuildEvent>
   </PropertyGroup>

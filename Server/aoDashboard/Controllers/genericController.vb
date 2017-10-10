@@ -304,57 +304,39 @@ Namespace Controllers
         Public Shared Function GetGridWrapper(cp As CPBaseClass, Title As String, Content As String, Width As Integer, Height As Integer) As String
             Dim result As String = ""
             Try
-
-                Dim Stream As String = ""
-                Dim SpacerHeight As Integer
-                Dim InsideWidth As Integer
-                Dim InsideHeight As Integer
-
-                SpacerHeight = cp.Utils.EncodeInteger(Height) - 38
-                InsideWidth = cp.Utils.EncodeInteger(Width)
-                InsideHeight = cp.Utils.EncodeInteger(Height) - 70
-
-                Stream = Stream & "<table cellpadding=""0"" cellspacing=""0"" border=""0"">"
-
-                Stream = Stream & "<tr>"
-                Stream = Stream & "<td><img src=""/upload/dashboard/container_01.png""></td>"
-                Stream = Stream & "<td width=""" & InsideWidth & """><img src=""/upload/dashboard/container_02.png"" height=""13"" width=""100%""></td>"
-                Stream = Stream & "<td><img src=""/upload/dashboard/container_03.png""></td>"
-                Stream = Stream & "</tr>"
-
-                Stream = Stream & "<tr>"
-                Stream = Stream & "<td style=""BACKGROUND: url(/upload/dashboard/container_04.png) repeat-y left top"">"
-                Stream = Stream & "<img src=""/ccLib/images/spacer.gif"" height=""" & SpacerHeight & """ width=""12"">"
-                Stream = Stream & "</td>"
-
-                Stream = Stream & "<td valign=""top"" style=""BACKGROUND: url(/upload/dashboard/container_05.png) left top"">"
-
-                Stream = Stream & "<div class=""dodadTitle"">" & Title & "</div>"
-                Stream = Stream & "<div style=""overflow: auto; width: 100%; height: " & InsideHeight & ";"">"
-
-                Stream = Stream & Content
-
-                Stream = Stream & "</div>"
-
-                Stream = Stream & "</td>"
-
-                Stream = Stream & "<td style=""BACKGROUND: url(/upload/dashboard/container_06.png) repeat-y left top"">"
-                Stream = Stream & "<img src=""/ccLib/images/spacer.gif"" height=""" & SpacerHeight & """ width=""18"">"
-                Stream = Stream & "</td>"
-                Stream = Stream & "</tr>"
-
-                Stream = Stream & "<tr>"
-                Stream = Stream & "<td><img src=""/upload/dashboard/container_07.png""></td>"
-                Stream = Stream & "<td width=""" & InsideWidth & """><img src=""/upload/dashboard/container_08.png"" height=""22"" width=""100%""></td>"
-                Stream = Stream & "<td><img src=""/upload/dashboard/container_09.png""></td>"
-                Stream = Stream & "</tr>"
-
-                Stream = Stream & "</table>"
-
-                result = Stream
+                Dim SpacerHeight As Integer = cp.Utils.EncodeInteger(Height) - 38
+                Dim InsideWidth As Integer = cp.Utils.EncodeInteger(Width)
+                Dim InsideHeight As Integer = cp.Utils.EncodeInteger(Height) - 70
+                result = result & "<table cellpadding=""0"" cellspacing=""0"" border=""0"">"
+                result = result & "<tr>"
+                result = result & "<td><img src=""/dashboard/container_01.png""></td>"
+                result = result & "<td width=""" & InsideWidth & """><img src=""/dashboard/container_02.png"" height=""13"" width=""100%""></td>"
+                result = result & "<td><img src=""/dashboard/container_03.png""></td>"
+                result = result & "</tr>"
+                result = result & "<tr>"
+                result = result & "<td style=""BACKGROUND: url(/dashboard/container_04.png) repeat-y left top"">"
+                result = result & "<img src=""/ccLib/images/spacer.gif"" height=""" & SpacerHeight & """ width=""12"">"
+                result = result & "</td>"
+                result = result & "<td valign=""top"" style=""BACKGROUND: url(/dashboard/container_05.png) left top"">"
+                result = result & "<div class=""dodadTitle"">" & Title & "</div>"
+                result = result & "<div style=""overflow: auto; width: 100%; height: " & InsideHeight & ";"">"
+                result = result & Content
+                result = result & "</div>"
+                result = result & "</td>"
+                result = result & "<td style=""BACKGROUND: url(/dashboard/container_06.png) repeat-y left top"">"
+                result = result & "<img src=""/ccLib/images/spacer.gif"" height=""" & SpacerHeight & """ width=""18"">"
+                result = result & "</td>"
+                result = result & "</tr>"
+                result = result & "<tr>"
+                result = result & "<td><img src=""/dashboard/container_07.png""></td>"
+                result = result & "<td width=""" & InsideWidth & """><img src=""/dashboard/container_08.png"" height=""22"" width=""100%""></td>"
+                result = result & "<td><img src=""/dashboard/container_09.png""></td>"
+                result = result & "</tr>"
+                result = result & "</table>"
             Catch ex As ArgumentException
                 cp.Site.ErrorReport(ex)
             End Try
+            Return result
         End Function
         '
         '
@@ -362,11 +344,11 @@ Namespace Controllers
         Public Shared Function LoadConfig(cp As CPBaseClass) As XmlDocument
             Dim result As New System.Xml.XmlDocument
             Try
-                Dim UserConfigFilename As String = "upload\dashboard\dashconfig." & cp.User.Id & ".xml"
+                Dim UserConfigFilename As String = "dashboard\dashconfig." & cp.User.Id & ".xml"
                 Dim Config As String = cp.File.ReadVirtual(UserConfigFilename)
                 If Config = "" Then
                     Dim DefaultConfigfilename As String
-                    DefaultConfigfilename = "upload\dashboard\dashconfig.xml"
+                    DefaultConfigfilename = "dashboard\dashconfig.xml"
                     DefaultConfigfilename = cp.Site.GetText("Dashboard Default Config Content Filename", DefaultConfigfilename)
                     Config = cp.File.ReadVirtual(DefaultConfigfilename)
                     Call cp.File.SaveVirtual(UserConfigFilename, Config)
@@ -387,7 +369,7 @@ Namespace Controllers
             'Dim objFSO As New kmaFileSystem3.FileSystemClass
             'objFSO = CreateObject("kmaFileSystem3.FileSystemClass")
             '
-            UserConfigFilename = cp.Site.PhysicalFilePath & "upload\dashboard\dashconfig." & cp.User.Id & ".xml"
+            UserConfigFilename = cp.Site.PhysicalFilePath & "dashboard\dashconfig." & cp.User.Id & ".xml"
             Call cp.File.Save(UserConfigFilename, objXML.OuterXml)
             '
         End Sub
@@ -429,9 +411,6 @@ Namespace Controllers
         '
         '
         Public Shared Function GetAddonIconImg(AdminURL As String, IconWidth As Long, IconHeight As Long, IconSprites As Long, IconIsInline As Boolean, IconImgID As String, IconFilename As String, serverFilePath As String, IconAlt As String, IconTitle As String, ACInstanceID As String, IconSpriteColumn As Long) As String
-            '
-            Dim ImgStyle As String
-            Dim IconHeightNumeric As Long
             '
             If IconAlt = "" Then
                 IconAlt = "Add-on"

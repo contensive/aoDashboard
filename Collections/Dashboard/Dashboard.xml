@@ -545,29 +545,29 @@ function navDrop(id,x,y){
 		<Styles></Styles>
 		<Scripting Language="" EntryPoint="" Timeout="5000"/>
 	</Addon>
-	<ImportCollection name="jQuery">{A435BF70-041B-43D1-8A8D-5D9D59A7FCD0}</ImportCollection>
+	<ImportCollection name="JQuery">{A435BF70-041B-43D1-8A8D-5D9D59A7FCD0}</ImportCollection>
 	<ImportCollection name="Whos Online">{F7A1CB55-369B-462A-B5D9-6C1A57EFE4BF}</ImportCollection>
 	<ImportCollection name="Visit Charts">{D5B7BA7F-6B78-4625-8B23-232AC6574130}</ImportCollection>
 	<ImportCollection name="Twitter">{EADB8DAF-CC49-404E-AEDE-71AEE9C9BFEC}</ImportCollection>
 	<ImportCollection name="Site Usage">{BB12E536-21FC-4C86-97A0-7579405EB173}</ImportCollection>
-	<Resource name="container.png" type="content" path="upload/dashboard" />
-	<Resource name="container_01.png" type="content" path="upload/dashboard" />
-	<Resource name="container_02.png" type="content" path="upload/dashboard" />
-	<Resource name="container_03.png" type="content" path="upload/dashboard" />
-	<Resource name="container_04.png" type="content" path="upload/dashboard" />
-	<Resource name="container_05.png" type="content" path="upload/dashboard" />
-	<Resource name="container_06.png" type="content" path="upload/dashboard" />
-	<Resource name="container_07.png" type="content" path="upload/dashboard" />
-	<Resource name="container_08.png" type="content" path="upload/dashboard" />
-	<Resource name="container_09.png" type="content" path="upload/dashboard" />
-	<Resource name="dashconfig.xml" type="content" path="upload/dashboard" />
-	<Resource name="desktoplogo.gif" type="content" path="upload/dashboard" />
-	<Resource name="grid.gif" type="content" path="upload/dashboard" />
-	<Resource name="iconclient.png" type="content" path="upload/dashboard" />
-	<Resource name="icondashboard.png" type="content" path="upload/dashboard" />
-	<Resource name="icongoogle.png" type="content" path="upload/dashboard" />
-	<Resource name="jquery.scale9grid.js" type="content" path="upload/dashboard" />
-	<Resource name="trashcan.png" type="content" path="upload/dashboard" />
-	<Resource name="whosonline.png" type="content" path="upload/dashboard" />
-	<Resource name="aodashboard.dll" type="executable" path="" />
+	<Resource name="dashconfig.xml" type="content" path="dashboard" />
+	<Resource name="container.png" type="www" path="dashboard" />
+	<Resource name="container_01.png" type="www" path="dashboard" />
+	<Resource name="container_02.png" type="www" path="dashboard" />
+	<Resource name="container_03.png" type="www" path="dashboard" />
+	<Resource name="container_04.png" type="www" path="dashboard" />
+	<Resource name="container_05.png" type="www" path="dashboard" />
+	<Resource name="container_06.png" type="www" path="dashboard" />
+	<Resource name="container_07.png" type="www" path="dashboard" />
+	<Resource name="container_08.png" type="www" path="dashboard" />
+	<Resource name="container_09.png" type="www" path="dashboard" />
+	<Resource name="desktoplogo.gif" type="www" path="dashboard" />
+	<Resource name="grid.gif" type="www" path="dashboard" />
+	<Resource name="iconclient.png" type="www" path="dashboard" />
+	<Resource name="icondashboard.png" type="www" path="dashboard" />
+	<Resource name="icongoogle.png" type="www" path="dashboard" />
+	<Resource name="jquery.scale9grid.js" type="www" path="dashboard" />
+	<Resource name="trashcan.png" type="www" path="dashboard" />
+	<Resource name="whosonline.png" type="www" path="dashboard" />
+	<Resource name="aodashboard.dll" type="executable" path="" />		
 </Collection>

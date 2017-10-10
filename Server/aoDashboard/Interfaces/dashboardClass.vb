@@ -18,8 +18,8 @@ Namespace Interfaces
         '
         Public Overrides Function Execute(ByVal cp As CPBaseClass) As Object
             Dim result As String = ""
+            Dim hint As String = "1"
             Try
-                Dim hint As String
                 Dim IconZIndex As Integer
                 Dim RequiredJS As String
                 Dim node As XmlNode
@@ -46,16 +46,19 @@ Namespace Interfaces
                     '
                     ' review values, remove deleted nodes and get settings
                     '
+                    hint &= ",2"
                     ConfigChanged = False
                     For Each node In config.DocumentElement.ChildNodes
                         Select Case LCase(node.Name)
                             Case "defaultwrapper"
+                                hint &= ",3"
                                 DefaultWrapperGUID = genericController.getAttribute(cp, node, "guid")
                                 Dim wrapper As Models.wrapperModel = Models.wrapperModel.create(cp, DefaultWrapperGUID)
                                 If (wrapper IsNot Nothing) Then
                                     WrapperID = wrapper.id
                                 End If
                             Case "node"
+                                hint &= ",4a"
                                 AddonGuid = genericController.getAttribute(cp, node, "addonGUID")
                                 If AddonGuid = "" Then
                                     ContentGuid = genericController.getAttribute(cp, node, "contentGUID")
@@ -65,6 +68,7 @@ Namespace Interfaces
                                 End If
                                 SizeY = cp.Utils.EncodeInteger(genericController.getAttribute(cp, node, "sizey"))
                                 If ((AddonGuid = "") And (ContentGuid = "") And (ContentName = "")) Or cp.Utils.EncodeBoolean(genericController.getAttribute(cp, node, "deleted")) Then
+                                    hint &= ",4b"
                                     '
                                     ' delete any nodes marked as delete
                                     ' this is actually a problem if the user has mulitple windows open,
@@ -76,18 +80,22 @@ Namespace Interfaces
                                     Call ParentNode.RemoveChild(node)
                                     ConfigChanged = True
                                 Else
+                                    hint &= ",4c"
                                     If cp.Utils.EncodeInteger(genericController.getAttribute(cp, node, "x")) < 0 Then
-                                        config.Attributes("x").Value = "0"
+                                        hint &= ",4d"
+                                        node.Attributes("x").Value = "0"
                                         ConfigChanged = True
                                     End If
                                     If cp.Utils.EncodeInteger(genericController.getAttribute(cp, node, "y")) < 0 Then
-                                        config.Attributes("y").Value = "0"
+                                        hint &= ",4e"
+                                        node.Attributes("y").Value = "0"
                                         ConfigChanged = True
                                     End If
                                 End If
                         End Select
                     Next
                     If ConfigChanged Then
+                        hint &= ",5"
                         Call Controllers.genericController.SaveConfig(cp, config)
                     End If
                     '
@@ -97,6 +105,7 @@ Namespace Interfaces
                     For Each node In config.DocumentElement.ChildNodes
                         Select Case LCase(node.Name)
                             Case "node"
+                                hint &= ",6"
                                 RequiredJS = ""
                                 AddonGuid = Controllers.genericController.getAttribute(cp, node, "addonGUID")
                                 ContentGuid = Controllers.genericController.getAttribute(cp, node, "contentGUID")
@@ -115,6 +124,7 @@ Namespace Interfaces
                         NodePtr = NodePtr + 1
                     Next
                 End If
+                hint &= ",7"
                 '
                 ' Add JQuery UI dropable to desktop
                 '
@@ -126,13 +136,14 @@ Namespace Interfaces
                 '
                 ' Assemble final page
                 '
+                hint &= ",8"
                 result = "" _
                     & "<div id=""dashBoardWrapper"" class=""dashBoardWrapper"">" _
                     & ("&nbsp;" & Dashboard) _
                     & "</div>" _
                     & "<script type=""text/javascript"">" & GlobalJS & "</script>"
             Catch ex As Exception
-                cp.Site.ErrorReport(ex)
+                cp.Site.ErrorReport(ex, "dashboardClass, hint [" & hint & "]")
             End Try
             Return result
         End Function

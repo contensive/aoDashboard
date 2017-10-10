@@ -21,7 +21,7 @@ Namespace Interfaces
                 Dim Node As XmlNode
                 Dim NodePtr As Integer
                 Dim IconZIndex As Integer
-                Dim RequiredJS As String
+                Dim RequiredJS As String = ""
                 Dim AddonGuid As String
                 Dim ContentGuid As String
                 Dim ContentName As String
