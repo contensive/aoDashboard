@@ -550,7 +550,7 @@ function navDrop(id,x,y){
 	<ImportCollection name="Visit Charts">{D5B7BA7F-6B78-4625-8B23-232AC6574130}</ImportCollection>
 	<ImportCollection name="Twitter">{EADB8DAF-CC49-404E-AEDE-71AEE9C9BFEC}</ImportCollection>
 	<ImportCollection name="Site Usage">{BB12E536-21FC-4C86-97A0-7579405EB173}</ImportCollection>
-	<Resource name="dashconfig.xml" type="content" path="dashboard" />
+	<Resource name="dashconfig.xml" type="content" path="upload\dashboard" />
 	<Resource name="container.png" type="www" path="dashboard" />
 	<Resource name="container_01.png" type="www" path="dashboard" />
 	<Resource name="container_02.png" type="www" path="dashboard" />
