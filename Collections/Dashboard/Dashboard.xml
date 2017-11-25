@@ -190,7 +190,7 @@ function navDrop(id,x,y){
 ]]></JavascriptInHead>
 		<JavascriptBodyEnd></JavascriptBodyEnd>
 		<MetaDescription></MetaDescription>
-		<OtherHeadTags><![CDATA[<script type="text/javascript" src="/upload/dashboard/jquery.scale9grid.js"></script>
+		<OtherHeadTags><![CDATA[<script type="text/javascript" src="/dashboard/jquery.scale9grid.js"></script>
 
 ]]></OtherHeadTags>
 		<Content>Yes</Content>
