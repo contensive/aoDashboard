@@ -52,7 +52,6 @@
 		<InIframe>No</InIframe>
 		<BlockEditTools>yes</BlockEditTools>
 		<FormXML></FormXML>
-		<IncludeAddon name="JQuery UI" guid="{840B9AEF-9470-4599-BD47-7EC0C9298614}"/>
 		<IsInline>No</IsInline>
 		<JavascriptOnLoad></JavascriptOnLoad>
 		<JavascriptInHead><![CDATA[console.log('Dashboard Load');
@@ -190,9 +189,7 @@ function navDrop(id,x,y){
 ]]></JavascriptInHead>
 		<JavascriptBodyEnd></JavascriptBodyEnd>
 		<MetaDescription></MetaDescription>
-		<OtherHeadTags><![CDATA[<script type="text/javascript" src="/dashboard/jquery.scale9grid.js"></script>
-
-]]></OtherHeadTags>
+		<OtherHeadTags></OtherHeadTags>
 		<Content>Yes</Content>
 		<Template>Yes</Template>
 		<Email>No</Email>
@@ -292,6 +289,8 @@ function navDrop(id,x,y){
 
 ]]></Styles>
 		<Scripting Language="" EntryPoint="" Timeout="5000"/>
+		<IncludeAddon name="JQuery UI" guid="{840B9AEF-9470-4599-BD47-7EC0C9298614}"/>
+		<IncludeAddon name="scale9grid" guid="{02CF6C5F-5A42-42B2-987F-FFDD44C7733D}"/>
 	</Addon>
 	<Addon name="Dashboard Trashcan" guid="{0E879FC7-87C8-42E9-831A-22B263F229DF}" type="Add-on">
 		<Copy></Copy>
@@ -544,6 +543,11 @@ function navDrop(id,x,y){
 		<RemoteAssetLink></RemoteAssetLink>
 		<Styles></Styles>
 		<Scripting Language="" EntryPoint="" Timeout="5000"/>
+	</Addon>
+	<Addon name="scale9grid" guid="{02CF6C5F-5A42-42B2-987F-FFDD44C7733D}" type="Add-on">
+		<BlockEditTools>yes</BlockEditTools>
+		<JavascriptInHead><![CDATA[document.write('<scr'+'ipt type="text/javascript" src="/dashboard/jquery.scale9grid.js"></scr'+'ipt>');]]></JavascriptInHead>
+		<IncludeAddon name="jQuery" guid="{9C882078-0DAC-48E3-AD4B-CF2AA230DF80}"/>
 	</Addon>
 	<ImportCollection name="JQuery">{A435BF70-041B-43D1-8A8D-5D9D59A7FCD0}</ImportCollection>
 	<ImportCollection name="Whos Online">{F7A1CB55-369B-462A-B5D9-6C1A57EFE4BF}</ImportCollection>
