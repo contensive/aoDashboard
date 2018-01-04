@@ -137,11 +137,12 @@ Namespace Interfaces
                 ' Assemble final page
                 '
                 hint &= ",8"
+                cp.Doc.AddBodyEnd("<script type=""text/javascript"">" & GlobalJS & "</script>")
                 result = "" _
                     & "<div id=""dashBoardWrapper"" class=""dashBoardWrapper"">" _
-                    & ("&nbsp;" & Dashboard) _
+                    & Dashboard _
                     & "</div>" _
-                    & "<script type=""text/javascript"">" & GlobalJS & "</script>"
+                    & ""
             Catch ex As Exception
                 cp.Site.ErrorReport(ex, "dashboardClass, hint [" & hint & "]")
             End Try
