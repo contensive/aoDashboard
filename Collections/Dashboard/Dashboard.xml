@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="windows-1252"?>
-<Collection name="Dashboard" guid="{B470C25F-DDBC-4593-8161-1A2FD4A35690}" system="No" updatable="Yes" blockNavigatorNode="No">
+<Collection name="Dashboard" guid="{b470c25f-ddbc-4593-8161-1a2fd4a35690}" system="No" updatable="Yes" blockNavigatorNode="No">
 	<HelpLink></HelpLink>
 	<Help></Help>
 	<Addon name="_oninstall" guid="{361DB5F8-8C00-40E6-8407-E54A09A35F8C}" type="Add-on">
@@ -17,11 +17,12 @@
 		<BlockEditTools>No</BlockEditTools>
 		<FormXML></FormXML>
 		<IsInline>No</IsInline>
-		<JavascriptOnLoad></JavascriptOnLoad>
 		<JavascriptInHead></JavascriptInHead>
-		<JavascriptBodyEnd></JavascriptBodyEnd>
-		<MetaDescription></MetaDescription>
-		<OtherHeadTags></OtherHeadTags>
+		<javascriptForceHead>No</javascriptForceHead>
+		<JSHeadScriptSrc></JSHeadScriptSrc>
+		<!-- deprecated --><JSBodyScriptSrc></JSBodyScriptSrc>
+		<!-- deprecated --><JavascriptBodyEnd></JavascriptBodyEnd>
+		<!-- deprecated --><JavascriptOnLoad></JavascriptOnLoad>
 		<Content>No</Content>
 		<Template>No</Template>
 		<Email>No</Email>
@@ -33,16 +34,19 @@
 		<RemoteMethod>No</RemoteMethod>
 		<ProcessRunOnce>Yes</ProcessRunOnce>
 		<ProcessInterval>0</ProcessInterval>
+		<MetaDescription></MetaDescription>
+		<OtherHeadTags></OtherHeadTags>
 		<PageTitle></PageTitle>
 		<RemoteAssetLink></RemoteAssetLink>
 		<Styles></Styles>
-		<Scripting Language="" EntryPoint="" Timeout="5000"/>
+		<styleslinkhref></styleslinkhref>
+		<Scripting Language="VBScript" EntryPoint="" Timeout="5000"/>
 	</Addon>
 	<Addon name="Dashboard" guid="{4BA7B4A2-ED6C-46C5-9C7B-8CE251FC8FF5}" type="Add-on">
 		<Copy></Copy>
 		<CopyText></CopyText>
 		<ActiveXProgramID></ActiveXProgramID>
-		<DotNetClass><![CDATA[Contensive.Addons.aoDashboard.Interfaces.dashboardClass]]></DotNetClass>
+		<DotNetClass><![CDATA[Contensive.Addons.Dashboard.Interfaces.DashboardClass]]></DotNetClass>
 		<ArgumentList></ArgumentList>
 		<AsAjax>No</AsAjax>
 		<Filter>No</Filter>
@@ -50,10 +54,11 @@
 		<HelpLink></HelpLink>
 		<Icon Link="/upload/dashboard/iconDashboard.png" width="57" height="59" sprites="4" />
 		<InIframe>No</InIframe>
-		<BlockEditTools>yes</BlockEditTools>
+		<BlockEditTools>Yes</BlockEditTools>
 		<FormXML></FormXML>
+		<IncludeAddon name="JQuery UI" guid="{840B9AEF-9470-4599-BD47-7EC0C9298614}"/>
+		<IncludeAddon name="jquery.scale9grid.js" guid="{b722c07f-f858-4cb8-b9bb-f4242fcc59e7}"/>
 		<IsInline>No</IsInline>
-		<JavascriptOnLoad></JavascriptOnLoad>
 		<JavascriptInHead><![CDATA[console.log('Dashboard Load');
 //
 // -- initialize
@@ -187,9 +192,11 @@ function navDrop(id,x,y){
 	// dashResize();
 }
 ]]></JavascriptInHead>
-		<JavascriptBodyEnd></JavascriptBodyEnd>
-		<MetaDescription></MetaDescription>
-		<OtherHeadTags></OtherHeadTags>
+		<javascriptForceHead>No</javascriptForceHead>
+		<JSHeadScriptSrc></JSHeadScriptSrc>
+		<!-- deprecated --><JSBodyScriptSrc></JSBodyScriptSrc>
+		<!-- deprecated --><JavascriptBodyEnd></JavascriptBodyEnd>
+		<!-- deprecated --><JavascriptOnLoad></JavascriptOnLoad>
 		<Content>Yes</Content>
 		<Template>Yes</Template>
 		<Email>No</Email>
@@ -201,6 +208,8 @@ function navDrop(id,x,y){
 		<RemoteMethod>No</RemoteMethod>
 		<ProcessRunOnce>No</ProcessRunOnce>
 		<ProcessInterval>0</ProcessInterval>
+		<MetaDescription></MetaDescription>
+		<OtherHeadTags></OtherHeadTags>
 		<PageTitle><![CDATA[Administration Site]]></PageTitle>
 		<RemoteAssetLink></RemoteAssetLink>
 		<Styles><![CDATA[
@@ -288,9 +297,8 @@ function navDrop(id,x,y){
 }
 
 ]]></Styles>
-		<Scripting Language="" EntryPoint="" Timeout="5000"/>
-		<IncludeAddon name="JQuery UI" guid="{840B9AEF-9470-4599-BD47-7EC0C9298614}"/>
-		<IncludeAddon name="scale9grid" guid="{02CF6C5F-5A42-42B2-987F-FFDD44C7733D}"/>
+		<styleslinkhref></styleslinkhref>
+		<Scripting Language="VBScript" EntryPoint="" Timeout="5000"/>
 	</Addon>
 	<Addon name="Dashboard Trashcan" guid="{0E879FC7-87C8-42E9-831A-22B263F229DF}" type="Add-on">
 		<Copy></Copy>
@@ -307,11 +315,12 @@ function navDrop(id,x,y){
 		<BlockEditTools>No</BlockEditTools>
 		<FormXML></FormXML>
 		<IsInline>No</IsInline>
-		<JavascriptOnLoad></JavascriptOnLoad>
 		<JavascriptInHead></JavascriptInHead>
-		<JavascriptBodyEnd></JavascriptBodyEnd>
-		<MetaDescription></MetaDescription>
-		<OtherHeadTags></OtherHeadTags>
+		<javascriptForceHead>No</javascriptForceHead>
+		<JSHeadScriptSrc></JSHeadScriptSrc>
+		<!-- deprecated --><JSBodyScriptSrc></JSBodyScriptSrc>
+		<!-- deprecated --><JavascriptBodyEnd></JavascriptBodyEnd>
+		<!-- deprecated --><JavascriptOnLoad></JavascriptOnLoad>
 		<Content>No</Content>
 		<Template>No</Template>
 		<Email>No</Email>
@@ -323,16 +332,19 @@ function navDrop(id,x,y){
 		<RemoteMethod>No</RemoteMethod>
 		<ProcessRunOnce>No</ProcessRunOnce>
 		<ProcessInterval>0</ProcessInterval>
+		<MetaDescription></MetaDescription>
+		<OtherHeadTags></OtherHeadTags>
 		<PageTitle></PageTitle>
 		<RemoteAssetLink></RemoteAssetLink>
 		<Styles></Styles>
-		<Scripting Language="" EntryPoint="" Timeout="5000"/>
+		<styleslinkhref></styleslinkhref>
+		<Scripting Language="VBScript" EntryPoint="" Timeout="5000"/>
 	</Addon>
 	<Addon name="dashboardclosenode" guid="{6DEC632B-C8DF-44EB-ABCB-12B362660708}" type="Add-on">
 		<Copy></Copy>
 		<CopyText></CopyText>
 		<ActiveXProgramID></ActiveXProgramID>
-		<DotNetClass><![CDATA[Contensive.Addons.aoDashboard.Interfaces.closeNodeClass]]></DotNetClass>
+		<DotNetClass><![CDATA[Contensive.Addons.Dashboard.Interfaces.closeNodeClass]]></DotNetClass>
 		<ArgumentList></ArgumentList>
 		<AsAjax>No</AsAjax>
 		<Filter>No</Filter>
@@ -343,11 +355,12 @@ function navDrop(id,x,y){
 		<BlockEditTools>No</BlockEditTools>
 		<FormXML></FormXML>
 		<IsInline>No</IsInline>
-		<JavascriptOnLoad></JavascriptOnLoad>
 		<JavascriptInHead></JavascriptInHead>
-		<JavascriptBodyEnd></JavascriptBodyEnd>
-		<MetaDescription></MetaDescription>
-		<OtherHeadTags></OtherHeadTags>
+		<javascriptForceHead>No</javascriptForceHead>
+		<JSHeadScriptSrc></JSHeadScriptSrc>
+		<!-- deprecated --><JSBodyScriptSrc></JSBodyScriptSrc>
+		<!-- deprecated --><JavascriptBodyEnd></JavascriptBodyEnd>
+		<!-- deprecated --><JavascriptOnLoad></JavascriptOnLoad>
 		<Content>No</Content>
 		<Template>No</Template>
 		<Email>No</Email>
@@ -359,16 +372,19 @@ function navDrop(id,x,y){
 		<RemoteMethod>Yes</RemoteMethod>
 		<ProcessRunOnce>No</ProcessRunOnce>
 		<ProcessInterval>0</ProcessInterval>
+		<MetaDescription></MetaDescription>
+		<OtherHeadTags></OtherHeadTags>
 		<PageTitle></PageTitle>
 		<RemoteAssetLink></RemoteAssetLink>
 		<Styles></Styles>
-		<Scripting Language="" EntryPoint="" Timeout="5000"/>
+		<styleslinkhref></styleslinkhref>
+		<Scripting Language="VBScript" EntryPoint="" Timeout="5000"/>
 	</Addon>
 	<Addon name="DashboardDelNode" guid="{058EAF9D-6347-43D9-82B1-ACF56A3C23E0}" type="Add-on">
 		<Copy></Copy>
 		<CopyText></CopyText>
 		<ActiveXProgramID></ActiveXProgramID>
-		<DotNetClass><![CDATA[Contensive.Addons.aoDashboard.Interfaces.delNodeClass]]></DotNetClass>
+		<DotNetClass><![CDATA[Contensive.Addons.Dashboard.Interfaces.delNodeClass]]></DotNetClass>
 		<ArgumentList></ArgumentList>
 		<AsAjax>No</AsAjax>
 		<Filter>No</Filter>
@@ -379,11 +395,12 @@ function navDrop(id,x,y){
 		<BlockEditTools>No</BlockEditTools>
 		<FormXML></FormXML>
 		<IsInline>No</IsInline>
-		<JavascriptOnLoad></JavascriptOnLoad>
 		<JavascriptInHead></JavascriptInHead>
-		<JavascriptBodyEnd></JavascriptBodyEnd>
-		<MetaDescription></MetaDescription>
-		<OtherHeadTags></OtherHeadTags>
+		<javascriptForceHead>No</javascriptForceHead>
+		<JSHeadScriptSrc></JSHeadScriptSrc>
+		<!-- deprecated --><JSBodyScriptSrc></JSBodyScriptSrc>
+		<!-- deprecated --><JavascriptBodyEnd></JavascriptBodyEnd>
+		<!-- deprecated --><JavascriptOnLoad></JavascriptOnLoad>
 		<Content>No</Content>
 		<Template>No</Template>
 		<Email>No</Email>
@@ -395,16 +412,19 @@ function navDrop(id,x,y){
 		<RemoteMethod>Yes</RemoteMethod>
 		<ProcessRunOnce>No</ProcessRunOnce>
 		<ProcessInterval>0</ProcessInterval>
+		<MetaDescription></MetaDescription>
+		<OtherHeadTags></OtherHeadTags>
 		<PageTitle></PageTitle>
 		<RemoteAssetLink></RemoteAssetLink>
 		<Styles></Styles>
-		<Scripting Language="" EntryPoint="" Timeout="5000"/>
+		<styleslinkhref></styleslinkhref>
+		<Scripting Language="VBScript" EntryPoint="" Timeout="5000"/>
 	</Addon>
 	<Addon name="DashboardDragStop" guid="{E6334477-2772-4C5B-87ED-144E8A7DD009}" type="Add-on">
 		<Copy></Copy>
 		<CopyText></CopyText>
 		<ActiveXProgramID></ActiveXProgramID>
-		<DotNetClass><![CDATA[Contensive.Addons.aoDashboard.Interfaces.dashDragStopClass]]></DotNetClass>
+		<DotNetClass><![CDATA[Contensive.Addons.Dashboard.Interfaces.dashDragStopClass]]></DotNetClass>
 		<ArgumentList></ArgumentList>
 		<AsAjax>No</AsAjax>
 		<Filter>No</Filter>
@@ -415,11 +435,12 @@ function navDrop(id,x,y){
 		<BlockEditTools>No</BlockEditTools>
 		<FormXML></FormXML>
 		<IsInline>No</IsInline>
-		<JavascriptOnLoad></JavascriptOnLoad>
 		<JavascriptInHead></JavascriptInHead>
-		<JavascriptBodyEnd></JavascriptBodyEnd>
-		<MetaDescription></MetaDescription>
-		<OtherHeadTags></OtherHeadTags>
+		<javascriptForceHead>No</javascriptForceHead>
+		<JSHeadScriptSrc></JSHeadScriptSrc>
+		<!-- deprecated --><JSBodyScriptSrc></JSBodyScriptSrc>
+		<!-- deprecated --><JavascriptBodyEnd></JavascriptBodyEnd>
+		<!-- deprecated --><JavascriptOnLoad></JavascriptOnLoad>
 		<Content>No</Content>
 		<Template>No</Template>
 		<Email>No</Email>
@@ -431,16 +452,19 @@ function navDrop(id,x,y){
 		<RemoteMethod>Yes</RemoteMethod>
 		<ProcessRunOnce>No</ProcessRunOnce>
 		<ProcessInterval>0</ProcessInterval>
+		<MetaDescription></MetaDescription>
+		<OtherHeadTags></OtherHeadTags>
 		<PageTitle></PageTitle>
 		<RemoteAssetLink></RemoteAssetLink>
 		<Styles></Styles>
-		<Scripting Language="" EntryPoint="" Timeout="5000"/>
+		<styleslinkhref></styleslinkhref>
+		<Scripting Language="VBScript" EntryPoint="" Timeout="5000"/>
 	</Addon>
 	<Addon name="DashboardNavDrop" guid="{C9141C65-32E7-45D4-9EBB-D312F3754BC8}" type="Add-on">
 		<Copy></Copy>
 		<CopyText></CopyText>
 		<ActiveXProgramID></ActiveXProgramID>
-		<DotNetClass><![CDATA[Contensive.Addons.aoDashboard.Interfaces.navDropClass]]></DotNetClass>
+		<DotNetClass><![CDATA[Contensive.Addons.Dashboard.Interfaces.navDropClass]]></DotNetClass>
 		<ArgumentList></ArgumentList>
 		<AsAjax>No</AsAjax>
 		<Filter>No</Filter>
@@ -451,11 +475,12 @@ function navDrop(id,x,y){
 		<BlockEditTools>No</BlockEditTools>
 		<FormXML></FormXML>
 		<IsInline>No</IsInline>
-		<JavascriptOnLoad></JavascriptOnLoad>
 		<JavascriptInHead></JavascriptInHead>
-		<JavascriptBodyEnd></JavascriptBodyEnd>
-		<MetaDescription></MetaDescription>
-		<OtherHeadTags></OtherHeadTags>
+		<javascriptForceHead>No</javascriptForceHead>
+		<JSHeadScriptSrc></JSHeadScriptSrc>
+		<!-- deprecated --><JSBodyScriptSrc></JSBodyScriptSrc>
+		<!-- deprecated --><JavascriptBodyEnd></JavascriptBodyEnd>
+		<!-- deprecated --><JavascriptOnLoad></JavascriptOnLoad>
 		<Content>No</Content>
 		<Template>No</Template>
 		<Email>No</Email>
@@ -467,16 +492,19 @@ function navDrop(id,x,y){
 		<RemoteMethod>Yes</RemoteMethod>
 		<ProcessRunOnce>No</ProcessRunOnce>
 		<ProcessInterval>0</ProcessInterval>
+		<MetaDescription></MetaDescription>
+		<OtherHeadTags></OtherHeadTags>
 		<PageTitle></PageTitle>
 		<RemoteAssetLink></RemoteAssetLink>
 		<Styles></Styles>
-		<Scripting Language="" EntryPoint="" Timeout="5000"/>
+		<styleslinkhref></styleslinkhref>
+		<Scripting Language="VBScript" EntryPoint="" Timeout="5000"/>
 	</Addon>
 	<Addon name="DashboardOpenNode" guid="{CF0D4F7A-BE09-4DA4-9036-C7CBD2D01E28}" type="Add-on">
 		<Copy></Copy>
 		<CopyText></CopyText>
 		<ActiveXProgramID></ActiveXProgramID>
-		<DotNetClass><![CDATA[Contensive.Addons.aoDashboard.Interfaces.openNodeClass]]></DotNetClass>
+		<DotNetClass><![CDATA[Contensive.Addons.Dashboard.Interfaces.openNodeClass]]></DotNetClass>
 		<ArgumentList></ArgumentList>
 		<AsAjax>No</AsAjax>
 		<Filter>No</Filter>
@@ -487,11 +515,12 @@ function navDrop(id,x,y){
 		<BlockEditTools>No</BlockEditTools>
 		<FormXML></FormXML>
 		<IsInline>No</IsInline>
-		<JavascriptOnLoad></JavascriptOnLoad>
 		<JavascriptInHead></JavascriptInHead>
-		<JavascriptBodyEnd></JavascriptBodyEnd>
-		<MetaDescription></MetaDescription>
-		<OtherHeadTags></OtherHeadTags>
+		<javascriptForceHead>No</javascriptForceHead>
+		<JSHeadScriptSrc></JSHeadScriptSrc>
+		<!-- deprecated --><JSBodyScriptSrc></JSBodyScriptSrc>
+		<!-- deprecated --><JavascriptBodyEnd></JavascriptBodyEnd>
+		<!-- deprecated --><JavascriptOnLoad></JavascriptOnLoad>
 		<Content>No</Content>
 		<Template>No</Template>
 		<Email>No</Email>
@@ -503,16 +532,19 @@ function navDrop(id,x,y){
 		<RemoteMethod>Yes</RemoteMethod>
 		<ProcessRunOnce>No</ProcessRunOnce>
 		<ProcessInterval>0</ProcessInterval>
+		<MetaDescription></MetaDescription>
+		<OtherHeadTags></OtherHeadTags>
 		<PageTitle></PageTitle>
 		<RemoteAssetLink></RemoteAssetLink>
 		<Styles></Styles>
-		<Scripting Language="" EntryPoint="" Timeout="5000"/>
+		<styleslinkhref></styleslinkhref>
+		<Scripting Language="VBScript" EntryPoint="" Timeout="5000"/>
 	</Addon>
 	<Addon name="DashboardResize" guid="{4E220430-213A-45FF-988D-6D1C30CBDC0D}" type="Add-on">
 		<Copy></Copy>
 		<CopyText></CopyText>
 		<ActiveXProgramID></ActiveXProgramID>
-		<DotNetClass><![CDATA[Contensive.Addons.aoDashboard.Interfaces.ResizeClass]]></DotNetClass>
+		<DotNetClass><![CDATA[Contensive.Addons.Dashboard.Interfaces.ResizeClass]]></DotNetClass>
 		<ArgumentList></ArgumentList>
 		<AsAjax>No</AsAjax>
 		<Filter>No</Filter>
@@ -523,11 +555,12 @@ function navDrop(id,x,y){
 		<BlockEditTools>No</BlockEditTools>
 		<FormXML></FormXML>
 		<IsInline>No</IsInline>
-		<JavascriptOnLoad></JavascriptOnLoad>
 		<JavascriptInHead></JavascriptInHead>
-		<JavascriptBodyEnd></JavascriptBodyEnd>
-		<MetaDescription></MetaDescription>
-		<OtherHeadTags></OtherHeadTags>
+		<javascriptForceHead>No</javascriptForceHead>
+		<JSHeadScriptSrc></JSHeadScriptSrc>
+		<!-- deprecated --><JSBodyScriptSrc></JSBodyScriptSrc>
+		<!-- deprecated --><JavascriptBodyEnd></JavascriptBodyEnd>
+		<!-- deprecated --><JavascriptOnLoad></JavascriptOnLoad>
 		<Content>No</Content>
 		<Template>No</Template>
 		<Email>No</Email>
@@ -539,22 +572,60 @@ function navDrop(id,x,y){
 		<RemoteMethod>Yes</RemoteMethod>
 		<ProcessRunOnce>No</ProcessRunOnce>
 		<ProcessInterval>0</ProcessInterval>
+		<MetaDescription></MetaDescription>
+		<OtherHeadTags></OtherHeadTags>
 		<PageTitle></PageTitle>
 		<RemoteAssetLink></RemoteAssetLink>
 		<Styles></Styles>
-		<Scripting Language="" EntryPoint="" Timeout="5000"/>
+		<styleslinkhref></styleslinkhref>
+		<Scripting Language="VBScript" EntryPoint="" Timeout="5000"/>
 	</Addon>
-	<Addon name="scale9grid" guid="{02CF6C5F-5A42-42B2-987F-FFDD44C7733D}" type="Add-on">
-		<BlockEditTools>yes</BlockEditTools>
-		<JavascriptInHead><![CDATA[document.write('<scr'+'ipt type="text/javascript" src="/dashboard/jquery.scale9grid.js"></scr'+'ipt>');]]></JavascriptInHead>
-		<IncludeAddon name="jQuery" guid="{9C882078-0DAC-48E3-AD4B-CF2AA230DF80}"/>
+	<Addon name="jquery.scale9grid.js" guid="{b722c07f-f858-4cb8-b9bb-f4242fcc59e7}" type="Add-on">
+		<Copy></Copy>
+		<CopyText></CopyText>
+		<ActiveXProgramID></ActiveXProgramID>
+		<DotNetClass></DotNetClass>
+		<ArgumentList></ArgumentList>
+		<AsAjax>No</AsAjax>
+		<Filter>No</Filter>
+		<Help></Help>
+		<HelpLink></HelpLink>
+		<Icon Link="" width="0" height="0" sprites="0" />
+		<InIframe>No</InIframe>
+		<BlockEditTools>Yes</BlockEditTools>
+		<FormXML></FormXML>
+		<IncludeAddon name="JQuery" guid="{9C882078-0DAC-48E3-AD4B-CF2AA230DF80}"/>
+		<IsInline>No</IsInline>
+		<JavascriptInHead></JavascriptInHead>
+		<javascriptForceHead>No</javascriptForceHead>
+		<JSHeadScriptSrc><![CDATA[/dashboard/jquery.scale9grid.js]]></JSHeadScriptSrc>
+		<!-- deprecated --><JSBodyScriptSrc></JSBodyScriptSrc>
+		<!-- deprecated --><JavascriptBodyEnd></JavascriptBodyEnd>
+		<!-- deprecated --><JavascriptOnLoad></JavascriptOnLoad>
+		<Content>No</Content>
+		<Template>No</Template>
+		<Email>No</Email>
+		<Admin>No</Admin>
+		<OnPageEndEvent>No</OnPageEndEvent>
+		<OnPageStartEvent>No</OnPageStartEvent>
+		<OnBodyStart>No</OnBodyStart>
+		<OnBodyEnd>No</OnBodyEnd>
+		<RemoteMethod>No</RemoteMethod>
+		<ProcessRunOnce>No</ProcessRunOnce>
+		<ProcessInterval>0</ProcessInterval>
+		<MetaDescription></MetaDescription>
+		<OtherHeadTags></OtherHeadTags>
+		<PageTitle></PageTitle>
+		<RemoteAssetLink></RemoteAssetLink>
+		<Styles></Styles>
+		<styleslinkhref></styleslinkhref>
+		<Scripting Language="VBScript" EntryPoint="" Timeout="5000"/>
 	</Addon>
 	<ImportCollection name="JQuery">{A435BF70-041B-43D1-8A8D-5D9D59A7FCD0}</ImportCollection>
 	<ImportCollection name="Whos Online">{F7A1CB55-369B-462A-B5D9-6C1A57EFE4BF}</ImportCollection>
 	<ImportCollection name="Visit Charts">{D5B7BA7F-6B78-4625-8B23-232AC6574130}</ImportCollection>
 	<ImportCollection name="Twitter">{EADB8DAF-CC49-404E-AEDE-71AEE9C9BFEC}</ImportCollection>
 	<ImportCollection name="Site Usage">{BB12E536-21FC-4C86-97A0-7579405EB173}</ImportCollection>
-	<Resource name="dashconfig.xml" type="content" path="dashboard" />
 	<Resource name="container.png" type="www" path="dashboard" />
 	<Resource name="container_01.png" type="www" path="dashboard" />
 	<Resource name="container_02.png" type="www" path="dashboard" />
@@ -573,5 +644,5 @@ function navDrop(id,x,y){
 	<Resource name="jquery.scale9grid.js" type="www" path="dashboard" />
 	<Resource name="trashcan.png" type="www" path="dashboard" />
 	<Resource name="whosonline.png" type="www" path="dashboard" />
-	<Resource name="aodashboard.dll" type="executable" path="" />		
+	<Resource name="aoDashboard.dll" type="executable" path="" />
 </Collection>

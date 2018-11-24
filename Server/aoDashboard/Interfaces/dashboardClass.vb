@@ -7,7 +7,7 @@ Imports System.Collections.Generic
 Imports System.Text
 Imports Contensive.BaseClasses
 Imports System.Xml
-Imports Contensive.Addons.aoDashboard.Controllers
+Imports Contensive.Addons.Dashboard.Controllers
 
 Namespace Interfaces
     Public Class dashboardClass

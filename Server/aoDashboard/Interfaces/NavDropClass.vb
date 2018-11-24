@@ -5,7 +5,7 @@ Imports System
 Imports System.Collections.Generic
 Imports System.Text
 Imports System.Xml
-Imports Contensive.Addons.aoDashboard.Controllers
+Imports Contensive.Addons.Dashboard.Controllers
 Imports Contensive.BaseClasses
 
 Namespace Interfaces

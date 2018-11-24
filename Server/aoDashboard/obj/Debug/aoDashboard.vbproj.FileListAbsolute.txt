@@ -24,3 +24,14 @@ C:\Users\jay\OneDrive\Documents\git\aoDashboard\Server\aoDashboard\obj\Debug\aoD
 C:\Users\jay\OneDrive\Documents\git\aoDashboard\Server\aoDashboard\obj\Debug\aoDashboard.dll
 C:\Users\jay\OneDrive\Documents\git\aoDashboard\Server\aoDashboard\obj\Debug\aoDashboard.xml
 C:\Users\jay\OneDrive\Documents\git\aoDashboard\Server\aoDashboard\obj\Debug\aoDashboard.pdb
+C:\Users\jay\Documents\Git\aoDashboard\Server\aoDashboard\bin\Debug\aoDashboard.dll
+C:\Users\jay\Documents\Git\aoDashboard\Server\aoDashboard\bin\Debug\aoDashboard.pdb
+C:\Users\jay\Documents\Git\aoDashboard\Server\aoDashboard\bin\Debug\aoDashboard.xml
+C:\Users\jay\Documents\Git\aoDashboard\Server\aoDashboard\bin\Debug\CPBase.dll
+C:\Users\jay\Documents\Git\aoDashboard\Server\aoDashboard\obj\Debug\Contensive.Addons.Dashboard.Resources.resources
+C:\Users\jay\Documents\Git\aoDashboard\Server\aoDashboard\obj\Debug\aoDashboard.vbproj.GenerateResource.Cache
+C:\Users\jay\Documents\Git\aoDashboard\Server\aoDashboard\obj\Debug\aoDashboard.vbproj.CoreCompileInputs.cache
+C:\Users\jay\Documents\Git\aoDashboard\Server\aoDashboard\obj\Debug\aoDashboard.dll
+C:\Users\jay\Documents\Git\aoDashboard\Server\aoDashboard\obj\Debug\aoDashboard.xml
+C:\Users\jay\Documents\Git\aoDashboard\Server\aoDashboard\obj\Debug\aoDashboard.pdb
+C:\Users\jay\Documents\Git\aoDashboard\Server\aoDashboard\obj\Debug\aoDashboard.vbprojResolveAssemblyReference.cache

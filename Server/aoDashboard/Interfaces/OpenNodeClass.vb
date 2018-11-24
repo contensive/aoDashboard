@@ -47,7 +47,7 @@ Namespace Interfaces
                             Dim attr As XmlAttribute = Node.Attributes("guid")
                             If (attr IsNot Nothing) Then
                                 DefaultWrapperGUID = attr.Value
-                                Dim wrapper As Contensive.Addons.aoDashboard.Models.wrapperModel = wrapperDict(DefaultWrapperGUID)
+                                Dim wrapper As Contensive.Addons.Dashboard.Models.wrapperModel = wrapperDict(DefaultWrapperGUID)
                                 If (wrapper IsNot Nothing) Then
                                     WrapperID = wrapper.id
                                 End If

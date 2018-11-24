@@ -9,7 +9,7 @@ Imports Contensive.BaseClasses
 
 Namespace Models
     Public Class contentModel
-        Inherits Contensive.Addons.aoDashboard.Models.baseModel
+        Inherits Contensive.Addons.Dashboard.Models.baseModel
         Implements ICloneable
         '
         '====================================================================================================

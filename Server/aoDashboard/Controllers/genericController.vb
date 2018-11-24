@@ -110,7 +110,7 @@ Namespace Controllers
                     IsIcon = True
                     ItemHTMLClass = "iconNode"
                     If (ContentGuid <> "") Then
-                        content = Contensive.Addons.aoDashboard.Models.contentModel.create(cp, ContentGuid)
+                        content = Contensive.Addons.Dashboard.Models.contentModel.create(cp, ContentGuid)
                     Else
                         content = Models.contentModel.createByName(cp, ContentName)
                     End If
