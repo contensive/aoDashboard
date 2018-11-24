@@ -1,0 +1,83 @@
+.ccBodyAdmin {
+	background-color:#C8C8C8; 
+}
+
+#desktop{
+	background-color:#C8C8C8; 
+	height:620px;
+}
+.dashBoardWrapper{
+	position:relative; 
+	background-color:transparent;
+}
+.dashboardWrapper .opacity50 {
+	-moz-opacity:.50; 
+	filter:alpha(opacity=50); 
+	opacity:.50; 
+}
+.dashBoardWrapper .toolBarInner {
+    background-color: #EEFFEE;
+    border-radius: 5px 5px 0 0;
+    cursor: pointer;
+    margin: 0;
+    padding: 10px;
+    text-align: right;
+}
+.dashBoardWrapper .toolBarInner {
+    cursor: move;
+}
+
+.dashBoardWrapper .toolBar {
+	position: absolute;
+	visibility: hidden;
+	padding:0px;
+	margin:0px;
+	top:-19px;
+	width:100%;
+}
+.dashBoardWrapper .designResizer {
+	overflow:auto;
+}
+.dashBoardWrapper .windowNode {
+	position: absolute; 
+	vertical-align: top; 
+	text-align: left; 
+}
+.dashBoardWrapper .iconNode {
+	position: absolute; 
+	vertical-align: top; 
+	text-align: center; 
+}
+.dodadContainer{
+	padding: 10px; 
+	padding-right: 15px; 
+	background: url("/upload/dashboard/container.png");
+}
+.dodad{
+	padding: 5px;
+}
+.dodadContainer{
+	position: relative;
+}
+.dodadTitle{
+	font-weight: bold; 
+	padding-bottom: 8px; 
+	padding-top: 5px;
+}
+.dashBoardWrapper a.shortcut {
+	text-decoration:none;
+	color:#000;
+}
+.dashBoardWrapper a.shortcut:visited {
+	text-decoration:none;
+	color:#000;
+}
+.dashBoardWrapper a.shortcut:hover {
+	text-decoration:none;
+	color:#444;
+}
+.droppableHover {
+	border:1px solid red;
+	background-color:white;
+}
+

@@ -59,141 +59,9 @@
 		<IncludeAddon name="JQuery UI" guid="{840B9AEF-9470-4599-BD47-7EC0C9298614}"/>
 		<IncludeAddon name="jquery.scale9grid.js" guid="{b722c07f-f858-4cb8-b9bb-f4242fcc59e7}"/>
 		<IsInline>No</IsInline>
-		<JavascriptInHead><![CDATA[console.log('Dashboard Load');
-//
-// -- initialize
-jQuery(document).ready(function(){
-	dashResize();
-})
-//
-// -- event to resize dash
-function dashResize() {
-	console.log('dashResize, nodeCnt['+nodeCnt+']');
-	var i,n,nodeTop,nodeBottom,desktopBottom=0;
-	for (i=0;i<=nodeCnt;i++){
-		n=document.getElementById('dashnode'+i)
-		if(n){
-			console.log('dashResize, initialize node['+i+']');
-			nodeTop=n.style.top;
-			nodeTop=parseInt(nodeTop.replace('px',''));
-			nodeBottom=nodeTop+n.scrollHeight;
-			if(nodeBottom>desktopBottom){desktopBottom=nodeBottom}
-		}
-	}
-	if(desktopBottom!=0){
-		n=document.getElementById('dashBoardWrapper');
-		if(n){n.style.height=desktopBottom}
-	}
-}
-//
-// -- mouse over body
-function overBody(toolsId){
-	e=document.getElementById(toolsId);
-	showTools(e);
-	e.overBody=true;
-	if(e.t) clearTimeout(e.t);
-}
-//
-// -- mouse out of body
-function outBody(toolsId){
-	e=document.getElementById(toolsId);
-	e.overBody=false;
-	if(e.oTools){
-		if(e.oTools==false){
-			e.t=setTimeout("hideTools('"+e.id+"')",3000);
-		}
-	} else {
-		e.t=setTimeout("hideTools('"+e.id+"')",3000);
-	}
-}
-function overTools(e){
-	showTools(e);
-	e.oTools=true;
-	if(e.t) clearTimeout(e.t);
-}
-function outTools(e){
-	e.oTools=false;
-	if(e.overBody){
-		if(e.overBody==false){
-			e.t=setTimeout("hideTools('"+e.id+"')",3000);	
-		}
-	} else {
-		e.t=setTimeout("hideTools('"+e.id+"')",3000);	
-	}
-}
-function showTools(e){
-	if(e){
-		if(e.style.visibility!='visible'){
-			e.style.visibility='visible';
-		}
-	}
-}
-function hideTools(toolsId){
-	var e=document.getElementById(toolsId);
-	if(e) e.style.visibility='hidden';
-}
-function dashDeleteNode( nodePtr, HTMLId ) {
-	var c=document.getElementById(HTMLId);
-	var p=c.parentNode;
-	p.removeChild(c);
-	cj.ajax.addon('dashboarddelnode','ptr='+nodePtr);
-	dashResize();
-}
-function dashOpenNodeCallback(response,callbackArg) {
-//alert('dashOpenNodeCallback');
-	var hId='dashhelper'+nodeCnt++;
-	navMakeHelper(hId);
-	var e=document.getElementById(hId);
-	e.innerHTML=response;
-	dashResize();
-}
-function dashOpenNode( nodePtr, HTMLId ) {
-//alert('dashOpenNode');
-	var c,p,hId;
-	c=document.getElementById(HTMLId);
-	p=c.parentNode;
-	p.removeChild(c);
-	cj.ajax.addonCallback('dashboardopennode','ptr='+nodePtr,dashOpenNodeCallback,'test');
-}
-function closeNode( nodePtr, HTMLId ) {
-	var c,p,hId;
-	c=document.getElementById(HTMLId);
-	var p=c.parentNode;
-	p.removeChild(c);
-	hId='dashhelper'+nodeCnt++;
-	navMakeHelper(hId);
-	cj.ajax.addon('dashboardclosenode','ptr='+nodePtr,'',hId);
-	dashResize();
-}
-function navMakeHelper( iconId ) {
-	var w=document.getElementById('dashBoardWrapper');
-	var e=document.createElement('div');
-	e.setAttribute('id',iconId);
-	e.setAttribute('style','position:absolute;top:0;left:0;');
-	w.appendChild(e);
-}
-function navDropCallback(response,iconId){
-	var e=document.getElementById(iconId);
-	e.innerHTML=response;
-	dashResize();
-}
-function navDrop(id,x,y){
-	console.log('navDrop');
-	var iconId='dashhelper'+nodeCnt++;
-	var w=document.getElementById('dashBoardWrapper');
-	var e=document.createElement('div');
-	var posX=(x-getPageOffsetLeft(w));
-	var posY=(y-37-getPageOffsetTop(w));
-	e.setAttribute('id',iconId);
-	e.setAttribute('style','position:absolute;top:0;left:0;');
-	w.appendChild(e);
-	cj.ajax.addonCallback('dashboardnavdrop','id='+id+'&x='+posX+'&y='+posY,navDropCallback,iconId);
-	// cj.ajax.addon('dashboardnavdrop','id='+id+'&x='+posX+'&y='+posY,'',iconId);
-	// dashResize();
-}
-]]></JavascriptInHead>
+		<JavascriptInHead></JavascriptInHead>
 		<javascriptForceHead>No</javascriptForceHead>
-		<JSHeadScriptSrc></JSHeadScriptSrc>
+		<JSHeadScriptSrc><![CDATA[/dashboard/dashboard.js]]></JSHeadScriptSrc>
 		<!-- deprecated --><JSBodyScriptSrc></JSBodyScriptSrc>
 		<!-- deprecated --><JavascriptBodyEnd></JavascriptBodyEnd>
 		<!-- deprecated --><JavascriptOnLoad></JavascriptOnLoad>
@@ -212,92 +80,8 @@ function navDrop(id,x,y){
 		<OtherHeadTags></OtherHeadTags>
 		<PageTitle><![CDATA[Administration Site]]></PageTitle>
 		<RemoteAssetLink></RemoteAssetLink>
-		<Styles><![CDATA[
-.ccBodyAdmin {
-	background-color:#C8C8C8; 
-}
-
-#desktop{
-	background-color:#C8C8C8; 
-	height:620px;
-}
-.dashBoardWrapper{
-	position:relative; 
-	background-color:transparent;
-}
-.dashboardWrapper .opacity50 {
-	-moz-opacity:.50; 
-	filter:alpha(opacity=50); 
-	opacity:.50; 
-}
-.dashBoardWrapper .toolBarInner {
-    background-color: #EEFFEE;
-    border-radius: 5px 5px 0 0;
-    cursor: pointer;
-    margin: 0;
-    padding: 10px;
-    text-align: right;
-}
-.dashBoardWrapper .toolBarInner {
-    cursor: move;
-}
-
-.dashBoardWrapper .toolBar {
-	position: absolute;
-	visibility: hidden;
-	padding:0px;
-	margin:0px;
-	top:-19px;
-	width:100%;
-}
-.dashBoardWrapper .designResizer {
-	overflow:auto;
-}
-.dashBoardWrapper .windowNode {
-	position: absolute; 
-	vertical-align: top; 
-	text-align: left; 
-}
-.dashBoardWrapper .iconNode {
-	position: absolute; 
-	vertical-align: top; 
-	text-align: center; 
-}
-.dodadContainer{
-	padding: 10px; 
-	padding-right: 15px; 
-	background: url("/upload/dashboard/container.png");
-}
-.dodad{
-	padding: 5px;
-}
-.dodadContainer{
-	position: relative;
-}
-.dodadTitle{
-	font-weight: bold; 
-	padding-bottom: 8px; 
-	padding-top: 5px;
-}
-.dashBoardWrapper a.shortcut {
-	text-decoration:none;
-	color:#000;
-}
-.dashBoardWrapper a.shortcut:visited {
-	text-decoration:none;
-	color:#000;
-}
-.dashBoardWrapper a.shortcut:hover {
-	text-decoration:none;
-	color:#444;
-}
-.droppableHover {
-	border:1px solid red;
-	background-color:white;
-}
-
-]]></Styles>
-		<styleslinkhref></styleslinkhref>
+		<Styles></Styles>
+		<styleslinkhref><![CDATA[/dashboard/dashboard.css]]></styleslinkhref>
 		<Scripting Language="VBScript" EntryPoint="" Timeout="5000"/>
 	</Addon>
 	<Addon name="Dashboard Trashcan" guid="{0E879FC7-87C8-42E9-831A-22B263F229DF}" type="Add-on">
@@ -580,6 +364,46 @@ function navDrop(id,x,y){
 		<styleslinkhref></styleslinkhref>
 		<Scripting Language="VBScript" EntryPoint="" Timeout="5000"/>
 	</Addon>
+	<Addon name="jquery.scale9grid." guid="{8878898c-037e-4d48-afee-e47c8ba7da06}" type="Add-on">
+		<Copy></Copy>
+		<CopyText></CopyText>
+		<ActiveXProgramID></ActiveXProgramID>
+		<DotNetClass></DotNetClass>
+		<ArgumentList></ArgumentList>
+		<AsAjax>No</AsAjax>
+		<Filter>No</Filter>
+		<Help></Help>
+		<HelpLink></HelpLink>
+		<Icon Link="" width="0" height="0" sprites="0" />
+		<InIframe>No</InIframe>
+		<BlockEditTools>Yes</BlockEditTools>
+		<FormXML></FormXML>
+		<IsInline>No</IsInline>
+		<JavascriptInHead></JavascriptInHead>
+		<javascriptForceHead>No</javascriptForceHead>
+		<JSHeadScriptSrc><![CDATA[/dashboard/jquery.scale9grid.js]]></JSHeadScriptSrc>
+		<!-- deprecated --><JSBodyScriptSrc></JSBodyScriptSrc>
+		<!-- deprecated --><JavascriptBodyEnd></JavascriptBodyEnd>
+		<!-- deprecated --><JavascriptOnLoad></JavascriptOnLoad>
+		<Content>No</Content>
+		<Template>No</Template>
+		<Email>No</Email>
+		<Admin>No</Admin>
+		<OnPageEndEvent>No</OnPageEndEvent>
+		<OnPageStartEvent>No</OnPageStartEvent>
+		<OnBodyStart>No</OnBodyStart>
+		<OnBodyEnd>No</OnBodyEnd>
+		<RemoteMethod>No</RemoteMethod>
+		<ProcessRunOnce>No</ProcessRunOnce>
+		<ProcessInterval>0</ProcessInterval>
+		<MetaDescription></MetaDescription>
+		<OtherHeadTags></OtherHeadTags>
+		<PageTitle></PageTitle>
+		<RemoteAssetLink></RemoteAssetLink>
+		<Styles></Styles>
+		<styleslinkhref></styleslinkhref>
+		<Scripting Language="" EntryPoint="" Timeout="5000"/>
+	</Addon>
 	<Addon name="jquery.scale9grid.js" guid="{b722c07f-f858-4cb8-b9bb-f4242fcc59e7}" type="Add-on">
 		<Copy></Copy>
 		<CopyText></CopyText>
@@ -644,5 +468,7 @@ function navDrop(id,x,y){
 	<Resource name="jquery.scale9grid.js" type="www" path="dashboard" />
 	<Resource name="trashcan.png" type="www" path="dashboard" />
 	<Resource name="whosonline.png" type="www" path="dashboard" />
+	<Resource name="dashboard.js" type="www" path="dashboard" />
+	<Resource name="dashboard.css" type="www" path="dashboard" />
 	<Resource name="aoDashboard.dll" type="executable" path="" />
 </Collection>
