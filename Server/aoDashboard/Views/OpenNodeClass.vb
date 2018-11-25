@@ -8,7 +8,7 @@ Imports System.Text
 Imports System.Xml
 Imports Contensive.BaseClasses
 
-Namespace Interfaces
+Namespace Views
     Public Class OpenNodeClass
         Inherits AddonBaseClass
         '
@@ -73,7 +73,7 @@ Namespace Interfaces
                             SizeX = CP.Utils.EncodeInteger(Controllers.genericController.getAttribute(CP, Node, "sizex"))
                             SizeY = CP.Utils.EncodeInteger(Controllers.genericController.getAttribute(CP, Node, "sizey"))
                             Options = Controllers.genericController.getAttribute(CP, Node, "optionstring")
-                            Content = Controllers.genericController.GetDodad(CP, AddonGuid, ContentGuid, ContentName, Title, PosX, PosY, State, SizeX, SizeY, Options, WrapperID, NodePtr, RequiredJS, IconZIndex)
+                            Content = Controllers.genericController.GetDodad(CP, AddonGuid, ContentGuid, ContentName, Title, PosX, PosY, State, SizeX, SizeY, Options, WrapperID, NodePtr, IconZIndex)
                             returnHtml = "" _
                     & Content _
                     & vbCrLf & vbTab & "<script type=""text/javascript"">" _

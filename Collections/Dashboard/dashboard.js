@@ -1,24 +1,19 @@
-console.log('Dashboard Load');
-//
-// -- initialize
-jQuery(document).ready(function(){
-	dashResize();
-})
+
 //
 // -- event to resize dash
 function dashResize() {
-	console.log('dashResize, nodeCnt['+nodeCnt+']');
+	console.log('dashResize');
 	var i,n,nodeTop,nodeBottom,desktopBottom=0;
-	for (i=0;i<=nodeCnt;i++){
-		n=document.getElementById('dashnode'+i)
+	jQuery(".dashNode").each(function(){
+		n=document.getElementById(this.id)
 		if(n){
-			console.log('dashResize, initialize node['+i+']');
+			console.log('dashResize, initialize node['+this.id+']');
 			nodeTop=n.style.top;
 			nodeTop=parseInt(nodeTop.replace('px',''));
 			nodeBottom=nodeTop+n.scrollHeight;
 			if(nodeBottom>desktopBottom){desktopBottom=nodeBottom}
 		}
-	}
+	})
 	if(desktopBottom!=0){
 		n=document.getElementById('dashBoardWrapper');
 		if(n){n.style.height=desktopBottom}
@@ -71,37 +66,36 @@ function hideTools(toolsId){
 	var e=document.getElementById(toolsId);
 	if(e) e.style.visibility='hidden';
 }
-function dashDeleteNode( nodePtr, HTMLId ) {
-	var c=document.getElementById(HTMLId);
+function dashDeleteNode( nodePtr, htmlId ) {
+	var c=document.getElementById(htmlId);
 	var p=c.parentNode;
 	p.removeChild(c);
-	cj.ajax.addon('dashboarddelnode','ptr='+nodePtr);
+	cj.ajax.addon('dashboarddelnode','key='+nodePtr);
 	dashResize();
 }
 function dashOpenNodeCallback(response,callbackArg) {
-//alert('dashOpenNodeCallback');
 	var hId='dashhelper'+nodeCnt++;
 	navMakeHelper(hId);
 	var e=document.getElementById(hId);
 	e.innerHTML=response;
 	dashResize();
 }
-function dashOpenNode( nodePtr, HTMLId ) {
+function dashOpenNode( nodePtr, htmlId ) {
 //alert('dashOpenNode');
 	var c,p,hId;
-	c=document.getElementById(HTMLId);
+	c=document.getElementById(htmlId);
 	p=c.parentNode;
 	p.removeChild(c);
-	cj.ajax.addonCallback('dashboardopennode','ptr='+nodePtr,dashOpenNodeCallback,'test');
+	cj.ajax.addonCallback('dashboardopennode','key='+nodePtr,dashOpenNodeCallback,'test');
 }
-function closeNode( nodePtr, HTMLId ) {
+function closeNode( nodePtr, htmlId ) {
 	var c,p,hId;
-	c=document.getElementById(HTMLId);
+	c=document.getElementById(htmlId);
 	var p=c.parentNode;
 	p.removeChild(c);
 	hId='dashhelper'+nodeCnt++;
 	navMakeHelper(hId);
-	cj.ajax.addon('dashboardclosenode','ptr='+nodePtr,'',hId);
+	cj.ajax.addon('dashboardclosenode','key='+nodePtr,'',hId);
 	dashResize();
 }
 function navMakeHelper( iconId ) {
@@ -135,45 +129,45 @@ function navDrop(id,x,y){
 */
 jQuery( document ).ready(function(){
 	/*
-	* bind to addon in windowmode
+	* make entire dashboard droppable
+	*/	
+	jQuery(""#desktop"").droppable({tolerance: 'fit'});
+	/*
+	* bind to icon nodes
+	*/	
+	jQuery(".dashNode").each(function(){
+		jQuery(this).draggable({
+			stop: function(event, ui){
+				var qs='key='+this.id+'&x='+this.style.left+'&y='+this.style.top;
+				cj.ajax.addonCallback('dashboarddragstop',qs,dashResize);
+			}
+			,start: function(event, ui){
+				this.style.zIndex=iconZIndexTop++;
+				jQuery(this).draggable('option', 'zIndex', iconZIndexTop );
+			}
+			,revert: 'invalid'
+			,zIndex: 0
+			,hoverClass: 'droppableHover'
+			,opacity: 0.50
+			,handle: '#toolBar'+this.id
+			,cursor: 'move'
+		});
+	});	
+	/*
+	* bind resizable
 	*/
-	jQuery('.dashNodeAddonWindowMode').draggable({
-		/*
-		* setup draggable
-		*/
-		stop: function(event, ui){
-			var e=document.getElementById('**need-node-id**');
-			cj.ajax.addonCallback('dashboarddragstop','ptr=1&x='+e.style.left+'&y='+e.style.top,dashResize);
-		}
-		,start: function(event, ui){
-			var e=document.getElementById('**need-node-id**');
-			e.style.zIndex=iconZIndexTop++;
-			jQuery('#**need-node-id**').draggable('option', 'zIndex', iconZIndexTop );
-		}
-		,revert: 'invalid'
-		,zIndex: 0
-		,hoverClass: 'droppableHover'
-		,opacity: 0.50
-		,handle: '#toolBardashnode1'
-		,cursor: 'move'
-	}).resizable({
-		/*
-		* setup resizable
-		*/
-		alsoResize: '#designResizerdashnode1'
-		,stop: function(event, ui) {
-			/* alert('resize stop') */
-			var e=document.getElementById('**need-node-id**');
-			var r=document.getElementById('designResizer**need-node-id**');
-			cj.ajax.addon('dashboardresize','ptr=1&x='+e.style.width+'&y='+r.style.height);
-			dashResize();
-		}
-	}).droppable({
-		/*
-		* setup droppable
-		*/
-		hoverClass: 'droppableHover',greedy: true
-	});
-	
-
+	jQuery(".windowNode").each(function(){
+		jQuery(this).resizable({
+			alsoResize: '#designResizer'+this.id
+			,stop: function(event, ui) {
+				var r=document.getElementById('designResizer'+this.id);
+				cj.ajax.addon('dashboardresize','key='+this.id+'&x='+this.style.width+'&y='+r.style.height);
+				dashResize();
+			}
+		});
+	});	
+	/*
+	* Initialize
+	*/
+	dashResize();
 });

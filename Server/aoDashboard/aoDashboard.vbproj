@@ -63,6 +63,9 @@
       <HintPath>packages\contensive.clib.4.1.2\lib\net35\CPBase.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.ServiceModel.Web" />
@@ -78,20 +81,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="constants.vb" />
-    <Compile Include="Interfaces\dashboardClass.vb" />
-    <Compile Include="Interfaces\DashDragStopClass.vb" />
-    <Compile Include="Interfaces\DelNodeClass.vb" />
-    <Compile Include="Interfaces\NavDropClass.vb" />
-    <Compile Include="Interfaces\OpenNodeClass.vb" />
-    <Compile Include="Interfaces\ResizeClass.vb" />
-    <Compile Include="Models\baseModel.vb" />
-    <Compile Include="Models\personModel.vb" />
-    <Compile Include="Models\addonModel.vb" />
-    <Compile Include="Models\wrapperModel.vb" />
-    <Compile Include="Models\contentModel.vb" />
-    <Compile Include="Models\_blankModel.vb" />
+    <Compile Include="Models\Domain\NodeModel.vb" />
+    <Compile Include="Models\Domain\xgenericController.vb" />
+    <Compile Include="Models\Domain\RequestModel.vb" />
+    <Compile Include="Views\DashboardClass.vb" />
+    <Compile Include="Views\DashDragStopClass.vb" />
+    <Compile Include="Views\DelNodeClass.vb" />
+    <Compile Include="Views\NavDropClass.vb" />
+    <Compile Include="Views\OpenNodeClass.vb" />
+    <Compile Include="Views\ResizeClass.vb" />
+    <Compile Include="Models\Db\baseModel.vb" />
+    <Compile Include="Models\Db\personModel.vb" />
+    <Compile Include="Models\Db\addonModel.vb" />
+    <Compile Include="Models\Db\wrapperModel.vb" />
+    <Compile Include="Models\Db\contentModel.vb" />
+    <Compile Include="Models\Db\_blankModel.vb" />
     <Compile Include="Controllers\genericController.vb" />
-    <Compile Include="Interfaces\closeNodeClass.vb" />
+    <Compile Include="Views\CloseNodeClass.vb" />
+    <Compile Include="Models\Domain\configModel.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -129,8 +136,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Models\modelData.txt" />
+    <Content Include="Models\Db\modelData.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
