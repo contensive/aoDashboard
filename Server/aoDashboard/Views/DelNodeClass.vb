@@ -19,9 +19,10 @@ Namespace Views
         Public Overrides Function Execute(ByVal CP As CPBaseClass) As Object
             Dim returnHtml As String = ""
             Try
-                Dim nodeKey As String = CP.Doc.GetText("node")
+                Dim request As New Models.RequestModel(CP)
+                Dim nodeKey As String = request.key
                 If (Not String.IsNullOrWhiteSpace(nodeKey)) Then
-                    Dim config2 As Models.configModel = Models.configModel.create(CP, CP.User.Id)
+                    Dim config2 As Models.ConfigModel = Models.ConfigModel.create(CP, CP.User.Id)
                     If (config2 IsNot Nothing) Then
                         If (config2.nodeList.ContainsKey(nodeKey)) Then
                             config2.nodeList.Remove(nodeKey)

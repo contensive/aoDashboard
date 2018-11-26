@@ -38,8 +38,9 @@ Namespace Models
         ''' <param name="cp"></param>
         Public Sub New(cp As CPBaseClass)
             key = cp.Doc.GetText("key")
-            x = cp.Doc.GetInteger("x")
-            y = cp.Doc.GetInteger("y")
+            x = cp.Utils.EncodeInteger(cp.Doc.GetText("x").ToLower().Replace("px", ""))
+            y = cp.Utils.EncodeInteger(cp.Doc.GetText("y").ToLower().Replace("px", ""))
+            id = cp.Doc.GetText("id")
         End Sub
     End Class
 End Namespace

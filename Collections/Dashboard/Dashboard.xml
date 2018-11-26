@@ -46,7 +46,7 @@
 		<Copy></Copy>
 		<CopyText></CopyText>
 		<ActiveXProgramID></ActiveXProgramID>
-		<DotNetClass><![CDATA[Contensive.Addons.Dashboard.Interfaces.DashboardClass]]></DotNetClass>
+		<DotNetClass><![CDATA[Contensive.Addons.Dashboard.Views.DashboardClass]]></DotNetClass>
 		<ArgumentList></ArgumentList>
 		<AsAjax>No</AsAjax>
 		<Filter>No</Filter>
@@ -128,7 +128,7 @@
 		<Copy></Copy>
 		<CopyText></CopyText>
 		<ActiveXProgramID></ActiveXProgramID>
-		<DotNetClass><![CDATA[Contensive.Addons.Dashboard.Interfaces.closeNodeClass]]></DotNetClass>
+		<DotNetClass><![CDATA[Contensive.Addons.Dashboard.Views.closeNodeClass]]></DotNetClass>
 		<ArgumentList></ArgumentList>
 		<AsAjax>No</AsAjax>
 		<Filter>No</Filter>
@@ -168,7 +168,7 @@
 		<Copy></Copy>
 		<CopyText></CopyText>
 		<ActiveXProgramID></ActiveXProgramID>
-		<DotNetClass><![CDATA[Contensive.Addons.Dashboard.Interfaces.delNodeClass]]></DotNetClass>
+		<DotNetClass><![CDATA[Contensive.Addons.Dashboard.Views.delNodeClass]]></DotNetClass>
 		<ArgumentList></ArgumentList>
 		<AsAjax>No</AsAjax>
 		<Filter>No</Filter>
@@ -208,7 +208,7 @@
 		<Copy></Copy>
 		<CopyText></CopyText>
 		<ActiveXProgramID></ActiveXProgramID>
-		<DotNetClass><![CDATA[Contensive.Addons.Dashboard.Interfaces.dashDragStopClass]]></DotNetClass>
+		<DotNetClass><![CDATA[Contensive.Addons.Dashboard.Views.dashDragStopClass]]></DotNetClass>
 		<ArgumentList></ArgumentList>
 		<AsAjax>No</AsAjax>
 		<Filter>No</Filter>
@@ -248,7 +248,7 @@
 		<Copy></Copy>
 		<CopyText></CopyText>
 		<ActiveXProgramID></ActiveXProgramID>
-		<DotNetClass><![CDATA[Contensive.Addons.Dashboard.Interfaces.navDropClass]]></DotNetClass>
+		<DotNetClass><![CDATA[Contensive.Addons.Dashboard.Views.navDropClass]]></DotNetClass>
 		<ArgumentList></ArgumentList>
 		<AsAjax>No</AsAjax>
 		<Filter>No</Filter>
@@ -288,7 +288,7 @@
 		<Copy></Copy>
 		<CopyText></CopyText>
 		<ActiveXProgramID></ActiveXProgramID>
-		<DotNetClass><![CDATA[Contensive.Addons.Dashboard.Interfaces.openNodeClass]]></DotNetClass>
+		<DotNetClass><![CDATA[Contensive.Addons.Dashboard.Views.openNodeClass]]></DotNetClass>
 		<ArgumentList></ArgumentList>
 		<AsAjax>No</AsAjax>
 		<Filter>No</Filter>
@@ -328,7 +328,7 @@
 		<Copy></Copy>
 		<CopyText></CopyText>
 		<ActiveXProgramID></ActiveXProgramID>
-		<DotNetClass><![CDATA[Contensive.Addons.Dashboard.Interfaces.ResizeClass]]></DotNetClass>
+		<DotNetClass><![CDATA[Contensive.Addons.Dashboard.Views.ResizeClass]]></DotNetClass>
 		<ArgumentList></ArgumentList>
 		<AsAjax>No</AsAjax>
 		<Filter>No</Filter>
@@ -364,7 +364,7 @@
 		<styleslinkhref></styleslinkhref>
 		<Scripting Language="VBScript" EntryPoint="" Timeout="5000"/>
 	</Addon>
-	<Addon name="jquery.scale9grid." guid="{8878898c-037e-4d48-afee-e47c8ba7da06}" type="Add-on">
+	<Addon name="deleteme-jquery.scale9grid" guid="{8878898c-037e-4d48-afee-e47c8ba7da06}" type="Add-on">
 		<Copy></Copy>
 		<CopyText></CopyText>
 		<ActiveXProgramID></ActiveXProgramID>

@@ -18,10 +18,10 @@ Namespace Views
                 Dim iconZIndexTop As Integer = 0
                 '
                 ' -- create dashboard html and additional javascript
-                Dim config As Models.configModel = Models.configModel.create(cp, cp.User.Id)
+                Dim config As Models.ConfigModel = Models.ConfigModel.create(cp, cp.User.Id)
                 Dim Dashboard As String = ""
                 For Each kvp In config.nodeList
-                    Dashboard &= Controllers.genericController.getNodeHtml(cp, kvp.Value)
+                    Dashboard &= Models.NodeModel.getNodeHtml(cp, kvp.Value)
                     iconZIndexTop = If((iconZIndexTop > kvp.Value.z), iconZIndexTop, kvp.Value.z)
                 Next
                 '

@@ -17,14 +17,14 @@ Namespace Views
             Try
                 Dim request As New Models.RequestModel(CP)
                 If (Not String.IsNullOrWhiteSpace(request.key)) Then
-                    Dim config As Models.configModel = Models.configModel.create(CP, CP.User.Id)
+                    Dim config As Models.ConfigModel = Models.ConfigModel.create(CP, CP.User.Id)
                     If (config IsNot Nothing) Then
                         If (config.nodeList.ContainsKey(request.key)) Then
-                            Dim configNode As Models.configModel.ConfigNodeModel = config.nodeList(request.key)
+                            Dim configNode As Models.ConfigModel.ConfigNodeModel = config.nodeList(request.key)
                             configNode.x = request.x
                             configNode.y = request.y
                             config.save(CP)
-                            result = Controllers.genericController.getNodeHtml(CP, configNode)
+                            result = Models.NodeModel.getNodeHtml(CP, configNode)
                         End If
                     End If
                 End If

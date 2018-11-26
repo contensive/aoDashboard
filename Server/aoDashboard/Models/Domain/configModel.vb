@@ -10,7 +10,7 @@ Imports Contensive.Addons.Dashboard.Controllers
 Imports Contensive.BaseClasses
 
 Namespace Models
-    Public Class configModel
+    Public Class ConfigModel
         Public defaultWrapper As ConfigWrapper
         Public nodeList As Dictionary(Of String, ConfigNodeModel)
 
@@ -90,8 +90,8 @@ Namespace Models
         ''' <param name="cp"></param>
         ''' <param name="userId"></param>
         ''' <returns></returns>
-        Public Shared Function create(cp As CPBaseClass, userId As Integer) As configModel
-            Dim result As configModel = load(cp, userId)
+        Public Shared Function create(cp As CPBaseClass, userId As Integer) As ConfigModel
+            Dim result As ConfigModel = load(cp, userId)
             If (result Is Nothing) Then
                 '
                 ' -- try legacy config
@@ -121,12 +121,12 @@ Namespace Models
         ''' <param name="cp"></param>
         ''' <param name="userId"></param>
         ''' <returns></returns>
-        Private Shared Function load(cp As CPBaseClass, userId As Integer) As configModel
-            Dim result As configModel = Nothing
+        Private Shared Function load(cp As CPBaseClass, userId As Integer) As ConfigModel
+            Dim result As ConfigModel = Nothing
             Dim userConfigFilename As String = "dashboard\dashconfig." & userId & ".json"
             Dim jsonConfigText As String = cp.File.ReadVirtual(userConfigFilename)
             If (Not String.IsNullOrWhiteSpace(jsonConfigText)) Then
-                result = Newtonsoft.Json.JsonConvert.DeserializeObject(Of configModel)(jsonConfigText)
+                result = Newtonsoft.Json.JsonConvert.DeserializeObject(Of ConfigModel)(jsonConfigText)
             End If
             Return result
         End Function
@@ -152,16 +152,18 @@ Namespace Models
         '
         '====================================================================================================
         '
-        Public Shared Function createFromLegacyXmlData(cp As CPBaseClass, userId As Integer) As configModel
-            Dim result As configModel = Nothing
+        Public Shared Function createFromLegacyXmlData(cp As CPBaseClass, userId As Integer) As ConfigModel
+            Dim result As ConfigModel = Nothing
             Try
                 Dim UserConfigFilename As String = If(userId <= 0, "dashboard\dashconfig.xml", "dashboard\dashconfig." & userId & ".xml")
                 Dim xmlConfigText As String = cp.File.ReadVirtual(UserConfigFilename)
-                If (String.IsNullOrWhiteSpace(xmlConfigText)) Then
+                If (Not String.IsNullOrWhiteSpace(xmlConfigText)) Then
                     Dim xmlConfig As New System.Xml.XmlDocument
                     xmlConfig.LoadXml(xmlConfigText)
                     If xmlConfig.HasChildNodes Then
-                        result = New configModel()
+                        result = New ConfigModel With {
+                            .nodeList = New Dictionary(Of String, ConfigNodeModel)
+                        }
                         '
                         ' -- review values, remove deleted nodes and get settings
                         Dim nodeKeySuffix As Integer = 0
@@ -191,6 +193,8 @@ Namespace Models
                                         Next
                                     End If
                                     Dim nodeKey As String = "node" & nodeKeySuffix
+                                    Dim nodeState As ConfigNodeState
+                                    [Enum].TryParse(Controllers.genericController.getAttribute(cp, node, "state"), nodeState)
                                     result.nodeList.Add(nodeKey, New ConfigNodeModel() With {
                                         .key = nodeKey,
                                         .addonArgList = addonArgList,
@@ -199,7 +203,7 @@ Namespace Models
                                         .contentName = genericController.getAttribute(cp, node, "contentName"),
                                         .sizex = cp.Utils.EncodeInteger(Controllers.genericController.getAttribute(cp, node, "sizex")),
                                         .sizey = cp.Utils.EncodeInteger(genericController.getAttribute(cp, node, "sizey")),
-                                        .state = CType(Controllers.genericController.getAttribute(cp, node, "state"), ConfigNodeState),
+                                        .state = nodeState,
                                         .title = Controllers.genericController.getAttribute(cp, node, "title"),
                                         .x = cp.Utils.EncodeInteger(genericController.getAttribute(cp, node, "x")),
                                         .y = cp.Utils.EncodeInteger(genericController.getAttribute(cp, node, "y"))
