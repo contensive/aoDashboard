@@ -8,8 +8,8 @@ Imports System.Text
 Imports Contensive.BaseClasses
 
 Namespace Models
-    Public Class contentModel
-        Inherits Contensive.Addons.Dashboard.Models.baseModel
+    Public Class ContentModel
+        Inherits Contensive.Addons.Dashboard.Models.BaseModel
         Implements ICloneable
         '
         '====================================================================================================
@@ -43,23 +43,23 @@ Namespace Models
         'Public Property ParentID As Integer
         '
         '====================================================================================================
-        Public Overloads Shared Function add(cp As CPBaseClass) As contentModel
-            Return add(Of contentModel)(cp)
+        Public Overloads Shared Function add(cp As CPBaseClass) As ContentModel
+            Return add(Of ContentModel)(cp)
         End Function
         '
         '====================================================================================================
-        Public Overloads Shared Function create(cp As CPBaseClass, recordId As Integer) As contentModel
-            Return create(Of contentModel)(cp, recordId)
+        Public Overloads Shared Function create(cp As CPBaseClass, recordId As Integer) As ContentModel
+            Return create(Of ContentModel)(cp, recordId)
         End Function
         '
         '====================================================================================================
-        Public Overloads Shared Function create(cp As CPBaseClass, recordGuid As String) As contentModel
-            Return create(Of contentModel)(cp, recordGuid)
+        Public Overloads Shared Function create(cp As CPBaseClass, recordGuid As String) As ContentModel
+            Return create(Of ContentModel)(cp, recordGuid)
         End Function
         '
         '====================================================================================================
-        Public Overloads Shared Function createByName(cp As CPBaseClass, recordName As String) As contentModel
-            Return createByName(Of contentModel)(cp, recordName)
+        Public Overloads Shared Function createByName(cp As CPBaseClass, recordName As String) As ContentModel
+            Return createByName(Of ContentModel)(cp, recordName)
         End Function
         '
         '====================================================================================================
@@ -69,48 +69,48 @@ Namespace Models
         '
         '====================================================================================================
         Public Overloads Shared Sub delete(cp As CPBaseClass, recordId As Integer)
-            delete(Of contentModel)(cp, recordId)
+            delete(Of ContentModel)(cp, recordId)
         End Sub
         '
         '====================================================================================================
         Public Overloads Shared Sub delete(cp As CPBaseClass, ccGuid As String)
-            delete(Of contentModel)(cp, ccGuid)
+            delete(Of ContentModel)(cp, ccGuid)
         End Sub
         '
         '====================================================================================================
-        Public Overloads Shared Function createList(cp As CPBaseClass, sqlCriteria As String, Optional sqlOrderBy As String = "id") As List(Of contentModel)
-            Return createList(Of contentModel)(cp, sqlCriteria, sqlOrderBy)
+        Public Overloads Shared Function createList(cp As CPBaseClass, sqlCriteria As String, Optional sqlOrderBy As String = "id") As List(Of ContentModel)
+            Return createList(Of ContentModel)(cp, sqlCriteria, sqlOrderBy)
         End Function
         '
         '====================================================================================================
         Public Overloads Shared Function getRecordName(cp As CPBaseClass, recordId As Integer) As String
-            Return baseModel.getRecordName(Of contentModel)(cp, recordId)
+            Return BaseModel.getRecordName(Of ContentModel)(cp, recordId)
         End Function
         '
         '====================================================================================================
         Public Overloads Shared Function getRecordName(cp As CPBaseClass, ccGuid As String) As String
-            Return baseModel.getRecordName(Of contentModel)(cp, ccGuid)
+            Return BaseModel.getRecordName(Of ContentModel)(cp, ccGuid)
         End Function
         '
         '====================================================================================================
         Public Overloads Shared Function getRecordId(cp As CPBaseClass, ccGuid As String) As Integer
-            Return baseModel.getRecordId(Of contentModel)(cp, ccGuid)
+            Return BaseModel.getRecordId(Of ContentModel)(cp, ccGuid)
         End Function
         '
         '====================================================================================================
         Public Overloads Shared Function getCount(cp As CPBaseClass, sqlCriteria As String) As Integer
-            Return baseModel.getCount(Of contentModel)(cp, sqlCriteria)
+            Return BaseModel.getCount(Of ContentModel)(cp, sqlCriteria)
         End Function
         '
         '====================================================================================================
         Public Overloads Function getUploadPath(fieldName As String) As String
-            Return MyBase.getUploadPath(Of contentModel)(fieldName)
+            Return MyBase.getUploadPath(Of ContentModel)(fieldName)
         End Function
         '
         '====================================================================================================
         '
-        Public Function Clone(cp As CPBaseClass) As contentModel
-            Dim result As contentModel = DirectCast(Me.Clone(), contentModel)
+        Public Function Clone(cp As CPBaseClass) As ContentModel
+            Dim result As ContentModel = DirectCast(Me.Clone(), ContentModel)
             result.id = cp.Content.AddRecord(contentName)
             result.ccguid = cp.Utils.CreateGuid()
             result.save(cp)

@@ -8,8 +8,8 @@ Imports System.Text
 Imports Contensive.BaseClasses
 
 Namespace Models
-    Public Class personModel
-        Inherits baseModel
+    Public Class PersonModel
+        Inherits BaseModel
         Implements ICloneable
         '
         '====================================================================================================
@@ -80,23 +80,23 @@ Namespace Models
         Public Property Zip As String
         '
         '====================================================================================================
-        Public Overloads Shared Function add(cp As CPBaseClass) As personModel
-            Return add(Of personModel)(cp)
+        Public Overloads Shared Function add(cp As CPBaseClass) As PersonModel
+            Return add(Of PersonModel)(cp)
         End Function
         '
         '====================================================================================================
-        Public Overloads Shared Function create(cp As CPBaseClass, recordId As Integer) As personModel
-            Return create(Of personModel)(cp, recordId)
+        Public Overloads Shared Function create(cp As CPBaseClass, recordId As Integer) As PersonModel
+            Return create(Of PersonModel)(cp, recordId)
         End Function
         '
         '====================================================================================================
-        Public Overloads Shared Function create(cp As CPBaseClass, recordGuid As String) As personModel
-            Return create(Of personModel)(cp, recordGuid)
+        Public Overloads Shared Function create(cp As CPBaseClass, recordGuid As String) As PersonModel
+            Return create(Of PersonModel)(cp, recordGuid)
         End Function
         '
         '====================================================================================================
-        Public Overloads Shared Function createByName(cp As CPBaseClass, recordName As String) As personModel
-            Return createByName(Of personModel)(cp, recordName)
+        Public Overloads Shared Function createByName(cp As CPBaseClass, recordName As String) As PersonModel
+            Return createByName(Of PersonModel)(cp, recordName)
         End Function
         '
         '====================================================================================================
@@ -106,48 +106,48 @@ Namespace Models
         '
         '====================================================================================================
         Public Overloads Shared Sub delete(cp As CPBaseClass, recordId As Integer)
-            delete(Of personModel)(cp, recordId)
+            delete(Of PersonModel)(cp, recordId)
         End Sub
         '
         '====================================================================================================
         Public Overloads Shared Sub delete(cp As CPBaseClass, ccGuid As String)
-            delete(Of personModel)(cp, ccGuid)
+            delete(Of PersonModel)(cp, ccGuid)
         End Sub
         '
         '====================================================================================================
-        Public Overloads Shared Function createList(cp As CPBaseClass, sqlCriteria As String, Optional sqlOrderBy As String = "id") As List(Of personModel)
-            Return createList(Of personModel)(cp, sqlCriteria, sqlOrderBy)
+        Public Overloads Shared Function createList(cp As CPBaseClass, sqlCriteria As String, Optional sqlOrderBy As String = "id") As List(Of PersonModel)
+            Return createList(Of PersonModel)(cp, sqlCriteria, sqlOrderBy)
         End Function
         '
         '====================================================================================================
         Public Overloads Shared Function getRecordName(cp As CPBaseClass, recordId As Integer) As String
-            Return baseModel.getRecordName(Of personModel)(cp, recordId)
+            Return BaseModel.getRecordName(Of PersonModel)(cp, recordId)
         End Function
         '
         '====================================================================================================
         Public Overloads Shared Function getRecordName(cp As CPBaseClass, ccGuid As String) As String
-            Return baseModel.getRecordName(Of personModel)(cp, ccGuid)
+            Return BaseModel.getRecordName(Of PersonModel)(cp, ccGuid)
         End Function
         '
         '====================================================================================================
         Public Overloads Shared Function getRecordId(cp As CPBaseClass, ccGuid As String) As Integer
-            Return baseModel.getRecordId(Of personModel)(cp, ccGuid)
+            Return BaseModel.getRecordId(Of PersonModel)(cp, ccGuid)
         End Function
         '
         '====================================================================================================
         Public Overloads Shared Function getCount(cp As CPBaseClass, sqlCriteria As String) As Integer
-            Return baseModel.getCount(Of personModel)(cp, sqlCriteria)
+            Return BaseModel.getCount(Of PersonModel)(cp, sqlCriteria)
         End Function
         '
         '====================================================================================================
         Public Overloads Function getUploadPath(fieldName As String) As String
-            Return MyBase.getUploadPath(Of personModel)(fieldName)
+            Return MyBase.getUploadPath(Of PersonModel)(fieldName)
         End Function
         '
         '====================================================================================================
         '
-        Public Function Clone(cp As CPBaseClass) As personModel
-            Dim result As personModel = DirectCast(Me.Clone(), personModel)
+        Public Function Clone(cp As CPBaseClass) As PersonModel
+            Dim result As PersonModel = DirectCast(Me.Clone(), PersonModel)
             result.id = cp.Content.AddRecord(contentName)
             result.ccguid = cp.Utils.CreateGuid()
             result.save(cp)

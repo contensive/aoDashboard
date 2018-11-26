@@ -471,5 +471,6 @@
 	<Resource name="dashboard.js" type="www" path="dashboard" />
 	<Resource name="dashboard.css" type="www" path="dashboard" />
 	<Resource name="addon.png" type="www" path="dashboard" />
+	<Resource name="content.png" type="www" path="dashboard" />
 	<Resource name="aoDashboard.dll" type="executable" path="" />
 </Collection>

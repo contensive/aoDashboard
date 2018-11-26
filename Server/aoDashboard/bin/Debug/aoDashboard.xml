@@ -22,6 +22,18 @@ aoDashboard
   resource lookups using this strongly typed resource class.
 </summary>
 </member>
+<member name="M:Contensive.Addons.Dashboard.Models.NodeModel.getNodeHtml(Contensive.BaseClasses.CPBaseClass,Contensive.Addons.Dashboard.Models.ConfigModel.ConfigNodeModel)">
+ <summary>
+ the entire contructed object that is moved around on the dashboard.
+ From inside out:
+ DodadContent - The inner-most part of the Dodad, the actual content that is on the desktop
+ DesignWrapper - the visible border for all Dodads
+ ControlWrapper = the absolute positioned wrapper that contains all drag/drop/resize/toolbar features
+ </summary>
+ <param name="cp"></param>
+ <param name="nodeConfig"></param>
+ <returns></returns>
+</member>
 <member name="M:Contensive.Addons.Dashboard.Models.NodeModel.getNodeHtml(Contensive.BaseClasses.CPBaseClass,System.String,System.String,System.String,System.String,System.Int32,System.Int32,System.String,Contensive.Addons.Dashboard.Models.ConfigModel.ConfigNodeState,System.Int32,System.String,System.Int32,System.String,System.Int32)">
  <summary>
  create the html for the node from individual node values (transitional signature)
@@ -74,12 +86,12 @@ aoDashboard
  </summary>
  <param name="cp"></param>
 </member>
-<member name="M:Contensive.Addons.Dashboard.Models.baseModel.#ctor">
+<member name="M:Contensive.Addons.Dashboard.Models.BaseModel.#ctor">
  <summary>
  Create an empty object. needed for deserialization
  </summary>
 </member>
-<member name="M:Contensive.Addons.Dashboard.Models.baseModel.add``1(Contensive.BaseClasses.CPBaseClass)">
+<member name="M:Contensive.Addons.Dashboard.Models.BaseModel.add``1(Contensive.BaseClasses.CPBaseClass)">
  <summary>
  Add a new recod to the db and open it. Starting a new model with this method will use the default values in Contensive metadata (active, contentcontrolid, etc).
  include callersCacheNameList to get a list of cacheNames used to assemble this response
@@ -87,56 +99,56 @@ aoDashboard
  <param name="cp"></param>
  <returns></returns>
 </member>
-<member name="M:Contensive.Addons.Dashboard.Models.baseModel.create``1(Contensive.BaseClasses.CPBaseClass,System.Int32)">
+<member name="M:Contensive.Addons.Dashboard.Models.BaseModel.create``1(Contensive.BaseClasses.CPBaseClass,System.Int32)">
  <summary>
  return a new model with the data selected. All cacheNames related to the object will be added to the cacheNameList.
  </summary>
  <param name="cp"></param>
  <param name="recordId">The id of the record to be read into the new object</param>
 </member>
-<member name="M:Contensive.Addons.Dashboard.Models.baseModel.create``1(Contensive.BaseClasses.CPBaseClass,System.String)">
+<member name="M:Contensive.Addons.Dashboard.Models.BaseModel.create``1(Contensive.BaseClasses.CPBaseClass,System.String)">
  <summary>
  open an existing object
  </summary>
  <param name="cp"></param>
  <param name="recordGuid"></param>
 </member>
-<member name="M:Contensive.Addons.Dashboard.Models.baseModel.createByName``1(Contensive.BaseClasses.CPBaseClass,System.String)">
+<member name="M:Contensive.Addons.Dashboard.Models.BaseModel.createByName``1(Contensive.BaseClasses.CPBaseClass,System.String)">
  <summary>
  open an existing object
  </summary>
  <param name="cp"></param>
  <param name="recordName"></param>
 </member>
-<member name="M:Contensive.Addons.Dashboard.Models.baseModel.loadRecord``1(Contensive.BaseClasses.CPBaseClass,Contensive.BaseClasses.CPCSBaseClass)">
+<member name="M:Contensive.Addons.Dashboard.Models.BaseModel.loadRecord``1(Contensive.BaseClasses.CPBaseClass,Contensive.BaseClasses.CPCSBaseClass)">
  <summary>
  open an existing object
  </summary>
  <param name="cp"></param>
  <param name="cs"></param>
 </member>
-<member name="M:Contensive.Addons.Dashboard.Models.baseModel.save(Contensive.BaseClasses.CPBaseClass)">
+<member name="M:Contensive.Addons.Dashboard.Models.BaseModel.save(Contensive.BaseClasses.CPBaseClass)">
  <summary>
  save the instance properties to a record with matching id. If id is not provided, a new record is created.
  </summary>
  <param name="cp"></param>
  <returns></returns>
 </member>
-<member name="M:Contensive.Addons.Dashboard.Models.baseModel.delete``1(Contensive.BaseClasses.CPBaseClass,System.Int32)">
+<member name="M:Contensive.Addons.Dashboard.Models.BaseModel.delete``1(Contensive.BaseClasses.CPBaseClass,System.Int32)">
  <summary>
  delete an existing database record by id
  </summary>
  <param name="cp"></param>
  <param name="recordId"></param>
 </member>
-<member name="M:Contensive.Addons.Dashboard.Models.baseModel.delete``1(Contensive.BaseClasses.CPBaseClass,System.String)">
+<member name="M:Contensive.Addons.Dashboard.Models.BaseModel.delete``1(Contensive.BaseClasses.CPBaseClass,System.String)">
  <summary>
  delete an existing database record by guid
  </summary>
  <param name="cp"></param>
  <param name="ccguid"></param>
 </member>
-<member name="M:Contensive.Addons.Dashboard.Models.baseModel.createList``1(Contensive.BaseClasses.CPBaseClass,System.String,System.String)">
+<member name="M:Contensive.Addons.Dashboard.Models.BaseModel.createList``1(Contensive.BaseClasses.CPBaseClass,System.String,System.String)">
  <summary>
  pattern get a list of objects from this model
  </summary>
@@ -144,7 +156,7 @@ aoDashboard
  <param name="sqlCriteria"></param>
  <returns></returns>
 </member>
-<member name="M:Contensive.Addons.Dashboard.Models.baseModel.getRecordName``1(Contensive.BaseClasses.CPBaseClass,System.Int32)">
+<member name="M:Contensive.Addons.Dashboard.Models.BaseModel.getRecordName``1(Contensive.BaseClasses.CPBaseClass,System.Int32)">
  <summary>
  get the name of the record by it's id
  </summary>
@@ -152,7 +164,7 @@ aoDashboard
  <param name="recordId"></param>record
  <returns></returns>
 </member>
-<member name="M:Contensive.Addons.Dashboard.Models.baseModel.getRecordName``1(Contensive.BaseClasses.CPBaseClass,System.String)">
+<member name="M:Contensive.Addons.Dashboard.Models.BaseModel.getRecordName``1(Contensive.BaseClasses.CPBaseClass,System.String)">
  <summary>
  get the name of the record by it's guid 
  </summary>
@@ -160,7 +172,7 @@ aoDashboard
  <param name="ccGuid"></param>record
  <returns></returns>
 </member>
-<member name="M:Contensive.Addons.Dashboard.Models.baseModel.getRecordId``1(Contensive.BaseClasses.CPBaseClass,System.String)">
+<member name="M:Contensive.Addons.Dashboard.Models.BaseModel.getRecordId``1(Contensive.BaseClasses.CPBaseClass,System.String)">
  <summary>
  get the id of the record by it's guid 
  </summary>
@@ -168,7 +180,7 @@ aoDashboard
  <param name="ccGuid"></param>record
  <returns></returns>
 </member>
-<member name="M:Contensive.Addons.Dashboard.Models.baseModel.getUploadPath``1(System.String)">
+<member name="M:Contensive.Addons.Dashboard.Models.BaseModel.getUploadPath``1(System.String)">
  <summary>
  Temporary method to create a path for an uploaded. First, try the texrt value in the field. If it is empty, use this method to create the path,
  append the filename to the end and save it to the field, and save the file there. This path starts with the tablename and ends with a slash.
@@ -309,12 +321,47 @@ aoDashboard
  <param name="cp"></param>
  <returns></returns>
 </member>
-<member name="M:Contensive.Addons.Dashboard.Controllers.genericController.getGUID(Contensive.BaseClasses.CPBaseClass,System.Boolean@)">
+<member name="M:Contensive.Addons.Dashboard.Controllers.genericController.GetAddonIconImg(System.String,System.Int64,System.Int64,System.Int64,System.Boolean,System.String,System.String,System.String,System.String,System.String,System.String,System.Int64)">
  <summary>
- return a normalized guid in registry format
+ create addon icon
  </summary>
- <param name="CP"></param>
- <param name="registryFormat"></param>
+ <param name="AdminURL"></param>
+ <param name="IconWidth"></param>
+ <param name="IconHeight"></param>
+ <param name="IconSprites"></param>
+ <param name="IconIsInline"></param>
+ <param name="IconImgID"></param>
+ <param name="IconFilename"></param>
+ <param name="serverFilePath"></param>
+ <param name="IconAlt"></param>
+ <param name="IconTitle"></param>
+ <param name="ACInstanceID"></param>
+ <param name="IconSpriteColumn"></param>
+ <returns></returns>
+</member>
+<member name="M:Contensive.Addons.Dashboard.Controllers.genericController.GetIconSprite(System.String,System.Int64,System.String,System.Int64,System.Int64,System.String,System.String,System.String,System.Boolean,System.String)">
+ <summary>
+ create an icon as a 4 image sprite
+ </summary>
+ <param name="TagID"></param>
+ <param name="SpriteColumn"></param>
+ <param name="IconSrc"></param>
+ <param name="IconWidth"></param>
+ <param name="IconHeight"></param>
+ <param name="IconAlt"></param>
+ <param name="IconTitle"></param>
+ <param name="onDblClick"></param>
+ <param name="IconIsInline"></param>
+ <param name="ACInstanceID"></param>
+ <returns></returns>
+</member>
+<member name="M:Contensive.Addons.Dashboard.Controllers.genericController.getAttribute(Contensive.BaseClasses.CPBaseClass,System.Xml.XmlNode,System.String)">
+ <summary>
+ get xml attribute
+ </summary>
+ <param name="cp"></param>
+ <param name="node"></param>
+ <param name="attrName"></param>
  <returns></returns>
 </member>
 </members>

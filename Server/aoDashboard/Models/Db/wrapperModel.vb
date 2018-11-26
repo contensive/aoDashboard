@@ -8,8 +8,8 @@ Imports System.Text
 Imports Contensive.BaseClasses
 
 Namespace Models
-    Public Class wrapperModel
-        Inherits baseModel
+    Public Class WrapperModel
+        Inherits BaseModel
         Implements ICloneable
         '
         '====================================================================================================
@@ -30,23 +30,23 @@ Namespace Models
         Public Property targetstring As String
         '
         '====================================================================================================
-        Public Overloads Shared Function add(cp As CPBaseClass) As wrapperModel
-            Return add(Of wrapperModel)(cp)
+        Public Overloads Shared Function add(cp As CPBaseClass) As WrapperModel
+            Return add(Of WrapperModel)(cp)
         End Function
         '
         '====================================================================================================
-        Public Overloads Shared Function create(cp As CPBaseClass, recordId As Integer) As wrapperModel
-            Return create(Of wrapperModel)(cp, recordId)
+        Public Overloads Shared Function create(cp As CPBaseClass, recordId As Integer) As WrapperModel
+            Return create(Of WrapperModel)(cp, recordId)
         End Function
         '
         '====================================================================================================
-        Public Overloads Shared Function create(cp As CPBaseClass, recordGuid As String) As wrapperModel
-            Return create(Of wrapperModel)(cp, recordGuid)
+        Public Overloads Shared Function create(cp As CPBaseClass, recordGuid As String) As WrapperModel
+            Return create(Of WrapperModel)(cp, recordGuid)
         End Function
         '
         '====================================================================================================
-        Public Overloads Shared Function createByName(cp As CPBaseClass, recordName As String) As wrapperModel
-            Return createByName(Of wrapperModel)(cp, recordName)
+        Public Overloads Shared Function createByName(cp As CPBaseClass, recordName As String) As WrapperModel
+            Return createByName(Of WrapperModel)(cp, recordName)
         End Function
         '
         '====================================================================================================
@@ -56,48 +56,48 @@ Namespace Models
         '
         '====================================================================================================
         Public Overloads Shared Sub delete(cp As CPBaseClass, recordId As Integer)
-            delete(Of wrapperModel)(cp, recordId)
+            delete(Of WrapperModel)(cp, recordId)
         End Sub
         '
         '====================================================================================================
         Public Overloads Shared Sub delete(cp As CPBaseClass, ccGuid As String)
-            delete(Of wrapperModel)(cp, ccGuid)
+            delete(Of WrapperModel)(cp, ccGuid)
         End Sub
         '
         '====================================================================================================
-        Public Overloads Shared Function createList(cp As CPBaseClass, sqlCriteria As String, Optional sqlOrderBy As String = "id") As List(Of wrapperModel)
-            Return createList(Of wrapperModel)(cp, sqlCriteria, sqlOrderBy)
+        Public Overloads Shared Function createList(cp As CPBaseClass, sqlCriteria As String, Optional sqlOrderBy As String = "id") As List(Of WrapperModel)
+            Return createList(Of WrapperModel)(cp, sqlCriteria, sqlOrderBy)
         End Function
         '
         '====================================================================================================
         Public Overloads Shared Function getRecordName(cp As CPBaseClass, recordId As Integer) As String
-            Return baseModel.getRecordName(Of wrapperModel)(cp, recordId)
+            Return BaseModel.getRecordName(Of WrapperModel)(cp, recordId)
         End Function
         '
         '====================================================================================================
         Public Overloads Shared Function getRecordName(cp As CPBaseClass, ccGuid As String) As String
-            Return baseModel.getRecordName(Of wrapperModel)(cp, ccGuid)
+            Return BaseModel.getRecordName(Of WrapperModel)(cp, ccGuid)
         End Function
         '
         '====================================================================================================
         Public Overloads Shared Function getRecordId(cp As CPBaseClass, ccGuid As String) As Integer
-            Return baseModel.getRecordId(Of wrapperModel)(cp, ccGuid)
+            Return BaseModel.getRecordId(Of WrapperModel)(cp, ccGuid)
         End Function
         '
         '====================================================================================================
         Public Overloads Shared Function getCount(cp As CPBaseClass, sqlCriteria As String) As Integer
-            Return baseModel.getCount(Of wrapperModel)(cp, sqlCriteria)
+            Return BaseModel.getCount(Of WrapperModel)(cp, sqlCriteria)
         End Function
         '
         '====================================================================================================
         Public Overloads Function getUploadPath(fieldName As String) As String
-            Return MyBase.getUploadPath(Of wrapperModel)(fieldName)
+            Return MyBase.getUploadPath(Of WrapperModel)(fieldName)
         End Function
         '
         '====================================================================================================
         '
-        Public Function Clone(cp As CPBaseClass) As wrapperModel
-            Dim result As wrapperModel = DirectCast(Me.Clone(), wrapperModel)
+        Public Function Clone(cp As CPBaseClass) As WrapperModel
+            Dim result As WrapperModel = DirectCast(Me.Clone(), WrapperModel)
             result.id = cp.Content.AddRecord(contentName)
             result.ccguid = cp.Utils.CreateGuid()
             result.save(cp)
@@ -110,11 +110,11 @@ Namespace Models
             Return Me.MemberwiseClone()
         End Function
         '
-        Public Shared Function getGuidDictionary(cp As CPBaseClass) As Dictionary(Of String, wrapperModel)
-            Dim result As New Dictionary(Of String, wrapperModel)
+        Public Shared Function getGuidDictionary(cp As CPBaseClass) As Dictionary(Of String, WrapperModel)
+            Dim result As New Dictionary(Of String, WrapperModel)
             Try
-                Dim wrapperList As List(Of wrapperModel) = createList(cp, "")
-                For Each wrapper As wrapperModel In wrapperList
+                Dim wrapperList As List(Of WrapperModel) = createList(cp, "")
+                For Each wrapper As WrapperModel In wrapperList
                     If (Not result.ContainsKey(wrapper.ccguid)) Then
                         result.Add(wrapper.ccguid, wrapper)
                     End If

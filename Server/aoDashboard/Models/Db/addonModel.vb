@@ -8,8 +8,8 @@ Imports System.Text
 Imports Contensive.BaseClasses
 
 Namespace Models
-    Public Class addonModel
-        Inherits baseModel
+    Public Class AddonModel
+        Inherits BaseModel
         Implements ICloneable
         '
         '====================================================================================================
@@ -73,23 +73,23 @@ Namespace Models
         'Public Property Template As Boolean
         '
         '====================================================================================================
-        Public Overloads Shared Function add(cp As CPBaseClass) As addonModel
-            Return add(Of addonModel)(cp)
+        Public Overloads Shared Function add(cp As CPBaseClass) As AddonModel
+            Return add(Of AddonModel)(cp)
         End Function
         '
         '====================================================================================================
-        Public Overloads Shared Function create(cp As CPBaseClass, recordId As Integer) As addonModel
-            Return create(Of addonModel)(cp, recordId)
+        Public Overloads Shared Function create(cp As CPBaseClass, recordId As Integer) As AddonModel
+            Return create(Of AddonModel)(cp, recordId)
         End Function
         '
         '====================================================================================================
-        Public Overloads Shared Function create(cp As CPBaseClass, recordGuid As String) As addonModel
-            Return create(Of addonModel)(cp, recordGuid)
+        Public Overloads Shared Function create(cp As CPBaseClass, recordGuid As String) As AddonModel
+            Return create(Of AddonModel)(cp, recordGuid)
         End Function
         '
         '====================================================================================================
-        Public Overloads Shared Function createByName(cp As CPBaseClass, recordName As String) As addonModel
-            Return createByName(Of addonModel)(cp, recordName)
+        Public Overloads Shared Function createByName(cp As CPBaseClass, recordName As String) As AddonModel
+            Return createByName(Of AddonModel)(cp, recordName)
         End Function
         '
         '====================================================================================================
@@ -99,48 +99,48 @@ Namespace Models
         '
         '====================================================================================================
         Public Overloads Shared Sub delete(cp As CPBaseClass, recordId As Integer)
-            delete(Of addonModel)(cp, recordId)
+            delete(Of AddonModel)(cp, recordId)
         End Sub
         '
         '====================================================================================================
         Public Overloads Shared Sub delete(cp As CPBaseClass, ccGuid As String)
-            delete(Of addonModel)(cp, ccGuid)
+            delete(Of AddonModel)(cp, ccGuid)
         End Sub
         '
         '====================================================================================================
-        Public Overloads Shared Function createList(cp As CPBaseClass, sqlCriteria As String, Optional sqlOrderBy As String = "id") As List(Of addonModel)
-            Return createList(Of addonModel)(cp, sqlCriteria, sqlOrderBy)
+        Public Overloads Shared Function createList(cp As CPBaseClass, sqlCriteria As String, Optional sqlOrderBy As String = "id") As List(Of AddonModel)
+            Return createList(Of AddonModel)(cp, sqlCriteria, sqlOrderBy)
         End Function
         '
         '====================================================================================================
         Public Overloads Shared Function getRecordName(cp As CPBaseClass, recordId As Integer) As String
-            Return baseModel.getRecordName(Of addonModel)(cp, recordId)
+            Return BaseModel.getRecordName(Of AddonModel)(cp, recordId)
         End Function
         '
         '====================================================================================================
         Public Overloads Shared Function getRecordName(cp As CPBaseClass, ccGuid As String) As String
-            Return baseModel.getRecordName(Of addonModel)(cp, ccGuid)
+            Return BaseModel.getRecordName(Of AddonModel)(cp, ccGuid)
         End Function
         '
         '====================================================================================================
         Public Overloads Shared Function getRecordId(cp As CPBaseClass, ccGuid As String) As Integer
-            Return baseModel.getRecordId(Of addonModel)(cp, ccGuid)
+            Return BaseModel.getRecordId(Of AddonModel)(cp, ccGuid)
         End Function
         '
         '====================================================================================================
         Public Overloads Shared Function getCount(cp As CPBaseClass, sqlCriteria As String) As Integer
-            Return baseModel.getCount(Of addonModel)(cp, sqlCriteria)
+            Return BaseModel.getCount(Of AddonModel)(cp, sqlCriteria)
         End Function
         '
         '====================================================================================================
         Public Overloads Function getUploadPath(fieldName As String) As String
-            Return MyBase.getUploadPath(Of addonModel)(fieldName)
+            Return MyBase.getUploadPath(Of AddonModel)(fieldName)
         End Function
         '
         '====================================================================================================
         '
-        Public Function Clone(cp As CPBaseClass) As addonModel
-            Dim result As addonModel = DirectCast(Me.Clone(), addonModel)
+        Public Function Clone(cp As CPBaseClass) As AddonModel
+            Dim result As AddonModel = DirectCast(Me.Clone(), AddonModel)
             result.id = cp.Content.AddRecord(contentName)
             result.ccguid = cp.Utils.CreateGuid()
             result.save(cp)

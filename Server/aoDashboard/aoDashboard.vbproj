@@ -83,7 +83,6 @@
     <Compile Include="constants.vb" />
     <Compile Include="GlobalSuppressions.vb" />
     <Compile Include="Models\Domain\NodeModel.vb" />
-    <Compile Include="Models\Domain\xgenericController.vb" />
     <Compile Include="Models\Domain\RequestModel.vb" />
     <Compile Include="Views\DashboardClass.vb" />
     <Compile Include="Views\DashDragStopClass.vb" />
@@ -91,15 +90,15 @@
     <Compile Include="Views\NavDropClass.vb" />
     <Compile Include="Views\OpenNodeClass.vb" />
     <Compile Include="Views\ResizeClass.vb" />
-    <Compile Include="Models\Db\baseModel.vb" />
-    <Compile Include="Models\Db\personModel.vb" />
-    <Compile Include="Models\Db\addonModel.vb" />
-    <Compile Include="Models\Db\wrapperModel.vb" />
-    <Compile Include="Models\Db\contentModel.vb" />
+    <Compile Include="Models\Db\BaseModel.vb" />
+    <Compile Include="Models\Db\PersonModel.vb" />
+    <Compile Include="Models\Db\AddonModel.vb" />
+    <Compile Include="Models\Db\WrapperModel.vb" />
+    <Compile Include="Models\Db\ContentModel.vb" />
     <Compile Include="Models\Db\_blankModel.vb" />
     <Compile Include="Controllers\genericController.vb" />
     <Compile Include="Views\CloseNodeClass.vb" />
-    <Compile Include="Models\Domain\configModel.vb" />
+    <Compile Include="Models\Domain\ConfigModel.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

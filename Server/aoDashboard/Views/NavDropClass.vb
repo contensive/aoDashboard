@@ -21,14 +21,14 @@ Namespace Views
             Try
                 Dim request As New Models.RequestModel(CP)
                 Dim config As Models.ConfigModel = Models.ConfigModel.create(CP, CP.User.Id)
-                Dim wrapper As Models.wrapperModel = Models.wrapperModel.create(CP, config.defaultWrapper.guid)
+                Dim wrapper As Models.WrapperModel = Models.WrapperModel.create(CP, config.defaultWrapper.guid)
                 Select Case request.id.ToLower().Substring(0, 1)
                     Case "a"
                         '
                         ' -- An Addon was dragged onto the desktop
                         Dim requestAddonId As Integer = CP.Utils.EncodeInteger(request.id.Substring(1))
                         If (requestAddonId > 0) Then
-                            Dim addon As Models.addonModel = Models.addonModel.create(CP, requestAddonId)
+                            Dim addon As Models.AddonModel = Models.AddonModel.create(CP, requestAddonId)
                             If (addon IsNot Nothing) Then
                                 Dim AddonName As String = addon.name
                                 Dim IconFileName As String = addon.IconFilename
@@ -81,7 +81,7 @@ Namespace Views
                         ' -- A content link was dragged onto the desktop
                         Dim contentId As Integer = CP.Utils.EncodeInteger(request.id.Substring(1))
                         If contentId > 0 Then
-                            Dim content As Models.contentModel = Models.contentModel.create(CP, contentId)
+                            Dim content As Models.ContentModel = Models.ContentModel.create(CP, contentId)
                             If (content IsNot Nothing) Then
                                 If (String.IsNullOrEmpty(content.IconLink)) Then
                                     '

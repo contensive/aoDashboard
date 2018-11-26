@@ -1,4 +1,6 @@
-
+//
+// -- randomish number
+function getUniqueID() {return new Date().valueOf();}
 //
 // -- event to resize dash
 function dashResize() {
@@ -74,7 +76,7 @@ function dashDeleteNode( nodePtr, htmlId ) {
 	dashResize();
 }
 function dashOpenNodeCallback(response,callbackArg) {
-	var hId="dashhelper"+nodeCnt++;
+	var hId="dashhelper"+getUniqueID();
 	navMakeHelper(hId);
 	var e=document.getElementById(hId);
 	e.innerHTML=response;
@@ -93,10 +95,9 @@ function closeNode( nodePtr, htmlId ) {
 	c=document.getElementById(htmlId);
 	var p=c.parentNode;
 	p.removeChild(c);
-	hId="dashhelper"+nodeCnt++;
+	hId="dashhelper"+getUniqueID();
 	navMakeHelper(hId);
-	cj.ajax.addon("dashboardclosenode","key="+nodePtr,"",hId);
-	dashResize();
+	cj.ajax.addonCallback("dashboardclosenode","key="+nodePtr,"",hId);
 }
 function navMakeHelper( iconId ) {
 	var w=document.getElementById("dashBoardWrapper");
@@ -108,11 +109,12 @@ function navMakeHelper( iconId ) {
 function navDropCallback(response,iconId){
 	var e=document.getElementById(iconId);
 	e.innerHTML=response;
+	dashBindNodes();
 	dashResize();
 }
 function navDrop(id,x,y){
-	console.log("navDrop");
-	var iconId="dashhelper"+nodeCnt++;
+	console.log("navDrop, id ["+id+"], x ["+x+"], y ["+y+"]");
+	var iconId="dashhelper"+getUniqueID();
 	console.log("navDrop, iconId ["+iconId+"]");
 	var w=document.getElementById("dashBoardWrapper");
 	var e=document.createElement("div");
@@ -125,20 +127,11 @@ function navDrop(id,x,y){
 	var qs = "id="+id+"&x="+posX+"&y="+posY;
 	console.log("navDrop, qs ["+qs+"]");
 	cj.ajax.addonCallback("dashboardnavdrop",qs,navDropCallback,iconId);
-	// cj.ajax.addon("dashboardnavdrop","id="+id+"&x="+posX+"&y="+posY,"",iconId);
-	// dashResize();
 }
 /*
-* OnReady
+*	bind nodes
 */
-jQuery( document ).ready(function(){
-	/*
-	* make entire dashboard droppable
-	*/	
-	jQuery("#desktop").droppable({tolerance: "fit"});
-	/*
-	* bind to icon nodes
-	*/	
+function dashBindNodes() {
 	jQuery(".dashNode").each(function(){
 		jQuery(this).draggable({
 			stop: function(event, ui){
@@ -166,11 +159,25 @@ jQuery( document ).ready(function(){
 			alsoResize: "#designResizer"+this.id
 			,stop: function(event, ui) {
 				var r=document.getElementById("designResizer"+this.id);
-				cj.ajax.addon("dashboardresize","key="+this.id+"&x="+this.style.width+"&y="+r.style.height);
-				dashResize();
+				var qs="key="+this.id+"&x="+this.style.width+"&y="+r.style.height;
+				cj.ajax.addonCallback("dashboardresize",qs,dashResize);
 			}
 		});
 	});	
+}
+
+/*
+* OnReady
+*/
+jQuery( document ).ready(function(){
+	/*
+	* make entire dashboard droppable
+	*/	
+	jQuery("#desktop").droppable({tolerance: "fit"});
+	/*
+	* bind to icon nodes
+	*/
+	dashBindNodes();
 	/*
 	* Initialize
 	*/

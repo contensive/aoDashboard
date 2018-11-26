@@ -9,82 +9,24 @@ Imports Contensive.BaseClasses
 
 Namespace Controllers
     Public Class genericController
-
-        Public Shared Function GetGridWrapper(cp As CPBaseClass, Title As String, Content As String, Width As Integer, Height As Integer) As String
-            Dim result As String = ""
-            Try
-                Dim SpacerHeight As Integer = cp.Utils.EncodeInteger(Height) - 38
-                Dim InsideWidth As Integer = cp.Utils.EncodeInteger(Width)
-                Dim InsideHeight As Integer = cp.Utils.EncodeInteger(Height) - 70
-                result = result & "<table cellpadding=""0"" cellspacing=""0"" border=""0"">"
-                result = result & "<tr>"
-                result = result & "<td><img src=""/dashboard/container_01.png""></td>"
-                result = result & "<td width=""" & InsideWidth & """><img src=""/dashboard/container_02.png"" height=""13"" width=""100%""></td>"
-                result = result & "<td><img src=""/dashboard/container_03.png""></td>"
-                result = result & "</tr>"
-                result = result & "<tr>"
-                result = result & "<td style=""BACKGROUND: url(/dashboard/container_04.png) repeat-y left top"">"
-                result = result & "<img src=""/ccLib/images/spacer.gif"" height=""" & SpacerHeight & """ width=""12"">"
-                result = result & "</td>"
-                result = result & "<td valign=""top"" style=""BACKGROUND: url(/dashboard/container_05.png) left top"">"
-                result = result & "<div class=""dodadTitle"">" & Title & "</div>"
-                result = result & "<div style=""overflow: auto; width: 100%; height: " & InsideHeight & ";"">"
-                result = result & Content
-                result = result & "</div>"
-                result = result & "</td>"
-                result = result & "<td style=""BACKGROUND: url(/dashboard/container_06.png) repeat-y left top"">"
-                result = result & "<img src=""/ccLib/images/spacer.gif"" height=""" & SpacerHeight & """ width=""18"">"
-                result = result & "</td>"
-                result = result & "</tr>"
-                result = result & "<tr>"
-                result = result & "<td><img src=""/dashboard/container_07.png""></td>"
-                result = result & "<td width=""" & InsideWidth & """><img src=""/dashboard/container_08.png"" height=""22"" width=""100%""></td>"
-                result = result & "<td><img src=""/dashboard/container_09.png""></td>"
-                result = result & "</tr>"
-                result = result & "</table>"
-            Catch ex As ArgumentException
-                cp.Site.ErrorReport(ex)
-            End Try
-            Return result
-        End Function
-
-
-        '
-        Public Shared Function encodeSqlTextLike(cp As CPBaseClass, source As String) As String
-            Dim sqlText As String = cp.Db.EncodeSQLText(source)
-            If sqlText.Length <= 2 Then
-                Return String.Empty
-            Else
-                Return "'%" & sqlText.Substring(1, source.Length - 2) & "%'"
-            End If
-        End Function
         '
         '====================================================================================================
         ''' <summary>
-        ''' return a normalized guid in registry format
+        ''' create addon icon
         ''' </summary>
-        ''' <param name="CP"></param>
-        ''' <param name="registryFormat"></param>
+        ''' <param name="AdminURL"></param>
+        ''' <param name="IconWidth"></param>
+        ''' <param name="IconHeight"></param>
+        ''' <param name="IconSprites"></param>
+        ''' <param name="IconIsInline"></param>
+        ''' <param name="IconImgID"></param>
+        ''' <param name="IconFilename"></param>
+        ''' <param name="serverFilePath"></param>
+        ''' <param name="IconAlt"></param>
+        ''' <param name="IconTitle"></param>
+        ''' <param name="ACInstanceID"></param>
+        ''' <param name="IconSpriteColumn"></param>
         ''' <returns></returns>
-        Public Shared Function getGUID(ByVal CP As BaseClasses.CPBaseClass, Optional ByRef registryFormat As Boolean = False) As String
-            Dim result As String = ""
-            Try
-                Dim g As Guid = Guid.NewGuid
-                If g <> Guid.Empty Then
-                    result = g.ToString
-                    '
-                    If result <> "" Then
-                        result = If(registryFormat, result, "{" & result & "}")
-                    End If
-                End If
-            Catch ex As Exception
-                CP.Site.ErrorReport(ex)
-            End Try
-            Return result
-        End Function
-        '
-        '
-        '
         Public Shared Function GetAddonIconImg(AdminURL As String, IconWidth As Long, IconHeight As Long, IconSprites As Long, IconIsInline As Boolean, IconImgID As String, IconFilename As String, serverFilePath As String, IconAlt As String, IconTitle As String, ACInstanceID As String, IconSpriteColumn As Long) As String
             '
             If IconAlt = "" Then
@@ -200,6 +142,22 @@ Namespace Controllers
                 '        'Return_IconStyleMenuEntries = Return_IconStyleMenuEntries & """]"
             End If
         End Function
+        '
+        '====================================================================================================
+        ''' <summary>
+        ''' create an icon as a 4 image sprite
+        ''' </summary>
+        ''' <param name="TagID"></param>
+        ''' <param name="SpriteColumn"></param>
+        ''' <param name="IconSrc"></param>
+        ''' <param name="IconWidth"></param>
+        ''' <param name="IconHeight"></param>
+        ''' <param name="IconAlt"></param>
+        ''' <param name="IconTitle"></param>
+        ''' <param name="onDblClick"></param>
+        ''' <param name="IconIsInline"></param>
+        ''' <param name="ACInstanceID"></param>
+        ''' <returns></returns>
         Public Shared Function GetIconSprite(TagID As String, SpriteColumn As Long, IconSrc As String, IconWidth As Long, IconHeight As Long, IconAlt As String, IconTitle As String, onDblClick As String, IconIsInline As Boolean, ACInstanceID As String) As String
             '
             Dim ImgStyle As String
@@ -227,7 +185,14 @@ Namespace Controllers
             GetIconSprite = GetIconSprite & " style=""" & ImgStyle & """>"
         End Function
         '
-        ' -- getAttribute
+        '====================================================================================================
+        ''' <summary>
+        ''' get xml attribute
+        ''' </summary>
+        ''' <param name="cp"></param>
+        ''' <param name="node"></param>
+        ''' <param name="attrName"></param>
+        ''' <returns></returns>
         Friend Shared Function getAttribute(cp As CPBaseClass, node As XmlNode, attrName As String) As String
             Dim result As String = ""
             Try
@@ -239,13 +204,6 @@ Namespace Controllers
                 cp.Site.ErrorReport(ex)
             End Try
             Return result
-        End Function
-        '
-        ' -- build an attribute
-        Friend Shared Function createAttribute(doc As XmlDocument, attrName As String, attrValue As String) As XmlAttribute
-            Dim returnAttr As XmlAttribute = doc.CreateAttribute(attrName)
-            returnAttr.Value = attrValue
-            Return returnAttr
         End Function
     End Class
 

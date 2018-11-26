@@ -9,7 +9,7 @@ Imports Contensive.BaseClasses
 
 Namespace Models
     Public Class _blankModel
-        Inherits baseModel
+        Inherits BaseModel
         Implements ICloneable
         '
         '====================================================================================================
@@ -20,7 +20,7 @@ Namespace Models
         '
         '====================================================================================================
         ' -- instance properties
-        Public Property DataSourceID As Integer                         '<------ replace this with a list all model fields not part of the base model
+        Public Property dataSourceID As Integer                         '<------ replace this with a list all model fields not part of the base model
         '
         '====================================================================================================
         Public Overloads Shared Function add(cp As CPBaseClass) As _blankModel
@@ -64,22 +64,22 @@ Namespace Models
         '
         '====================================================================================================
         Public Overloads Shared Function getRecordName(cp As CPBaseClass, recordId As Integer) As String
-            Return baseModel.getRecordName(Of _blankModel)(cp, recordId)
+            Return BaseModel.getRecordName(Of _blankModel)(cp, recordId)
         End Function
         '
         '====================================================================================================
         Public Overloads Shared Function getRecordName(cp As CPBaseClass, ccGuid As String) As String
-            Return baseModel.getRecordName(Of _blankModel)(cp, ccGuid)
+            Return BaseModel.getRecordName(Of _blankModel)(cp, ccGuid)
         End Function
         '
         '====================================================================================================
         Public Overloads Shared Function getRecordId(cp As CPBaseClass, ccGuid As String) As Integer
-            Return baseModel.getRecordId(Of _blankModel)(cp, ccGuid)
+            Return BaseModel.getRecordId(Of _blankModel)(cp, ccGuid)
         End Function
         '
         '====================================================================================================
         Public Overloads Shared Function getCount(cp As CPBaseClass, sqlCriteria As String) As Integer
-            Return baseModel.getCount(Of _blankModel)(cp, sqlCriteria)
+            Return BaseModel.getCount(Of _blankModel)(cp, sqlCriteria)
         End Function
         '
         '====================================================================================================
@@ -89,7 +89,7 @@ Namespace Models
         '
         '====================================================================================================
         '
-        Public Function Clone(cp As CPBaseClass) As _blankModel
+        Public Function clone(cp As CPBaseClass) As _blankModel
             Dim result As _blankModel = DirectCast(Me.Clone(), _blankModel)
             result.id = cp.Content.AddRecord(contentName)
             result.ccguid = cp.Utils.CreateGuid()

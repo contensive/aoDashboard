@@ -170,11 +170,6 @@ Namespace Models
                         For Each node As XmlElement In xmlConfig.DocumentElement.ChildNodes
                             Select Case LCase(node.Name)
                                 Case "defaultwrapper"
-                                    'Dim DefaultWrapperGUID As String = genericController.getAttribute(cp, node, "guid")
-                                    'Dim wrapper As Models.wrapperModel = Models.wrapperModel.create(cp, DefaultWrapperGUID)
-                                    'If (wrapper IsNot Nothing) Then
-                                    '    WrapperID = wrapper.id
-                                    'End If
                                     result.defaultWrapper = New ConfigWrapper() With {
                                         .guid = genericController.getAttribute(cp, node, "guid")
                                     }

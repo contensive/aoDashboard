@@ -10,17 +10,18 @@ Imports Contensive.BaseClasses
 
 Namespace Models
     Public Class NodeModel
-
         '
         '=====================================================================================
-        '
-        '   Dodad - the entire contructed object that is moved around on the dashboard
-        '
-        '       From inside out:
-        '           DodadContent - The inner-most part of the Dodad, the actual content that is on the desktop
-        '           DesignWrapper - the visible border for all Dodads
-        '           ControlWrapper = the absolute positioned wrapper that contains all drag/drop/resize/toolbar features
-        '
+        ''' <summary>
+        ''' the entire contructed object that is moved around on the dashboard.
+        ''' From inside out:
+        ''' DodadContent - The inner-most part of the Dodad, the actual content that is on the desktop
+        ''' DesignWrapper - the visible border for all Dodads
+        ''' ControlWrapper = the absolute positioned wrapper that contains all drag/drop/resize/toolbar features
+        ''' </summary>
+        ''' <param name="cp"></param>
+        ''' <param name="nodeConfig"></param>
+        ''' <returns></returns>
         Public Shared Function getNodeHtml(cp As CPBaseClass, nodeConfig As Models.ConfigModel.ConfigNodeModel) As String
             Dim result As String = ""
             Try
@@ -29,27 +30,24 @@ Namespace Models
                     AddonOptions &= "&" & nvp.name & "=" & nvp.value
                 Next
                 AddonOptions = If(String.IsNullOrEmpty(AddonOptions), "", AddonOptions.Substring(1))
-                Dim ToolBarHTMLId As String = "toolBar" & nodeConfig.key
-                Dim DesignResizerHTMLId As String = "designResizer" & nodeConfig.key
                 Dim WrapperWidth As Integer = 77
                 Dim WrapperHeight As Integer = 77
                 Dim IconWidth As Integer = 57
                 Dim IconHeight As Integer = 59
                 Dim IconSprites As Integer = 1
                 Dim IsIcon As Boolean = True
-                Dim content As contentModel = Nothing
-                Dim addon As addonModel = Nothing
                 Dim IconFileName As String = ""
                 Dim ShortcutHref As String = ""
                 Dim ItemHTMLClass As String = ""
                 Dim DroppableHoverClass As String = ""
                 Dim ToolBar As String = ""
                 Dim title As String = ""
+                Dim addon As AddonModel = Nothing
                 If (nodeConfig.addonGUID <> "") And (nodeConfig.addonGUID <> "0") Then
                     If IsNumeric(nodeConfig.addonGUID) And Len(nodeConfig.addonGUID) < 10 Then
-                        addon = Models.addonModel.create(cp, CInt(nodeConfig.addonGUID))
+                        addon = Models.AddonModel.create(cp, CInt(nodeConfig.addonGUID))
                     Else
-                        addon = Models.addonModel.create(cp, nodeConfig.addonGUID)
+                        addon = Models.AddonModel.create(cp, nodeConfig.addonGUID)
                     End If
                     '
                     ' -- Node is an Add-on
@@ -101,18 +99,18 @@ Namespace Models
                     ' -- Node is content
                     IsIcon = True
                     ItemHTMLClass = "dashNode iconNode"
+                    Dim content As ContentModel = Nothing
                     If (nodeConfig.contentGUID <> "") Then
-                        content = Contensive.Addons.Dashboard.Models.contentModel.create(cp, nodeConfig.contentGUID)
+                        content = Contensive.Addons.Dashboard.Models.ContentModel.create(cp, nodeConfig.contentGUID)
                     Else
-                        content = Models.contentModel.createByName(cp, nodeConfig.contentName)
+                        content = Models.ContentModel.createByName(cp, nodeConfig.contentName)
                     End If
                     If (content IsNot Nothing) Then
                         IconFileName = content.IconLink
                         IconWidth = content.IconWidth
                         IconHeight = content.IconHeight
                         IconSprites = content.IconSprites
-                        Dim ContentID As Integer
-                        ShortcutHref = "?cid=" & ContentID
+                        ShortcutHref = "?cid=" & content.id
                         DroppableHoverClass = ""
                         content.id = 0
                         AddonOptions = ""
@@ -156,6 +154,7 @@ Namespace Models
                 '
                 ' -- add wrapper (deprecated)
                 Dim DodadWrappedContent As String = DoDadContent
+                Dim DesignResizerHTMLId As String = "designResizer" & nodeConfig.key
                 '
                 ' -- add Design-Resizer (an inner wrapper to use for resizing the design wrapper with the control wrapper)
                 If Not IsIcon Then
@@ -179,6 +178,7 @@ Namespace Models
                     & (ToolBar) _
                     & "</div>" _
                     & ""
+                Dim ToolBarHTMLId As String = "toolBar" & nodeConfig.key
                 ToolBar = "" _
                     & "<div" _
                     & " class=""toolBar""" _
@@ -263,8 +263,8 @@ Namespace Models
                 Dim IconImg As String
                 Dim DesignResizerHTMLId As String
                 Dim ToolBarHTMLId As String
-                Dim content As Models.contentModel = Nothing
-                Dim addon As Models.addonModel = Nothing
+                Dim content As Models.ContentModel = Nothing
+                Dim addon As Models.AddonModel = Nothing
                 Dim IconFileName As String = ""
                 Dim ShortcutHref As String = ""
                 Dim ItemHTMLClass As String = ""
@@ -277,9 +277,9 @@ Namespace Models
                 WrapperHeight = 77
                 If (AddonIdOrGuid <> "") And (AddonIdOrGuid <> "0") Then
                     If IsNumeric(AddonIdOrGuid) And Len(AddonIdOrGuid) < 10 Then
-                        addon = Models.addonModel.create(cp, CInt(AddonIdOrGuid))
+                        addon = Models.AddonModel.create(cp, CInt(AddonIdOrGuid))
                     Else
-                        addon = Models.addonModel.create(cp, AddonIdOrGuid)
+                        addon = Models.AddonModel.create(cp, AddonIdOrGuid)
                     End If
                     '
                     ' Node is an Add-on
@@ -331,9 +331,9 @@ Namespace Models
                     IsIcon = True
                     ItemHTMLClass = "iconNode"
                     If (ContentGuid <> "") Then
-                        content = Contensive.Addons.Dashboard.Models.contentModel.create(cp, ContentGuid)
+                        content = Contensive.Addons.Dashboard.Models.ContentModel.create(cp, ContentGuid)
                     Else
-                        content = Models.contentModel.createByName(cp, ContentName)
+                        content = Models.ContentModel.createByName(cp, ContentName)
                     End If
                     If (content IsNot Nothing) Then
                         ContentID = content.id

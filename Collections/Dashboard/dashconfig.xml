@@ -1,0 +1,12 @@
+<dashboard>
+	<defaultwrapper guid="{9182DCA4-F88B-4593-A5A0-D9151A7FF342}"/>
+  <node addonGUID="{9A7A1567-CC4A-4AF8-B828-2AD7F9389D25}" title="Current Activity" x="20" y="20" state="open" sizex="231" sizey="308" optionstring="" />
+  <node addonGUID="{64CFC070-A546-4ACB-85D5-F2B6935178A9}" title="Contensive Tweets" x="20" y="350" state="open" sizex="231" sizey="308" optionstring="username=Contensive&amp;Tweets to display=10" />
+  <node addonGUID="{097C0307-4A12-4B95-B328-4B637F6E26D4}" title="Visits - 365 days" x="270" y="120" state="open" sizex="462" sizey="539" optionstring="Duration=365&amp;TargetDiv=monthlyvisit&amp;Rate=Daily&amp;width=97%&amp;height=78%" />
+  <node contentName="People" contentGUID="{C1985DC4-C985-4406-9934-61A911543454}" title="People" x="270" y="20" state="open" sizex="77" sizey="77" optionstring="" />
+  <node contentName="Organizations" contentGUID="{6867C3E6-3CC1-449A-9E8F-DBA591A1A7EF}" title="Organizations" x="350" y="20" state="open" sizex="77" sizey="77" optionstring="" />
+  <node contentName="Groups" contentGUID="{792F49A4-7ACC-4AE1-A80B-92E6112FED3D}" title="Groups" x="430" y="20" state="open" sizex="77" sizey="77" optionstring="" />
+  <node contentName="Page Content" contentGUID="{02203F58-0921-4F75-A089-0EAD6E8FEB4F}" title="Pages" x="510" y="20" state="open" sizex="77" sizey="77" optionstring="" />
+  <node contentName="Page Templates" contentGUID="{62D4F57F-431C-4189-A1AB-7492DB240E77}" title="Templates" x="590" y="20" state="open" sizex="77" sizey="77" optionstring="" />
+  <node contentName="Group Email" contentGUID="{659CDF19-D7BB-4284-B2AA-E8960BEB49AB}" title="Group Email" x="670" y="20" state="open" sizex="77" sizey="77" optionstring="" />
+</dashboard>
