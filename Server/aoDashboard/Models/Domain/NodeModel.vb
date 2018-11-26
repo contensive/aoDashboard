@@ -62,7 +62,7 @@ Namespace Models
                             IconWidth = addon.IconWidth
                             IconHeight = addon.IconHeight
                             IconSprites = addon.IconSprites
-                            ShortcutHref = "?addonid=" & addon.id
+                            ShortcutHref = If(String.IsNullOrWhiteSpace(nodeConfig.link), "?addonid=" & addon.id, nodeConfig.link)
                             ToolBar = "" _
                                 & "<a alt=""Minimize"" title=""Minimize"" href=""#"" onClick=""Return False;"" Class=""opacity50""><img border=0 src=""/cclib/images/opendown1313.gif"" width=""13"" height=""13""></a>" _
                                 & "<a alt=""Run In window"" title=""Run In Window"" href=""#"" onClick=""dashOpenNode('" & nodeConfig.key & "','" & nodeConfig.key & "');return false;""><img border=0 src=""/cclib/images/box1313.gif"" width=""13"" height=""13""></a>" _
@@ -76,8 +76,7 @@ Namespace Models
                             IsIcon = False
                             WrapperWidth = nodeConfig.sizex
                             WrapperHeight = nodeConfig.sizey
-                            ShortcutHref = ""
-                            'DoDadContent = GetDodadContent(cp, Addon.ID, AddonGuid, AddonOptions, nodeConfig.state, IconSprites, Title, IconFileName, IconWidth, IconHeight, cp.ServerFilePath, WrapperID, 0, 0, "")
+                            ShortcutHref = If(String.IsNullOrWhiteSpace(nodeConfig.link), "", nodeConfig.link)
                             ToolBar = "" _
                                 & "<div style=""float:left"">" & title & "</div>" _
                                 & "<a alt=""Minimize"" title=""Minimize"" href=""#"" onClick=""closeNode('" & nodeConfig.key & "','" & nodeConfig.key & "');return false;""><img border=0 src=""/cclib/images/opendown1313.gif"" width=""13"" height=""13""></a>" _
@@ -110,7 +109,7 @@ Namespace Models
                         IconWidth = content.IconWidth
                         IconHeight = content.IconHeight
                         IconSprites = content.IconSprites
-                        ShortcutHref = "?cid=" & content.id
+                        ShortcutHref = If(String.IsNullOrWhiteSpace(nodeConfig.link), "?cid=" & content.id, nodeConfig.link)
                         DroppableHoverClass = ""
                         content.id = 0
                         AddonOptions = ""
@@ -126,6 +125,22 @@ Namespace Models
                         IconHeight = 59
                         IconSprites = 4
                     End If
+                Else
+                    '
+                    ' -- simple link icon
+                    IsIcon = True
+                    ItemHTMLClass = "dashNode iconNode"
+                    IconFileName = "/dashboard/content.png"
+                    IconWidth = 57
+                    IconHeight = 59
+                    IconSprites = 4
+                    ShortcutHref = nodeConfig.Link
+                    DroppableHoverClass = ""
+                    nodeConfig.state = ConfigModel.ConfigNodeState.closed
+                    title = nodeConfig.title
+                    ToolBar = "" _
+                        & "<a href=""#"" onClick=""dashDeleteNode('" & nodeConfig.key & "','" & nodeConfig.key & "');return false;""><img border=0 src=""/cclib/images/closex1313.gif"" width=""13"" height=""13""></a>" _
+                        & ""
                 End If
                 '
                 ' -- Build inner content of icon or addon

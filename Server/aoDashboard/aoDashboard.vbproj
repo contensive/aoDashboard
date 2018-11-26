@@ -82,6 +82,7 @@
   <ItemGroup>
     <Compile Include="constants.vb" />
     <Compile Include="GlobalSuppressions.vb" />
+    <Compile Include="Models\Db\NavigatorEntryModel.vb" />
     <Compile Include="Models\Domain\NodeModel.vb" />
     <Compile Include="Models\Domain\RequestModel.vb" />
     <Compile Include="Views\DashboardClass.vb" />

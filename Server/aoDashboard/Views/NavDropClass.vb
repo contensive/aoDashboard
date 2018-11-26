@@ -61,6 +61,7 @@ Namespace Views
                                     .addonGUID = addon.ccguid,
                                     .contentGUID = "",
                                     .contentName = "",
+                                    .link = "",
                                     .key = nodeKey,
                                     .sizex = 200,
                                     .sizey = 300,
@@ -100,11 +101,43 @@ Namespace Views
                                     .addonGUID = "",
                                     .contentGUID = content.ccguid,
                                     .contentName = content.name,
+                                    .link = "",
                                     .key = nodeKey,
                                     .sizex = 77,
                                     .sizey = 77,
                                     .state = Models.ConfigModel.ConfigNodeState.closed,
                                     .title = content.name,
+                                    .wrapperId = If(wrapper Is Nothing, 0, wrapper.id),
+                                    .x = request.x,
+                                    .y = request.y,
+                                    .z = 9999
+                                }
+                                config.nodeList.Add(nodeKey, newNode)
+                                config.save(CP)
+                                result = Models.NodeModel.getNodeHtml(CP, newNode)
+                            End If
+                        End If
+                    Case "n"
+                        '
+                        ' -- A navigator entry not realted to content or addon
+                        Dim navigatorId As Integer = CP.Utils.EncodeInteger(request.id.Substring(1))
+                        If navigatorId > 0 Then
+                            Dim navigatorEntry As Models.NavigatorEntryModel = Models.NavigatorEntryModel.create(CP, navigatorId)
+                            If (navigatorEntry IsNot Nothing) Then
+                                '
+                                ' Add this add-on to the config and return the Icon
+                                Dim nodeKey As String = "nav" & navigatorEntry.id & "-" & Guid.NewGuid().ToString().Replace("{", "").Replace("}", "").Replace("-", "")
+                                Dim newNode As New Models.ConfigModel.ConfigNodeModel() With {
+                                    .addonArgList = New List(Of Models.ConfigModel.NameValueModel),
+                                    .addonGUID = "",
+                                    .contentGUID = "",
+                                    .contentName = "",
+                                    .link = navigatorEntry.linkpage,
+                                    .key = nodeKey,
+                                    .sizex = 77,
+                                    .sizey = 77,
+                                    .state = Models.ConfigModel.ConfigNodeState.closed,
+                                    .title = navigatorEntry.name,
                                     .wrapperId = If(wrapper Is Nothing, 0, wrapper.id),
                                     .x = request.x,
                                     .y = request.y,

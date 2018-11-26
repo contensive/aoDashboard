@@ -78,6 +78,10 @@ Namespace Models
             ''' </summary>
             Public z As Integer
             ''' <summary>
+            ''' If not empty, this link will be used for the dashboard icon. Use for navigator entries setup as links.
+            ''' </summary>
+            Public link As String
+            ''' <summary>
             ''' currently not used. The id of the wrapper object
             ''' </summary>
             Public wrapperId As Integer
