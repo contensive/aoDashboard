@@ -147,7 +147,7 @@ function dashBindNodes() {
 			,zIndex: 0
 			,hoverClass: "droppableHover"
 			,opacity: 0.50
-			,handle: "#toolBar"+this.id
+			/* ,handle: "#toolBar"+this.id */
 			,cursor: "move"
 		});
 	});	

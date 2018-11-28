@@ -15,6 +15,9 @@
 	filter:alpha(opacity=50); 
 	opacity:.50; 
 }
+.toolBarGrip {
+	float:left;
+}
 .dashBoardWrapper .toolBarInner {
     background-color: #EEFFEE;
     border-radius: 5px 5px 0 0;
