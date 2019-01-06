@@ -1,3 +1,4 @@
+
 .ccBodyAdmin {
 	background-color:#C8C8C8; 
 }
@@ -17,6 +18,7 @@
 }
 .toolBarGrip {
 	float:left;
+	margin-right: 10px;
 }
 .dashBoardWrapper .toolBarInner {
     background-color: #EEFFEE;
