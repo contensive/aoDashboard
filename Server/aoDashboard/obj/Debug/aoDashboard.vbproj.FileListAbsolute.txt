@@ -35,3 +35,4 @@ C:\Users\jay\Documents\Git\aoDashboard\Server\aoDashboard\obj\Debug\aoDashboard.
 C:\Users\jay\Documents\Git\aoDashboard\Server\aoDashboard\obj\Debug\aoDashboard.pdb
 C:\Users\jay\Documents\Git\aoDashboard\Server\aoDashboard\bin\Debug\Newtonsoft.Json.dll
 C:\Users\jay\Documents\Git\aoDashboard\Server\aoDashboard\bin\Debug\Newtonsoft.Json.xml
+C:\Users\jay\Documents\Git\aoDashboard\Server\aoDashboard\obj\Debug\aoDashboard.vbprojResolveAssemblyReference.cache
