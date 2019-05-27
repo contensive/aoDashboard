@@ -49,51 +49,52 @@ Namespace Models
                     Else
                         addon = Models.AddonModel.create(cp, nodeConfig.addonGUID)
                     End If
-                    '
-                    ' -- Node is an Add-on
-                    If (addon IsNot Nothing) Then
-                        title = addon.name
-                        If (nodeConfig.state = ConfigModel.ConfigNodeState.closed) Then
-                            '
-                            ' Addon is just an icon
-                            ItemHTMLClass = "dashNode iconNode"
-                            IsIcon = True
-                            IconFileName = addon.IconFilename
-                            IconWidth = addon.IconWidth
-                            IconHeight = addon.IconHeight
-                            IconSprites = addon.IconSprites
-                            ShortcutHref = If(String.IsNullOrWhiteSpace(nodeConfig.link), "?addonid=" & addon.id, nodeConfig.link)
-                            ToolBar = "" _
+                    If (addon Is Nothing) Then
+                        '
+                        ' -- this node is not valid, exit
+                        Return String.Empty
+                    End If
+                    title = addon.name
+                    If (nodeConfig.state = ConfigModel.ConfigNodeState.closed) Then
+                        '
+                        ' Addon is just an icon
+                        ItemHTMLClass = "dashNode iconNode"
+                        IsIcon = True
+                        IconFileName = addon.IconFilename
+                        IconWidth = addon.IconWidth
+                        IconHeight = addon.IconHeight
+                        IconSprites = addon.IconSprites
+                        ShortcutHref = If(String.IsNullOrWhiteSpace(nodeConfig.link), "?addonid=" & addon.id, nodeConfig.link)
+                        ToolBar = "" _
                                 & "<a alt=""Remove from dashboard"" title=""Remove from dashboard"" href=""#"" onClick=""dashDeleteNode('" & nodeConfig.key & "','" & nodeConfig.key & "');return false;""><i title=""close"" class=""fas fa-window-close"" style=""color:#222""></i></a>" _
                                 & ""
-                            '
-                            ' todo -- tmp fix to block wrapper 1) fix addon wrapper so it runs in a window. 2) unblock this
-                            'ToolBar = "" _
-                            '    & "<a alt=""Minimize"" title=""Minimize"" href=""#"" onClick=""Return False;"" Class=""opacity50""><img border=0 src=""/cclib/images/opendown1313.gif"" width=""13"" height=""13""></a>" _
-                            '    & "<a alt=""Run In window"" title=""Run In Window"" href=""#"" onClick=""dashOpenNode('" & nodeConfig.key & "','" & nodeConfig.key & "');return false;""><img border=0 src=""/cclib/images/box1313.gif"" width=""13"" height=""13""></a>" _
-                            '    & "<a alt=""Run full size"" title=""Run full size""  href=""?addonguid=" & addon.ccguid & """><img border=0 src=""/cclib/images/openup1313.gif"" width=""13"" height=""13""></a>" _
-                            '    & "<a alt=""Remove from dashboard"" title=""Remove from dashboard"" href=""#"" onClick=""dashDeleteNode('" & nodeConfig.key & "','" & nodeConfig.key & "');return false;""><img border=0 src=""/cclib/images/closex1313.gif"" width=""13"" height=""13""></a>" _
-                            '    & ""
-                        Else
-                            '
-                            ' open Addon running in a wrapper
-                            ItemHTMLClass = "dashNode windowNode"
-                            IsIcon = False
-                            WrapperWidth = nodeConfig.sizex
-                            WrapperHeight = nodeConfig.sizey
-                            ShortcutHref = If(String.IsNullOrWhiteSpace(nodeConfig.link), "", nodeConfig.link)
-                            ToolBar = "" _
+                        '
+                        ' todo -- tmp fix to block wrapper 1) fix addon wrapper so it runs in a window. 2) unblock this
+                        'ToolBar = "" _
+                        '    & "<a alt=""Minimize"" title=""Minimize"" href=""#"" onClick=""Return False;"" Class=""opacity50""><img border=0 src=""/cclib/images/opendown1313.gif"" width=""13"" height=""13""></a>" _
+                        '    & "<a alt=""Run In window"" title=""Run In Window"" href=""#"" onClick=""dashOpenNode('" & nodeConfig.key & "','" & nodeConfig.key & "');return false;""><img border=0 src=""/cclib/images/box1313.gif"" width=""13"" height=""13""></a>" _
+                        '    & "<a alt=""Run full size"" title=""Run full size""  href=""?addonguid=" & addon.ccguid & """><img border=0 src=""/cclib/images/openup1313.gif"" width=""13"" height=""13""></a>" _
+                        '    & "<a alt=""Remove from dashboard"" title=""Remove from dashboard"" href=""#"" onClick=""dashDeleteNode('" & nodeConfig.key & "','" & nodeConfig.key & "');return false;""><img border=0 src=""/cclib/images/closex1313.gif"" width=""13"" height=""13""></a>" _
+                        '    & ""
+                    Else
+                        '
+                        ' open Addon running in a wrapper
+                        ItemHTMLClass = "dashNode windowNode"
+                        IsIcon = False
+                        WrapperWidth = nodeConfig.sizex
+                        WrapperHeight = nodeConfig.sizey
+                        ShortcutHref = If(String.IsNullOrWhiteSpace(nodeConfig.link), "", nodeConfig.link)
+                        ToolBar = "" _
                                 & "<div style=""float:left"">" & title & "</div>" _
                                 & "<a alt=""Remove from dashboard"" title=""Remove from dashboard"" href=""#"" onClick=""dashDeleteNode('" & nodeConfig.key & "','" & nodeConfig.key & "');return false;""><i title=""close"" class=""fas fa-window-close"" style=""color:#222""></i></a>" _
                                 & ""
-                            'ToolBar = "" _
-                            '    & "<div style=""float:left"">" & title & "</div>" _
-                            '    & "<a alt=""Minimize"" title=""Minimize"" href=""#"" onClick=""closeNode('" & nodeConfig.key & "','" & nodeConfig.key & "');return false;""><img border=0 src=""/cclib/images/opendown1313.gif"" width=""13"" height=""13""></a>" _
-                            '    & "<a alt=""Run in window"" title=""Run in Window"" href=""#"" class=""opacity50"" onClick=""return false;""><img border=0 src=""/cclib/images/box1313.gif"" width=""13"" height=""13""></a>" _
-                            '    & "<a alt=""Run full size"" title=""Run full size""  href=""?addonguid=" & addon.ccguid & """><img border=0 src=""/cclib/images/openup1313.gif"" width=""13"" height=""13""></a>" _
-                            '    & "<a alt=""Remove from dashboard"" title=""Remove from dashboard"" href=""#"" onClick=""dashDeleteNode('" & nodeConfig.key & "','" & nodeConfig.key & "');return false;""><i title=""close"" class=""fas fa-window-close"" style=""color:#222""></i></a>" _
-                            '    & ""
-                        End If
+                        'ToolBar = "" _
+                        '    & "<div style=""float:left"">" & title & "</div>" _
+                        '    & "<a alt=""Minimize"" title=""Minimize"" href=""#"" onClick=""closeNode('" & nodeConfig.key & "','" & nodeConfig.key & "');return false;""><img border=0 src=""/cclib/images/opendown1313.gif"" width=""13"" height=""13""></a>" _
+                        '    & "<a alt=""Run in window"" title=""Run in Window"" href=""#"" class=""opacity50"" onClick=""return false;""><img border=0 src=""/cclib/images/box1313.gif"" width=""13"" height=""13""></a>" _
+                        '    & "<a alt=""Run full size"" title=""Run full size""  href=""?addonguid=" & addon.ccguid & """><img border=0 src=""/cclib/images/openup1313.gif"" width=""13"" height=""13""></a>" _
+                        '    & "<a alt=""Remove from dashboard"" title=""Remove from dashboard"" href=""#"" onClick=""dashDeleteNode('" & nodeConfig.key & "','" & nodeConfig.key & "');return false;""><i title=""close"" class=""fas fa-window-close"" style=""color:#222""></i></a>" _
+                        '    & ""
                     End If
                     DroppableHoverClass = "droppableHover"
                     If (String.IsNullOrEmpty(IconFileName)) Then
@@ -113,18 +114,21 @@ Namespace Models
                     Else
                         content = Models.ContentModel.createByName(cp, nodeConfig.contentName)
                     End If
-                    If (content IsNot Nothing) Then
-                        IconFileName = content.IconLink
-                        IconWidth = content.IconWidth
-                        IconHeight = content.IconHeight
-                        IconSprites = content.IconSprites
-                        ShortcutHref = If(String.IsNullOrWhiteSpace(nodeConfig.link), "?cid=" & content.id, nodeConfig.link)
-                        DroppableHoverClass = ""
-                        content.id = 0
-                        AddonOptions = ""
-                        nodeConfig.state = ConfigModel.ConfigNodeState.closed
-                        title = content.name
+                    If (content Is Nothing) Then
+                        '
+                        ' -- this node is not valid
+                        Return String.Empty
                     End If
+                    IconFileName = content.IconLink
+                    IconWidth = content.IconWidth
+                    IconHeight = content.IconHeight
+                    IconSprites = content.IconSprites
+                    ShortcutHref = If(String.IsNullOrWhiteSpace(nodeConfig.link), "?cid=" & content.id, nodeConfig.link)
+                    DroppableHoverClass = ""
+                    content.id = 0
+                    AddonOptions = ""
+                    nodeConfig.state = ConfigModel.ConfigNodeState.closed
+                    title = content.name
                     ToolBar = "" _
                         & "<a href=""#"" onClick=""dashDeleteNode('" & nodeConfig.key & "','" & nodeConfig.key & "');return false;""><i title=""close"" class=""fas fa-window-close"" style=""color:#222""></i></a>" _
                         & ""
