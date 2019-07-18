@@ -175,11 +175,11 @@ Namespace Models
                             Select Case LCase(node.Name)
                                 Case "defaultwrapper"
                                     result.defaultWrapper = New ConfigWrapper() With {
-                                        .guid = genericController.getAttribute(cp, node, "guid")
+                                        .guid = GenericController.getAttribute(cp, node, "guid")
                                     }
                                 Case "node"
                                     Dim addonArgList As New List(Of NameValueModel)
-                                    Dim optionString = Controllers.genericController.getAttribute(cp, node, "optionstring")
+                                    Dim optionString = Controllers.GenericController.getAttribute(cp, node, "optionstring")
                                     If (Not String.IsNullOrWhiteSpace(optionString)) Then
                                         For Each namevalue As String In optionString.Split("&"c)
                                             If (namevalue.IndexOf("="c) > 0) Then
@@ -193,19 +193,19 @@ Namespace Models
                                     End If
                                     Dim nodeKey As String = "node" & nodeKeySuffix
                                     Dim nodeState As ConfigNodeState
-                                    [Enum].TryParse(Controllers.genericController.getAttribute(cp, node, "state"), nodeState)
+                                    [Enum].TryParse(Controllers.GenericController.getAttribute(cp, node, "state"), nodeState)
                                     result.nodeList.Add(nodeKey, New ConfigNodeModel() With {
                                         .key = nodeKey,
                                         .addonArgList = addonArgList,
-                                        .addonGUID = genericController.getAttribute(cp, node, "addonGUID"),
-                                        .contentGUID = genericController.getAttribute(cp, node, "contentGUID"),
-                                        .contentName = genericController.getAttribute(cp, node, "contentName"),
-                                        .sizex = cp.Utils.EncodeInteger(Controllers.genericController.getAttribute(cp, node, "sizex")),
-                                        .sizey = cp.Utils.EncodeInteger(genericController.getAttribute(cp, node, "sizey")),
+                                        .addonGUID = GenericController.getAttribute(cp, node, "addonGUID"),
+                                        .contentGUID = GenericController.getAttribute(cp, node, "contentGUID"),
+                                        .contentName = GenericController.getAttribute(cp, node, "contentName"),
+                                        .sizex = cp.Utils.EncodeInteger(Controllers.GenericController.getAttribute(cp, node, "sizex")),
+                                        .sizey = cp.Utils.EncodeInteger(GenericController.getAttribute(cp, node, "sizey")),
                                         .state = nodeState,
-                                        .title = Controllers.genericController.getAttribute(cp, node, "title"),
-                                        .x = cp.Utils.EncodeInteger(genericController.getAttribute(cp, node, "x")),
-                                        .y = cp.Utils.EncodeInteger(genericController.getAttribute(cp, node, "y"))
+                                        .title = Controllers.GenericController.getAttribute(cp, node, "title"),
+                                        .x = cp.Utils.EncodeInteger(GenericController.getAttribute(cp, node, "x")),
+                                        .y = cp.Utils.EncodeInteger(GenericController.getAttribute(cp, node, "y"))
                                     })
                             End Select
                             nodeKeySuffix += 1

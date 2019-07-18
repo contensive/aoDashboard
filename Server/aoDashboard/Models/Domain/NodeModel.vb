@@ -66,6 +66,7 @@ Namespace Models
                         IconSprites = addon.IconSprites
                         ShortcutHref = If(String.IsNullOrWhiteSpace(nodeConfig.link), "?addonid=" & addon.id, nodeConfig.link)
                         ToolBar = "" _
+                                & "<a alt=""Run In window"" title=""Run In Window"" href=""#"" onClick=""dashOpenNode('" & nodeConfig.key & "','" & nodeConfig.key & "');return false;""><i title=""restore"" class=""fas fa-window-restore"" style=""color:#222""></i></a>" _
                                 & "<a alt=""Remove from dashboard"" title=""Remove from dashboard"" href=""#"" onClick=""dashDeleteNode('" & nodeConfig.key & "','" & nodeConfig.key & "');return false;""><i title=""close"" class=""fas fa-window-close"" style=""color:#222""></i></a>" _
                                 & ""
                         '
@@ -86,6 +87,7 @@ Namespace Models
                         ShortcutHref = If(String.IsNullOrWhiteSpace(nodeConfig.link), "", nodeConfig.link)
                         ToolBar = "" _
                                 & "<div style=""float:left"">" & title & "</div>" _
+                                & "<a alt=""Minimize"" title=""Minimize"" href=""#"" onClick=""closeNode('" & nodeConfig.key & "','" & nodeConfig.key & "');return false;""><i title=""restore"" class=""fas fa-window-minimize"" style=""color:#222""></i></a>" _
                                 & "<a alt=""Remove from dashboard"" title=""Remove from dashboard"" href=""#"" onClick=""dashDeleteNode('" & nodeConfig.key & "','" & nodeConfig.key & "');return false;""><i title=""close"" class=""fas fa-window-close"" style=""color:#222""></i></a>" _
                                 & ""
                         'ToolBar = "" _
@@ -169,7 +171,7 @@ Namespace Models
                     Else
                         '
                         ' Sprites
-                        IconImg = Controllers.genericController.GetAddonIconImg("", IconWidth, IconHeight, IconSprites, True, "", IconFileName, cp.Site.FilePath, title, title, "", 0)
+                        IconImg = Controllers.GenericController.getAddonIconImg("", IconWidth, IconHeight, IconSprites, True, "", IconFileName, cp.Site.FilePath, title, title, "", 0)
                     End If
                     DoDadContent = "" _
                         & vbCrLf & vbTab & vbTab & "<a class=""shortcut"" href=""" & ShortcutHref & """>" & IconImg & "<br>" & title & "</a>" _
@@ -416,7 +418,7 @@ Namespace Models
                         '
                         ' Sprites
                         '
-                        IconImg = Controllers.genericController.GetAddonIconImg("", IconWidth, IconHeight, IconSprites, True, "", IconFileName, cp.Site.FilePath, Title, Title, "", 0)
+                        IconImg = Controllers.GenericController.getAddonIconImg("", IconWidth, IconHeight, IconSprites, True, "", IconFileName, cp.Site.FilePath, Title, Title, "", 0)
                     End If
                     DoDadContent = "" _
                         & vbCrLf & vbTab & vbTab & "<a class=""shortcut"" href=""" & ShortcutHref & """>" & IconImg & "<br>" & Title & "</a>" _

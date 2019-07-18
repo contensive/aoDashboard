@@ -1,0 +1,1331 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<Collection name="Dashboard" guid="{b470c25f-ddbc-4593-8161-1a2fd4a35690}" system="No" updatable="No" blockNavigatorNode="No">
+	<HelpLink></HelpLink>
+	<Help></Help>
+	<Addon name="deleteme-jquery.scale9grid" guid="{8878898c-037e-4d48-afee-e47c8ba7da06}" type="Add-on">
+		<Copy></Copy>
+		<CopyText></CopyText>
+		<ActiveXProgramID></ActiveXProgramID>
+		<DotNetClass></DotNetClass>
+		<ArgumentList></ArgumentList>
+		<AsAjax>No</AsAjax>
+		<Filter>No</Filter>
+		<Help></Help>
+		<HelpLink></HelpLink>
+		<Icon Link="" width="0" height="0" sprites="0" />
+		<InIframe>No</InIframe>
+		<BlockEditTools>Yes</BlockEditTools>
+		<FormXML></FormXML>
+		<IsInline>No</IsInline>
+		<JavascriptOnLoad></JavascriptOnLoad>
+		<JavascriptInHead></JavascriptInHead>
+		<JavascriptBodyEnd></JavascriptBodyEnd>
+		<MetaDescription></MetaDescription>
+		<OtherHeadTags></OtherHeadTags>
+		<Content>No</Content>
+		<Template>No</Template>
+		<Email>No</Email>
+		<Admin>No</Admin>
+		<OnPageEndEvent>No</OnPageEndEvent>
+		<OnPageStartEvent>No</OnPageStartEvent>
+		<OnBodyStart>No</OnBodyStart>
+		<OnBodyEnd>No</OnBodyEnd>
+		<RemoteMethod>No</RemoteMethod>
+		<ProcessInterval>0</ProcessInterval>
+		<PageTitle></PageTitle>
+		<RemoteAssetLink></RemoteAssetLink>
+		<Styles></Styles>
+		<StylesLinkHref></StylesLinkHref>
+		<Styles></Styles>
+		<Scripting Language="VBScript" EntryPoint="" Timeout="5000"/>
+	</Addon>
+	<Addon name="Dashboard" guid="{4BA7B4A2-ED6C-46C5-9C7B-8CE251FC8FF5}" type="Add-on">
+		<Copy></Copy>
+		<CopyText></CopyText>
+		<ActiveXProgramID></ActiveXProgramID>
+		<DotNetClass><![CDATA[Contensive.Addons.Dashboard.Views.DashboardClass]]></DotNetClass>
+		<ArgumentList></ArgumentList>
+		<AsAjax>No</AsAjax>
+		<Filter>No</Filter>
+		<Help></Help>
+		<HelpLink></HelpLink>
+		<Icon Link="/upload/dashboard/iconDashboard.png" width="57" height="59" sprites="4" />
+		<InIframe>No</InIframe>
+		<BlockEditTools>Yes</BlockEditTools>
+		<FormXML></FormXML>
+		<IncludeAddon name="jquery.scale9grid.js" guid="{b722c07f-f858-4cb8-b9bb-f4242fcc59e7}"/>
+		<IncludeAddon name="JQuery UI" guid="{840B9AEF-9470-4599-BD47-7EC0C9298614}"/>
+		<IncludeAddon name="Font Awesome" guid="{1e2f82ae-6722-4564-a461-5b2e7c5e32b3}"/>
+		<IsInline>No</IsInline>
+		<JavascriptOnLoad></JavascriptOnLoad>
+		<JavascriptInHead><![CDATA[//
+// -- randomish number
+function getUniqueID() {return new Date().valueOf();}
+//
+// -- event to resize dash
+function dashResize() {
+	console.log("dashResize");
+	var i,n,nodeTop,nodeBottom,desktopBottom=0;
+	jQuery(".dashNode").each(function(){
+		n=document.getElementById(this.id)
+		if(n){
+			console.log("dashResize, initialize node["+this.id+"]");
+			nodeTop=n.style.top;
+			nodeTop=parseInt(nodeTop.replace("px",""));
+			nodeBottom=nodeTop+n.scrollHeight;
+			if(nodeBottom>desktopBottom){desktopBottom=nodeBottom}
+		}
+	})
+	if(desktopBottom!=0){
+		n=document.getElementById("dashBoardWrapper");
+		if(n){n.style.height=desktopBottom}
+	}
+}
+//
+// -- mouse over body
+function overBody(toolsId){
+	e=document.getElementById(toolsId);
+	showTools(e);
+	e.overBody=true;
+	if(e.t) clearTimeout(e.t);
+}
+//
+// -- mouse out of body
+function outBody(toolsId){
+	e=document.getElementById(toolsId);
+	e.overBody=false;
+	if(e.oTools){
+		if(e.oTools==false){
+			e.t=setTimeout("hideTools(\""+e.id+"\")",3000);
+		}
+	} else {
+		e.t=setTimeout("hideTools(\""+e.id+"\")",3000);
+	}
+}
+function overTools(e){
+	showTools(e);
+	e.oTools=true;
+	if(e.t) clearTimeout(e.t);
+}
+function outTools(e){
+	e.oTools=false;
+	if(e.overBody){
+		if(e.overBody==false){
+			e.t=setTimeout("hideTools(\""+e.id+"\")",3000);	
+		}
+	} else {
+		e.t=setTimeout("hideTools(\""+e.id+"\")",3000);	
+	}
+}
+function showTools(e){
+	if(e){
+		if(e.style.visibility!="visible"){
+			e.style.visibility="visible";
+		}
+	}
+}
+function hideTools(toolsId){
+	var e=document.getElementById(toolsId);
+	if(e) e.style.visibility="hidden";
+}
+function dashDeleteNode( nodePtr, htmlId ) {
+	var c=document.getElementById(htmlId);
+	var p=c.parentNode;
+	p.removeChild(c);
+	cj.ajax.addon("dashboarddelnode","key="+nodePtr);
+	dashResize();
+}
+function dashOpenNodeCallback(response,callbackArg) {
+	var hId="dashhelper"+getUniqueID();
+	navMakeHelper(hId);
+	var e=document.getElementById(hId);
+	e.innerHTML=response;
+	dashResize();
+}
+function dashOpenNode( nodePtr, htmlId ) {
+//alert("dashOpenNode");
+	var c,p,hId;
+	c=document.getElementById(htmlId);
+	p=c.parentNode;
+	p.removeChild(c);
+	cj.ajax.addonCallback("dashboardopennode","key="+nodePtr,dashOpenNodeCallback,"test");
+}
+function closeNode( nodePtr, htmlId ) {
+	var c,p,hId;
+	c=document.getElementById(htmlId);
+	var p=c.parentNode;
+	p.removeChild(c);
+	hId="dashhelper"+getUniqueID();
+	navMakeHelper(hId);
+	cj.ajax.addonCallback("dashboardclosenode","key="+nodePtr,"",hId);
+}
+function navMakeHelper( iconId ) {
+	var w=document.getElementById("dashBoardWrapper");
+	var e=document.createElement("div");
+	e.setAttribute("id",iconId);
+	e.setAttribute("style","position:absolute;top:0;left:0;");
+	w.appendChild(e);
+}
+function navDropCallback(response,iconId){
+	var e=document.getElementById(iconId);
+	e.innerHTML=response;
+	dashBindNodes();
+	dashResize();
+}
+function navDrop(id,x,y){
+	console.log("navDrop, id ["+id+"], x ["+x+"], y ["+y+"]");
+	var iconId="dashhelper"+getUniqueID();
+	console.log("navDrop, iconId ["+iconId+"]");
+	var w=document.getElementById("dashBoardWrapper");
+	var e=document.createElement("div");
+	var posX=(x-getPageOffsetLeft(w));
+	var posY=(y-37-getPageOffsetTop(w));
+	console.log("navDrop, posX ["+posX+"], posY ["+posY+"]");
+	e.setAttribute("id",iconId);
+	e.setAttribute("style","position:absolute;top:0;left:0;");
+	w.appendChild(e);
+	var qs = "id="+id+"&x="+posX+"&y="+posY;
+	console.log("navDrop, qs ["+qs+"]");
+	cj.ajax.addonCallback("dashboardnavdrop",qs,navDropCallback,iconId);
+}
+/*
+*	bind nodes
+*/
+function dashBindNodes() {
+	jQuery(".dashNode").each(function(){
+		jQuery(this).draggable({
+			stop: function(event, ui){
+				var qs="key="+this.id+"&x="+this.style.left+"&y="+this.style.top;
+				console.log("draggable:stop, qs ["+qs+"]");
+				cj.ajax.addonCallback("dashboarddragstop",qs,dashResize);
+			}
+			,start: function(event, ui){
+				this.style.zIndex=iconZIndexTop++;
+				jQuery(this).draggable("option", "zIndex", iconZIndexTop );
+			}
+			,revert: "invalid"
+			,zIndex: 0
+			,hoverClass: "droppableHover"
+			,opacity: 0.50
+			/* ,handle: "#toolBar"+this.id */
+			,cursor: "move"
+		});
+	});	
+	/*
+	* bind resizable
+	*/
+	jQuery(".windowNode").each(function(){
+		jQuery(this).resizable({
+			alsoResize: "#designResizer"+this.id
+			,stop: function(event, ui) {
+				var r=document.getElementById("designResizer"+this.id);
+				var qs="key="+this.id+"&x="+this.style.width+"&y="+r.style.height;
+				cj.ajax.addonCallback("dashboardresize",qs,dashResize);
+			}
+		});
+	});	
+}
+
+/*
+* OnReady
+*/
+jQuery( document ).ready(function(){
+	/*
+	* make entire dashboard droppable
+	*/	
+	jQuery("#desktop").droppable({tolerance: "fit"});
+	/*
+	* bind to icon nodes
+	*/
+	dashBindNodes();
+	/*
+	* Initialize
+	*/
+	dashResize();
+});]]></JavascriptInHead>
+		<JavascriptBodyEnd></JavascriptBodyEnd>
+		<MetaDescription></MetaDescription>
+		<OtherHeadTags></OtherHeadTags>
+		<Content>Yes</Content>
+		<Template>Yes</Template>
+		<Email>No</Email>
+		<Admin>No</Admin>
+		<OnPageEndEvent>No</OnPageEndEvent>
+		<OnPageStartEvent>No</OnPageStartEvent>
+		<OnBodyStart>No</OnBodyStart>
+		<OnBodyEnd>No</OnBodyEnd>
+		<RemoteMethod>No</RemoteMethod>
+		<ProcessInterval>0</ProcessInterval>
+		<PageTitle><![CDATA[Administration Site]]></PageTitle>
+		<RemoteAssetLink></RemoteAssetLink>
+		<Styles><![CDATA[.ccBodyAdmin {
+	background-color:#C8C8C8; 
+}
+
+#desktop{
+	background-color:#C8C8C8; 
+	height:620px;
+}
+.dashBoardWrapper{
+	position:relative; 
+	background-color:transparent;
+}
+.dashboardWrapper .opacity50 {
+	-moz-opacity:.50; 
+	filter:alpha(opacity=50); 
+	opacity:.50; 
+}
+.toolBarGrip {
+	float:left;
+	margin-right: 10px;
+}
+.dashBoardWrapper .toolBarInner {
+    background-color: #EEFFEE;
+    border-radius: 5px 5px 0 0;
+    cursor: pointer;
+    margin: 0;
+    padding: 10px;
+    text-align: right;
+}
+.dashBoardWrapper .toolBarInner {
+    cursor: move;
+}
+
+.dashBoardWrapper .toolBar {
+	position: absolute;
+	visibility: hidden;
+	padding:0px;
+	margin:0px;
+	top:-19px;
+	width:100%;
+}
+.dashBoardWrapper .designResizer {
+	overflow:auto;
+}
+.dashBoardWrapper .windowNode {
+	position: absolute; 
+	vertical-align: top; 
+	text-align: left; 
+}
+.dashBoardWrapper .iconNode {
+	position: absolute; 
+	vertical-align: top; 
+	text-align: center; 
+}
+.dodadContainer{
+	padding: 10px; 
+	padding-right: 15px; 
+	background: url("/upload/dashboard/container.png");
+}
+.dodad{
+	padding: 5px;
+}
+.dodadContainer{
+	position: relative;
+}
+.dodadTitle{
+	font-weight: bold; 
+	padding-bottom: 8px; 
+	padding-top: 5px;
+}
+.dashBoardWrapper a.shortcut {
+	text-decoration:none;
+	color:#000;
+}
+.dashBoardWrapper a.shortcut:visited {
+	text-decoration:none;
+	color:#000;
+}
+.dashBoardWrapper a.shortcut:hover {
+	text-decoration:none;
+	color:#444;
+}
+.droppableHover {
+	border:1px solid red;
+	background-color:white;
+}
+
+
+.ccBodyAdmin {
+	background-color:#C8C8C8; 
+}
+
+#desktop{
+	background-color:#C8C8C8; 
+	height:620px;
+}
+.dashBoardWrapper{
+	position:relative; 
+	background-color:transparent;
+}
+.dashboardWrapper .opacity50 {
+	-moz-opacity:.50; 
+	filter:alpha(opacity=50); 
+	opacity:.50; 
+}
+.toolBarGrip {
+	float:left;
+	margin-right: 10px;
+}
+.dashBoardWrapper .toolBarInner {
+    background-color: #EEFFEE;
+    border-radius: 5px 5px 0 0;
+    cursor: move;
+    margin: 0;
+    padding: 10px;
+    text-align: right;
+}
+.dashBoardWrapper .toolBarInner a {
+    margin-left:3px;
+}
+.dashBoardWrapper .toolBar {
+	position: absolute;
+	visibility: hidden;
+	padding:0px;
+	margin:0px;
+	top:-19px;
+	width:100%;
+}
+.dashBoardWrapper .designResizer {
+	overflow:auto;
+}
+.dashBoardWrapper .windowNode {
+	position: absolute; 
+	vertical-align: top; 
+	text-align: left; 
+}
+.dashBoardWrapper .iconNode {
+	position: absolute; 
+	vertical-align: top; 
+	text-align: center; 
+}
+.dodadContainer{
+	padding: 10px; 
+	padding-right: 15px; 
+	background: url("/upload/dashboard/container.png");
+}
+.dodad{
+	padding: 5px;
+}
+.dodadContainer{
+	position: relative;
+}
+.dodadTitle{
+	font-weight: bold; 
+	padding-bottom: 8px; 
+	padding-top: 5px;
+}
+.dashBoardWrapper a.shortcut {
+	text-decoration:none;
+	color:#000;
+}
+.dashBoardWrapper a.shortcut:visited {
+	text-decoration:none;
+	color:#000;
+}
+.dashBoardWrapper a.shortcut:hover {
+	text-decoration:none;
+	color:#444;
+}
+.droppableHover {
+	border:1px solid red;
+	background-color:white;
+}
+
+
+.ccBodyAdmin {
+	background-color:#C8C8C8; 
+}
+
+#desktop{
+	background-color:#C8C8C8; 
+	height:620px;
+}
+.dashBoardWrapper{
+	position:relative; 
+	background-color:transparent;
+}
+.dashboardWrapper .opacity50 {
+	-moz-opacity:.50; 
+	filter:alpha(opacity=50); 
+	opacity:.50; 
+}
+.toolBarGrip {
+	float:left;
+	margin-right: 10px;
+}
+.dashBoardWrapper .toolBarInner {
+    background-color: #EEFFEE;
+    border-radius: 5px 5px 0 0;
+    cursor: pointer;
+    margin: 0;
+    padding: 10px;
+    text-align: right;
+}
+.dashBoardWrapper .toolBarInner {
+    cursor: move;
+}
+
+.dashBoardWrapper .toolBar {
+	position: absolute;
+	visibility: hidden;
+	padding:0px;
+	margin:0px;
+	top:-19px;
+	width:100%;
+}
+.dashBoardWrapper .designResizer {
+	overflow:auto;
+}
+.dashBoardWrapper .windowNode {
+	position: absolute; 
+	vertical-align: top; 
+	text-align: left; 
+}
+.dashBoardWrapper .iconNode {
+	position: absolute; 
+	vertical-align: top; 
+	text-align: center; 
+}
+.dodadContainer{
+	padding: 10px; 
+	padding-right: 15px; 
+	background: url("/upload/dashboard/container.png");
+}
+.dodad{
+	padding: 5px;
+}
+.dodadContainer{
+	position: relative;
+}
+.dodadTitle{
+	font-weight: bold; 
+	padding-bottom: 8px; 
+	padding-top: 5px;
+}
+.dashBoardWrapper a.shortcut {
+	text-decoration:none;
+	color:#000;
+}
+.dashBoardWrapper a.shortcut:visited {
+	text-decoration:none;
+	color:#000;
+}
+.dashBoardWrapper a.shortcut:hover {
+	text-decoration:none;
+	color:#444;
+}
+.droppableHover {
+	border:1px solid red;
+	background-color:white;
+}
+
+
+.ccBodyAdmin {
+	background-color:#C8C8C8; 
+}
+
+#desktop{
+	background-color:#C8C8C8; 
+	height:620px;
+}
+.dashBoardWrapper{
+	position:relative; 
+	background-color:transparent;
+}
+.dashboardWrapper .opacity50 {
+	-moz-opacity:.50; 
+	filter:alpha(opacity=50); 
+	opacity:.50; 
+}
+.toolBarGrip {
+	float:left;
+	margin-right: 10px;
+}
+.dashBoardWrapper .toolBarInner {
+    background-color: #EEFFEE;
+    border-radius: 5px 5px 0 0;
+    cursor: pointer;
+    margin: 0;
+    padding: 10px;
+    text-align: right;
+}
+.dashBoardWrapper .toolBarInner {
+    cursor: move;
+}
+
+.dashBoardWrapper .toolBar {
+	position: absolute;
+	visibility: hidden;
+	padding:0px;
+	margin:0px;
+	top:-19px;
+	width:100%;
+}
+.dashBoardWrapper .designResizer {
+	overflow:auto;
+}
+.dashBoardWrapper .windowNode {
+	position: absolute; 
+	vertical-align: top; 
+	text-align: left; 
+}
+.dashBoardWrapper .iconNode {
+	position: absolute; 
+	vertical-align: top; 
+	text-align: center; 
+}
+.dodadContainer{
+	padding: 10px; 
+	padding-right: 15px; 
+	background: url("/upload/dashboard/container.png");
+}
+.dodad{
+	padding: 5px;
+}
+.dodadContainer{
+	position: relative;
+}
+.dodadTitle{
+	font-weight: bold; 
+	padding-bottom: 8px; 
+	padding-top: 5px;
+}
+.dashBoardWrapper a.shortcut {
+	text-decoration:none;
+	color:#000;
+}
+.dashBoardWrapper a.shortcut:visited {
+	text-decoration:none;
+	color:#000;
+}
+.dashBoardWrapper a.shortcut:hover {
+	text-decoration:none;
+	color:#444;
+}
+.droppableHover {
+	border:1px solid red;
+	background-color:white;
+}
+
+]]></Styles>
+		<StylesLinkHref></StylesLinkHref>
+		<Styles><![CDATA[.ccBodyAdmin {
+	background-color:#C8C8C8; 
+}
+
+#desktop{
+	background-color:#C8C8C8; 
+	height:620px;
+}
+.dashBoardWrapper{
+	position:relative; 
+	background-color:transparent;
+}
+.dashboardWrapper .opacity50 {
+	-moz-opacity:.50; 
+	filter:alpha(opacity=50); 
+	opacity:.50; 
+}
+.toolBarGrip {
+	float:left;
+	margin-right: 10px;
+}
+.dashBoardWrapper .toolBarInner {
+    background-color: #EEFFEE;
+    border-radius: 5px 5px 0 0;
+    cursor: pointer;
+    margin: 0;
+    padding: 10px;
+    text-align: right;
+}
+.dashBoardWrapper .toolBarInner {
+    cursor: move;
+}
+
+.dashBoardWrapper .toolBar {
+	position: absolute;
+	visibility: hidden;
+	padding:0px;
+	margin:0px;
+	top:-19px;
+	width:100%;
+}
+.dashBoardWrapper .designResizer {
+	overflow:auto;
+}
+.dashBoardWrapper .windowNode {
+	position: absolute; 
+	vertical-align: top; 
+	text-align: left; 
+}
+.dashBoardWrapper .iconNode {
+	position: absolute; 
+	vertical-align: top; 
+	text-align: center; 
+}
+.dodadContainer{
+	padding: 10px; 
+	padding-right: 15px; 
+	background: url("/upload/dashboard/container.png");
+}
+.dodad{
+	padding: 5px;
+}
+.dodadContainer{
+	position: relative;
+}
+.dodadTitle{
+	font-weight: bold; 
+	padding-bottom: 8px; 
+	padding-top: 5px;
+}
+.dashBoardWrapper a.shortcut {
+	text-decoration:none;
+	color:#000;
+}
+.dashBoardWrapper a.shortcut:visited {
+	text-decoration:none;
+	color:#000;
+}
+.dashBoardWrapper a.shortcut:hover {
+	text-decoration:none;
+	color:#444;
+}
+.droppableHover {
+	border:1px solid red;
+	background-color:white;
+}
+
+
+.ccBodyAdmin {
+	background-color:#C8C8C8; 
+}
+
+#desktop{
+	background-color:#C8C8C8; 
+	height:620px;
+}
+.dashBoardWrapper{
+	position:relative; 
+	background-color:transparent;
+}
+.dashboardWrapper .opacity50 {
+	-moz-opacity:.50; 
+	filter:alpha(opacity=50); 
+	opacity:.50; 
+}
+.toolBarGrip {
+	float:left;
+	margin-right: 10px;
+}
+.dashBoardWrapper .toolBarInner {
+    background-color: #EEFFEE;
+    border-radius: 5px 5px 0 0;
+    cursor: move;
+    margin: 0;
+    padding: 10px;
+    text-align: right;
+}
+.dashBoardWrapper .toolBarInner a {
+    margin-left:3px;
+}
+.dashBoardWrapper .toolBar {
+	position: absolute;
+	visibility: hidden;
+	padding:0px;
+	margin:0px;
+	top:-19px;
+	width:100%;
+}
+.dashBoardWrapper .designResizer {
+	overflow:auto;
+}
+.dashBoardWrapper .windowNode {
+	position: absolute; 
+	vertical-align: top; 
+	text-align: left; 
+}
+.dashBoardWrapper .iconNode {
+	position: absolute; 
+	vertical-align: top; 
+	text-align: center; 
+}
+.dodadContainer{
+	padding: 10px; 
+	padding-right: 15px; 
+	background: url("/upload/dashboard/container.png");
+}
+.dodad{
+	padding: 5px;
+}
+.dodadContainer{
+	position: relative;
+}
+.dodadTitle{
+	font-weight: bold; 
+	padding-bottom: 8px; 
+	padding-top: 5px;
+}
+.dashBoardWrapper a.shortcut {
+	text-decoration:none;
+	color:#000;
+}
+.dashBoardWrapper a.shortcut:visited {
+	text-decoration:none;
+	color:#000;
+}
+.dashBoardWrapper a.shortcut:hover {
+	text-decoration:none;
+	color:#444;
+}
+.droppableHover {
+	border:1px solid red;
+	background-color:white;
+}
+
+
+.ccBodyAdmin {
+	background-color:#C8C8C8; 
+}
+
+#desktop{
+	background-color:#C8C8C8; 
+	height:620px;
+}
+.dashBoardWrapper{
+	position:relative; 
+	background-color:transparent;
+}
+.dashboardWrapper .opacity50 {
+	-moz-opacity:.50; 
+	filter:alpha(opacity=50); 
+	opacity:.50; 
+}
+.toolBarGrip {
+	float:left;
+	margin-right: 10px;
+}
+.dashBoardWrapper .toolBarInner {
+    background-color: #EEFFEE;
+    border-radius: 5px 5px 0 0;
+    cursor: pointer;
+    margin: 0;
+    padding: 10px;
+    text-align: right;
+}
+.dashBoardWrapper .toolBarInner {
+    cursor: move;
+}
+
+.dashBoardWrapper .toolBar {
+	position: absolute;
+	visibility: hidden;
+	padding:0px;
+	margin:0px;
+	top:-19px;
+	width:100%;
+}
+.dashBoardWrapper .designResizer {
+	overflow:auto;
+}
+.dashBoardWrapper .windowNode {
+	position: absolute; 
+	vertical-align: top; 
+	text-align: left; 
+}
+.dashBoardWrapper .iconNode {
+	position: absolute; 
+	vertical-align: top; 
+	text-align: center; 
+}
+.dodadContainer{
+	padding: 10px; 
+	padding-right: 15px; 
+	background: url("/upload/dashboard/container.png");
+}
+.dodad{
+	padding: 5px;
+}
+.dodadContainer{
+	position: relative;
+}
+.dodadTitle{
+	font-weight: bold; 
+	padding-bottom: 8px; 
+	padding-top: 5px;
+}
+.dashBoardWrapper a.shortcut {
+	text-decoration:none;
+	color:#000;
+}
+.dashBoardWrapper a.shortcut:visited {
+	text-decoration:none;
+	color:#000;
+}
+.dashBoardWrapper a.shortcut:hover {
+	text-decoration:none;
+	color:#444;
+}
+.droppableHover {
+	border:1px solid red;
+	background-color:white;
+}
+
+
+.ccBodyAdmin {
+	background-color:#C8C8C8; 
+}
+
+#desktop{
+	background-color:#C8C8C8; 
+	height:620px;
+}
+.dashBoardWrapper{
+	position:relative; 
+	background-color:transparent;
+}
+.dashboardWrapper .opacity50 {
+	-moz-opacity:.50; 
+	filter:alpha(opacity=50); 
+	opacity:.50; 
+}
+.toolBarGrip {
+	float:left;
+	margin-right: 10px;
+}
+.dashBoardWrapper .toolBarInner {
+    background-color: #EEFFEE;
+    border-radius: 5px 5px 0 0;
+    cursor: pointer;
+    margin: 0;
+    padding: 10px;
+    text-align: right;
+}
+.dashBoardWrapper .toolBarInner {
+    cursor: move;
+}
+
+.dashBoardWrapper .toolBar {
+	position: absolute;
+	visibility: hidden;
+	padding:0px;
+	margin:0px;
+	top:-19px;
+	width:100%;
+}
+.dashBoardWrapper .designResizer {
+	overflow:auto;
+}
+.dashBoardWrapper .windowNode {
+	position: absolute; 
+	vertical-align: top; 
+	text-align: left; 
+}
+.dashBoardWrapper .iconNode {
+	position: absolute; 
+	vertical-align: top; 
+	text-align: center; 
+}
+.dodadContainer{
+	padding: 10px; 
+	padding-right: 15px; 
+	background: url("/upload/dashboard/container.png");
+}
+.dodad{
+	padding: 5px;
+}
+.dodadContainer{
+	position: relative;
+}
+.dodadTitle{
+	font-weight: bold; 
+	padding-bottom: 8px; 
+	padding-top: 5px;
+}
+.dashBoardWrapper a.shortcut {
+	text-decoration:none;
+	color:#000;
+}
+.dashBoardWrapper a.shortcut:visited {
+	text-decoration:none;
+	color:#000;
+}
+.dashBoardWrapper a.shortcut:hover {
+	text-decoration:none;
+	color:#444;
+}
+.droppableHover {
+	border:1px solid red;
+	background-color:white;
+}
+
+]]></Styles>
+		<Scripting Language="VBScript" EntryPoint="" Timeout="5000"/>
+	</Addon>
+	<Addon name="dashboardclosenode" guid="{6DEC632B-C8DF-44EB-ABCB-12B362660708}" type="Add-on">
+		<Copy></Copy>
+		<CopyText></CopyText>
+		<ActiveXProgramID></ActiveXProgramID>
+		<DotNetClass><![CDATA[Contensive.Addons.Dashboard.Views.closeNodeClass]]></DotNetClass>
+		<ArgumentList></ArgumentList>
+		<AsAjax>No</AsAjax>
+		<Filter>No</Filter>
+		<Help></Help>
+		<HelpLink></HelpLink>
+		<Icon Link="" width="0" height="0" sprites="0" />
+		<InIframe>No</InIframe>
+		<BlockEditTools>No</BlockEditTools>
+		<FormXML></FormXML>
+		<IsInline>No</IsInline>
+		<JavascriptOnLoad></JavascriptOnLoad>
+		<JavascriptInHead></JavascriptInHead>
+		<JavascriptBodyEnd></JavascriptBodyEnd>
+		<MetaDescription></MetaDescription>
+		<OtherHeadTags></OtherHeadTags>
+		<Content>No</Content>
+		<Template>No</Template>
+		<Email>No</Email>
+		<Admin>No</Admin>
+		<OnPageEndEvent>No</OnPageEndEvent>
+		<OnPageStartEvent>No</OnPageStartEvent>
+		<OnBodyStart>No</OnBodyStart>
+		<OnBodyEnd>No</OnBodyEnd>
+		<RemoteMethod>Yes</RemoteMethod>
+		<ProcessInterval>0</ProcessInterval>
+		<PageTitle></PageTitle>
+		<RemoteAssetLink></RemoteAssetLink>
+		<Styles></Styles>
+		<StylesLinkHref></StylesLinkHref>
+		<Styles></Styles>
+		<Scripting Language="VBScript" EntryPoint="" Timeout="5000"/>
+	</Addon>
+	<Addon name="DashboardDelNode" guid="{058EAF9D-6347-43D9-82B1-ACF56A3C23E0}" type="Add-on">
+		<Copy></Copy>
+		<CopyText></CopyText>
+		<ActiveXProgramID></ActiveXProgramID>
+		<DotNetClass><![CDATA[Contensive.Addons.Dashboard.Views.delNodeClass]]></DotNetClass>
+		<ArgumentList></ArgumentList>
+		<AsAjax>No</AsAjax>
+		<Filter>No</Filter>
+		<Help></Help>
+		<HelpLink></HelpLink>
+		<Icon Link="" width="0" height="0" sprites="0" />
+		<InIframe>No</InIframe>
+		<BlockEditTools>No</BlockEditTools>
+		<FormXML></FormXML>
+		<IsInline>No</IsInline>
+		<JavascriptOnLoad></JavascriptOnLoad>
+		<JavascriptInHead></JavascriptInHead>
+		<JavascriptBodyEnd></JavascriptBodyEnd>
+		<MetaDescription></MetaDescription>
+		<OtherHeadTags></OtherHeadTags>
+		<Content>No</Content>
+		<Template>No</Template>
+		<Email>No</Email>
+		<Admin>No</Admin>
+		<OnPageEndEvent>No</OnPageEndEvent>
+		<OnPageStartEvent>No</OnPageStartEvent>
+		<OnBodyStart>No</OnBodyStart>
+		<OnBodyEnd>No</OnBodyEnd>
+		<RemoteMethod>Yes</RemoteMethod>
+		<ProcessInterval>0</ProcessInterval>
+		<PageTitle></PageTitle>
+		<RemoteAssetLink></RemoteAssetLink>
+		<Styles></Styles>
+		<StylesLinkHref></StylesLinkHref>
+		<Styles></Styles>
+		<Scripting Language="VBScript" EntryPoint="" Timeout="5000"/>
+	</Addon>
+	<Addon name="DashboardDragStop" guid="{E6334477-2772-4C5B-87ED-144E8A7DD009}" type="Add-on">
+		<Copy></Copy>
+		<CopyText></CopyText>
+		<ActiveXProgramID></ActiveXProgramID>
+		<DotNetClass><![CDATA[Contensive.Addons.Dashboard.Views.dashDragStopClass]]></DotNetClass>
+		<ArgumentList></ArgumentList>
+		<AsAjax>No</AsAjax>
+		<Filter>No</Filter>
+		<Help></Help>
+		<HelpLink></HelpLink>
+		<Icon Link="" width="0" height="0" sprites="0" />
+		<InIframe>No</InIframe>
+		<BlockEditTools>No</BlockEditTools>
+		<FormXML></FormXML>
+		<IsInline>No</IsInline>
+		<JavascriptOnLoad></JavascriptOnLoad>
+		<JavascriptInHead></JavascriptInHead>
+		<JavascriptBodyEnd></JavascriptBodyEnd>
+		<MetaDescription></MetaDescription>
+		<OtherHeadTags></OtherHeadTags>
+		<Content>No</Content>
+		<Template>No</Template>
+		<Email>No</Email>
+		<Admin>No</Admin>
+		<OnPageEndEvent>No</OnPageEndEvent>
+		<OnPageStartEvent>No</OnPageStartEvent>
+		<OnBodyStart>No</OnBodyStart>
+		<OnBodyEnd>No</OnBodyEnd>
+		<RemoteMethod>Yes</RemoteMethod>
+		<ProcessInterval>0</ProcessInterval>
+		<PageTitle></PageTitle>
+		<RemoteAssetLink></RemoteAssetLink>
+		<Styles></Styles>
+		<StylesLinkHref></StylesLinkHref>
+		<Styles></Styles>
+		<Scripting Language="VBScript" EntryPoint="" Timeout="5000"/>
+	</Addon>
+	<Addon name="DashboardNavDrop" guid="{C9141C65-32E7-45D4-9EBB-D312F3754BC8}" type="Add-on">
+		<Copy></Copy>
+		<CopyText></CopyText>
+		<ActiveXProgramID></ActiveXProgramID>
+		<DotNetClass><![CDATA[Contensive.Addons.Dashboard.Views.navDropClass]]></DotNetClass>
+		<ArgumentList></ArgumentList>
+		<AsAjax>No</AsAjax>
+		<Filter>No</Filter>
+		<Help></Help>
+		<HelpLink></HelpLink>
+		<Icon Link="" width="0" height="0" sprites="0" />
+		<InIframe>No</InIframe>
+		<BlockEditTools>No</BlockEditTools>
+		<FormXML></FormXML>
+		<IsInline>No</IsInline>
+		<JavascriptOnLoad></JavascriptOnLoad>
+		<JavascriptInHead></JavascriptInHead>
+		<JavascriptBodyEnd></JavascriptBodyEnd>
+		<MetaDescription></MetaDescription>
+		<OtherHeadTags></OtherHeadTags>
+		<Content>No</Content>
+		<Template>No</Template>
+		<Email>No</Email>
+		<Admin>No</Admin>
+		<OnPageEndEvent>No</OnPageEndEvent>
+		<OnPageStartEvent>No</OnPageStartEvent>
+		<OnBodyStart>No</OnBodyStart>
+		<OnBodyEnd>No</OnBodyEnd>
+		<RemoteMethod>Yes</RemoteMethod>
+		<ProcessInterval>0</ProcessInterval>
+		<PageTitle></PageTitle>
+		<RemoteAssetLink></RemoteAssetLink>
+		<Styles></Styles>
+		<StylesLinkHref></StylesLinkHref>
+		<Styles></Styles>
+		<Scripting Language="VBScript" EntryPoint="" Timeout="5000"/>
+	</Addon>
+	<Addon name="DashboardOpenNode" guid="{CF0D4F7A-BE09-4DA4-9036-C7CBD2D01E28}" type="Add-on">
+		<Copy></Copy>
+		<CopyText></CopyText>
+		<ActiveXProgramID></ActiveXProgramID>
+		<DotNetClass><![CDATA[Contensive.Addons.Dashboard.Views.openNodeClass]]></DotNetClass>
+		<ArgumentList></ArgumentList>
+		<AsAjax>No</AsAjax>
+		<Filter>No</Filter>
+		<Help></Help>
+		<HelpLink></HelpLink>
+		<Icon Link="" width="0" height="0" sprites="0" />
+		<InIframe>No</InIframe>
+		<BlockEditTools>No</BlockEditTools>
+		<FormXML></FormXML>
+		<IsInline>No</IsInline>
+		<JavascriptOnLoad></JavascriptOnLoad>
+		<JavascriptInHead></JavascriptInHead>
+		<JavascriptBodyEnd></JavascriptBodyEnd>
+		<MetaDescription></MetaDescription>
+		<OtherHeadTags></OtherHeadTags>
+		<Content>No</Content>
+		<Template>No</Template>
+		<Email>No</Email>
+		<Admin>No</Admin>
+		<OnPageEndEvent>No</OnPageEndEvent>
+		<OnPageStartEvent>No</OnPageStartEvent>
+		<OnBodyStart>No</OnBodyStart>
+		<OnBodyEnd>No</OnBodyEnd>
+		<RemoteMethod>Yes</RemoteMethod>
+		<ProcessInterval>0</ProcessInterval>
+		<PageTitle></PageTitle>
+		<RemoteAssetLink></RemoteAssetLink>
+		<Styles></Styles>
+		<StylesLinkHref></StylesLinkHref>
+		<Styles></Styles>
+		<Scripting Language="VBScript" EntryPoint="" Timeout="5000"/>
+	</Addon>
+	<Addon name="DashboardResize" guid="{4E220430-213A-45FF-988D-6D1C30CBDC0D}" type="Add-on">
+		<Copy></Copy>
+		<CopyText></CopyText>
+		<ActiveXProgramID></ActiveXProgramID>
+		<DotNetClass><![CDATA[Contensive.Addons.Dashboard.Views.ResizeClass]]></DotNetClass>
+		<ArgumentList></ArgumentList>
+		<AsAjax>No</AsAjax>
+		<Filter>No</Filter>
+		<Help></Help>
+		<HelpLink></HelpLink>
+		<Icon Link="" width="0" height="0" sprites="0" />
+		<InIframe>No</InIframe>
+		<BlockEditTools>No</BlockEditTools>
+		<FormXML></FormXML>
+		<IsInline>No</IsInline>
+		<JavascriptOnLoad></JavascriptOnLoad>
+		<JavascriptInHead></JavascriptInHead>
+		<JavascriptBodyEnd></JavascriptBodyEnd>
+		<MetaDescription></MetaDescription>
+		<OtherHeadTags></OtherHeadTags>
+		<Content>No</Content>
+		<Template>No</Template>
+		<Email>No</Email>
+		<Admin>No</Admin>
+		<OnPageEndEvent>No</OnPageEndEvent>
+		<OnPageStartEvent>No</OnPageStartEvent>
+		<OnBodyStart>No</OnBodyStart>
+		<OnBodyEnd>No</OnBodyEnd>
+		<RemoteMethod>Yes</RemoteMethod>
+		<ProcessInterval>0</ProcessInterval>
+		<PageTitle></PageTitle>
+		<RemoteAssetLink></RemoteAssetLink>
+		<Styles></Styles>
+		<StylesLinkHref></StylesLinkHref>
+		<Styles></Styles>
+		<Scripting Language="VBScript" EntryPoint="" Timeout="5000"/>
+	</Addon>
+	<Addon name="jquery.scale9grid.js" guid="{b722c07f-f858-4cb8-b9bb-f4242fcc59e7}" type="Add-on">
+		<Copy></Copy>
+		<CopyText></CopyText>
+		<ActiveXProgramID></ActiveXProgramID>
+		<DotNetClass></DotNetClass>
+		<ArgumentList></ArgumentList>
+		<AsAjax>No</AsAjax>
+		<Filter>No</Filter>
+		<Help></Help>
+		<HelpLink></HelpLink>
+		<Icon Link="" width="0" height="0" sprites="0" />
+		<InIframe>No</InIframe>
+		<BlockEditTools>Yes</BlockEditTools>
+		<FormXML></FormXML>
+		<IncludeAddon name="JQuery" guid="{9C882078-0DAC-48E3-AD4B-CF2AA230DF80}"/>
+		<IsInline>No</IsInline>
+		<JavascriptOnLoad></JavascriptOnLoad>
+		<JavascriptInHead></JavascriptInHead>
+		<JavascriptBodyEnd></JavascriptBodyEnd>
+		<MetaDescription></MetaDescription>
+		<OtherHeadTags></OtherHeadTags>
+		<Content>No</Content>
+		<Template>No</Template>
+		<Email>No</Email>
+		<Admin>No</Admin>
+		<OnPageEndEvent>No</OnPageEndEvent>
+		<OnPageStartEvent>No</OnPageStartEvent>
+		<OnBodyStart>No</OnBodyStart>
+		<OnBodyEnd>No</OnBodyEnd>
+		<RemoteMethod>No</RemoteMethod>
+		<ProcessInterval>0</ProcessInterval>
+		<PageTitle></PageTitle>
+		<RemoteAssetLink></RemoteAssetLink>
+		<Styles></Styles>
+		<StylesLinkHref></StylesLinkHref>
+		<Styles></Styles>
+		<Scripting Language="VBScript" EntryPoint="" Timeout="5000"/>
+	</Addon>
+	<Addon name="DashboardRunOnInstall" guid="{361DB5F8-8C00-40E6-8407-E54A09A35F8C}" type="Add-on">
+		<Copy></Copy>
+		<CopyText></CopyText>
+		<ActiveXProgramID></ActiveXProgramID>
+		<DotNetClass></DotNetClass>
+		<ArgumentList></ArgumentList>
+		<AsAjax>No</AsAjax>
+		<Filter>No</Filter>
+		<Help></Help>
+		<HelpLink></HelpLink>
+		<Icon Link="" width="0" height="0" sprites="0" />
+		<InIframe>No</InIframe>
+		<BlockEditTools>No</BlockEditTools>
+		<FormXML></FormXML>
+		<IsInline>No</IsInline>
+		<JavascriptOnLoad></JavascriptOnLoad>
+		<JavascriptInHead></JavascriptInHead>
+		<JavascriptBodyEnd></JavascriptBodyEnd>
+		<MetaDescription></MetaDescription>
+		<OtherHeadTags></OtherHeadTags>
+		<Content>No</Content>
+		<Template>No</Template>
+		<Email>No</Email>
+		<Admin>No</Admin>
+		<OnPageEndEvent>No</OnPageEndEvent>
+		<OnPageStartEvent>No</OnPageStartEvent>
+		<OnBodyStart>No</OnBodyStart>
+		<OnBodyEnd>No</OnBodyEnd>
+		<RemoteMethod>No</RemoteMethod>
+		<ProcessInterval>0</ProcessInterval>
+		<PageTitle></PageTitle>
+		<RemoteAssetLink></RemoteAssetLink>
+		<Styles></Styles>
+		<StylesLinkHref></StylesLinkHref>
+		<Styles></Styles>
+		<Scripting Language="VBScript" EntryPoint="" Timeout="5000"/>
+	</Addon>
+	<Addon name="Dashboard Trashcan" guid="{0E879FC7-87C8-42E9-831A-22B263F229DF}" type="Add-on">
+		<Copy></Copy>
+		<CopyText></CopyText>
+		<ActiveXProgramID></ActiveXProgramID>
+		<DotNetClass></DotNetClass>
+		<ArgumentList></ArgumentList>
+		<AsAjax>No</AsAjax>
+		<Filter>No</Filter>
+		<Help></Help>
+		<HelpLink></HelpLink>
+		<Icon Link="/upload/dashboard/trashcan.png" width="0" height="0" sprites="0" />
+		<InIframe>No</InIframe>
+		<BlockEditTools>No</BlockEditTools>
+		<FormXML></FormXML>
+		<IsInline>No</IsInline>
+		<JavascriptOnLoad></JavascriptOnLoad>
+		<JavascriptInHead></JavascriptInHead>
+		<JavascriptBodyEnd></JavascriptBodyEnd>
+		<MetaDescription></MetaDescription>
+		<OtherHeadTags></OtherHeadTags>
+		<Content>No</Content>
+		<Template>No</Template>
+		<Email>No</Email>
+		<Admin>No</Admin>
+		<OnPageEndEvent>No</OnPageEndEvent>
+		<OnPageStartEvent>No</OnPageStartEvent>
+		<OnBodyStart>No</OnBodyStart>
+		<OnBodyEnd>No</OnBodyEnd>
+		<RemoteMethod>No</RemoteMethod>
+		<ProcessInterval>0</ProcessInterval>
+		<PageTitle></PageTitle>
+		<RemoteAssetLink></RemoteAssetLink>
+		<Styles></Styles>
+		<StylesLinkHref></StylesLinkHref>
+		<Styles></Styles>
+		<Scripting Language="VBScript" EntryPoint="" Timeout="5000"/>
+	</Addon>
+	<ImportCollection name="JQuery">{A435BF70-041B-43D1-8A8D-5D9D59A7FCD0}</ImportCollection>
+	<ImportCollection name="Whos Online">{F7A1CB55-369B-462A-B5D9-6C1A57EFE4BF}</ImportCollection>
+	<ImportCollection name="Visit Charts">{D5B7BA7F-6B78-4625-8B23-232AC6574130}</ImportCollection>
+	<ImportCollection name="Twitter">{EADB8DAF-CC49-404E-AEDE-71AEE9C9BFEC}</ImportCollection>
+	<ImportCollection name="Site Usage">{BB12E536-21FC-4C86-97A0-7579405EB173}</ImportCollection>
+	<ImportCollection name="Font Awesome">{3db6a433-59ca-43d1-9fb6-a539b6b947f2}</ImportCollection>
+	<Resource name="container.png" type="www" path="dashboard" />
+	<Resource name="container_01.png" type="www" path="dashboard" />
+	<Resource name="container_02.png" type="www" path="dashboard" />
+	<Resource name="container_03.png" type="www" path="dashboard" />
+	<Resource name="container_04.png" type="www" path="dashboard" />
+	<Resource name="container_05.png" type="www" path="dashboard" />
+	<Resource name="container_06.png" type="www" path="dashboard" />
+	<Resource name="container_07.png" type="www" path="dashboard" />
+	<Resource name="container_08.png" type="www" path="dashboard" />
+	<Resource name="container_09.png" type="www" path="dashboard" />
+	<Resource name="desktoplogo.gif" type="www" path="dashboard" />
+	<Resource name="grid.gif" type="www" path="dashboard" />
+	<Resource name="iconclient.png" type="www" path="dashboard" />
+	<Resource name="icondashboard.png" type="www" path="dashboard" />
+	<Resource name="icongoogle.png" type="www" path="dashboard" />
+	<Resource name="jquery.scale9grid.js" type="www" path="dashboard" />
+	<Resource name="trashcan.png" type="www" path="dashboard" />
+	<Resource name="whosonline.png" type="www" path="dashboard" />
+	<Resource name="dashboard.js" type="www" path="dashboard" />
+	<Resource name="dashboard.css" type="www" path="dashboard" />
+	<Resource name="addon.png" type="www" path="dashboard" />
+	<Resource name="content.png" type="www" path="dashboard" />
+	<Resource name="dashconfig.0.json" type="content" path="dashboard" />
+	<Resource name="aodashboard.dll" type="executable" path="" />
+	<Resource name="newtonsoft.json.dll" type="executable" path="" />
+</Collection>

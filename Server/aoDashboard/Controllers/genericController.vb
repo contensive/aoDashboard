@@ -8,7 +8,7 @@ Imports System.Xml
 Imports Contensive.BaseClasses
 
 Namespace Controllers
-    Public Class genericController
+    Public Class GenericController
         '
         '====================================================================================================
         ''' <summary>
@@ -27,7 +27,7 @@ Namespace Controllers
         ''' <param name="ACInstanceID"></param>
         ''' <param name="IconSpriteColumn"></param>
         ''' <returns></returns>
-        Public Shared Function GetAddonIconImg(AdminURL As String, IconWidth As Long, IconHeight As Long, IconSprites As Long, IconIsInline As Boolean, IconImgID As String, IconFilename As String, serverFilePath As String, IconAlt As String, IconTitle As String, ACInstanceID As String, IconSpriteColumn As Long) As String
+        Public Shared Function getAddonIconImg(AdminURL As String, IconWidth As Long, IconHeight As Long, IconSprites As Long, IconIsInline As Boolean, IconImgID As String, IconFilename As String, serverFilePath As String, IconAlt As String, IconTitle As String, ACInstanceID As String, IconSpriteColumn As Long) As String
             '
             If IconAlt = "" Then
                 IconAlt = "Add-on"
@@ -73,7 +73,7 @@ Namespace Controllers
                 '
                 ' just the icon
                 '
-                GetAddonIconImg = "<img" _
+                getAddonIconImg = "<img" _
                     & " border=0" _
                     & " id=""" & IconImgID & """" _
                     & " onDblClick=""window.parent.OpenAddonPropertyWindow(this,'" & AdminURL & "');""" _
@@ -87,25 +87,25 @@ Namespace Controllers
                 '    & " title=""" & IconTitle & """" _
                 '    & " src=""" & IconFilename & """"
                 If IconWidth <> 0 Then
-                    GetAddonIconImg = GetAddonIconImg & " width=""" & IconWidth & "px"""
+                    getAddonIconImg = getAddonIconImg & " width=""" & IconWidth & "px"""
                 End If
                 If IconHeight <> 0 Then
-                    GetAddonIconImg = GetAddonIconImg & " height=""" & IconHeight & "px"""
+                    getAddonIconImg = getAddonIconImg & " height=""" & IconHeight & "px"""
                 End If
                 If IconIsInline Then
-                    GetAddonIconImg = GetAddonIconImg & " style=""vertical-align:middle;display:inline;"" "
+                    getAddonIconImg = getAddonIconImg & " style=""vertical-align:middle;display:inline;"" "
                 Else
-                    GetAddonIconImg = GetAddonIconImg & " style=""display:block"" "
+                    getAddonIconImg = getAddonIconImg & " style=""display:block"" "
                 End If
                 If ACInstanceID <> "" Then
-                    GetAddonIconImg = GetAddonIconImg & " ACInstanceID=""" & ACInstanceID & """"
+                    getAddonIconImg = getAddonIconImg & " ACInstanceID=""" & ACInstanceID & """"
                 End If
-                GetAddonIconImg = GetAddonIconImg & ">"
+                getAddonIconImg = getAddonIconImg & ">"
             Else
                 '
                 ' Sprite Icon
                 '
-                GetAddonIconImg = GetIconSprite(IconImgID, IconSpriteColumn, IconFilename, IconWidth, IconHeight, IconAlt, IconTitle, "window.parent.OpenAddonPropertyWindow(this,'" & AdminURL & "');", IconIsInline, ACInstanceID)
+                getAddonIconImg = getIconSprite(IconImgID, IconSpriteColumn, IconFilename, IconWidth, IconHeight, IconAlt, IconTitle, "window.parent.OpenAddonPropertyWindow(this,'" & AdminURL & "');", IconIsInline, ACInstanceID)
                 '        GetAddonIconImg = "<img" _
                 '            & " border=0" _
                 '            & " id=""" & IconImgID & """" _
@@ -158,11 +158,11 @@ Namespace Controllers
         ''' <param name="IconIsInline"></param>
         ''' <param name="ACInstanceID"></param>
         ''' <returns></returns>
-        Public Shared Function GetIconSprite(TagID As String, SpriteColumn As Long, IconSrc As String, IconWidth As Long, IconHeight As Long, IconAlt As String, IconTitle As String, onDblClick As String, IconIsInline As Boolean, ACInstanceID As String) As String
+        Public Shared Function getIconSprite(TagID As String, SpriteColumn As Long, IconSrc As String, IconWidth As Long, IconHeight As Long, IconAlt As String, IconTitle As String, onDblClick As String, IconIsInline As Boolean, ACInstanceID As String) As String
             '
             Dim ImgStyle As String
             '
-            GetIconSprite = "<img" _
+            getIconSprite = "<img" _
             & " border=0" _
             & " id=""" & TagID & """" _
             & " onMouseOver=""this.style.backgroundPosition='" & (-1 * SpriteColumn * IconWidth) & "px -" & (2 * IconHeight) & "px';""" _
@@ -180,9 +180,9 @@ Namespace Controllers
                 ImgStyle = ImgStyle & "display:block;"
             End If
             If ACInstanceID <> "" Then
-                GetIconSprite = GetIconSprite & " ACInstanceID=""" & ACInstanceID & """"
+                getIconSprite = getIconSprite & " ACInstanceID=""" & ACInstanceID & """"
             End If
-            GetIconSprite = GetIconSprite & " style=""" & ImgStyle & """>"
+            getIconSprite = getIconSprite & " style=""" & ImgStyle & """>"
         End Function
         '
         '====================================================================================================
