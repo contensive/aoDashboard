@@ -35,9 +35,6 @@ goto tryagain
 :makefolder
 md "%deploymentFolderRoot%%deploymentNumber%"
 
-pause
-
-
 rem ==============================================================
 rem
 echo build 
@@ -50,11 +47,6 @@ if errorlevel 1 (
    exit /b %errorlevel%
 )
 cd ..\scripts
-
-
-pause
-
-
 
 rem ==============================================================
 rem
@@ -75,6 +67,3 @@ del "%collectionName%.zip" /Q
 "c:\program files\7-zip\7z.exe" a "%collectionName%.zip"
 xcopy "%collectionName%.zip" "%deploymentFolderRoot%%deploymentNumber%" /Y
 cd ..\..\scripts
-
-pause
-

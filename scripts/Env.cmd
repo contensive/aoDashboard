@@ -7,6 +7,6 @@ set minorVersion=1
 set collectionName=dashboard
 set collectionPath=..\collections\dashboard\
 set solutionName=aoDashboard.sln
-set binPath=..\server\aoDashboard\bin\debug\
+set binPath=..\source\bin\debug\
 set msbuildLocation=C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\
 set deploymentFolderRoot=C:\Deployments\aoDashboard\Dev\
