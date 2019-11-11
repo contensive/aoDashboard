@@ -7,6 +7,7 @@ Imports System.Text
 Imports System.Xml
 Imports Contensive.Addons.Dashboard.Controllers
 Imports Contensive.BaseClasses
+Imports Contensive.Models.Db
 
 Namespace Views
     Public Class NavDropClass
@@ -30,10 +31,10 @@ Namespace Views
                         ' -- An Addon was dragged onto the desktop
                         Dim requestAddonId As Integer = CP.Utils.EncodeInteger(request.id.Substring(1))
                         If (requestAddonId > 0) Then
-                            Dim addon As Models.AddonModel = Models.AddonModel.create(CP, requestAddonId)
+                            Dim addon As AddonModel = AddonModel.create(Of AddonModel)(CP, requestAddonId)
                             If (addon IsNot Nothing) Then
                                 Dim AddonName As String = addon.name
-                                Dim IconFileName As String = addon.IconFilename
+                                Dim IconFileName As String = addon.iconFilename
                                 Dim IconWidth As Integer
                                 Dim IconHeight As Integer
                                 Dim IconSprites As Integer
@@ -47,9 +48,9 @@ Namespace Views
                                 Else
                                     '
                                     ' -- Custom Icon
-                                    IconWidth = addon.IconWidth
-                                    IconHeight = addon.IconHeight
-                                    IconSprites = addon.IconSprites
+                                    IconWidth = CP.Utils.EncodeInteger(addon.iconWidth)
+                                    IconHeight = CP.Utils.EncodeInteger(addon.iconHeight)
+                                    IconSprites = CP.Utils.EncodeInteger(addon.iconSprites)
                                 End If
                                 If String.IsNullOrEmpty(addon.ccguid) Then
                                     addon.ccguid = CP.Utils.CreateGuid
@@ -84,7 +85,7 @@ Namespace Views
                         ' -- A content link was dragged onto the desktop
                         Dim contentId As Integer = CP.Utils.EncodeInteger(request.id.Substring(1))
                         If contentId > 0 Then
-                            Dim content As Models.ContentModel = Models.ContentModel.create(CP, contentId)
+                            Dim content As ContentModel = ContentModel.create(Of ContentModel)(CP, contentId)
                             If (content IsNot Nothing) Then
                                 If (String.IsNullOrEmpty(content.IconLink)) Then
                                     '

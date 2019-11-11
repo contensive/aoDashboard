@@ -128,7 +128,7 @@ Namespace Models
         Private Shared Function load(cp As CPBaseClass, userId As Integer) As ConfigModel
             Dim result As ConfigModel = Nothing
             Dim userConfigFilename As String = "dashboard\dashconfig." & userId & ".json"
-            Dim jsonConfigText As String = cp.File.ReadVirtual(userConfigFilename)
+            Dim jsonConfigText As String = cp.CdnFiles.Read(userConfigFilename)
             If (Not String.IsNullOrWhiteSpace(jsonConfigText)) Then
                 result = Newtonsoft.Json.JsonConvert.DeserializeObject(Of ConfigModel)(jsonConfigText)
             End If
@@ -142,7 +142,7 @@ Namespace Models
         ''' <param name="cp"></param>
         ''' <param name="userId"></param>
         Public Sub save(cp As CPBaseClass, userId As Integer)
-            cp.File.SaveVirtual("dashboard\dashconfig." & userId & ".json", Newtonsoft.Json.JsonConvert.SerializeObject(Me))
+            cp.CdnFiles.Save("dashboard\dashconfig." & userId & ".json", Newtonsoft.Json.JsonConvert.SerializeObject(Me))
         End Sub
         '
         '====================================================================================================
@@ -160,7 +160,7 @@ Namespace Models
             Dim result As ConfigModel = Nothing
             Try
                 Dim UserConfigFilename As String = If(userId <= 0, "dashboard\dashconfig.xml", "dashboard\dashconfig." & userId & ".xml")
-                Dim xmlConfigText As String = cp.File.ReadVirtual(UserConfigFilename)
+                Dim xmlConfigText As String = cp.CdnFiles.Read(UserConfigFilename)
                 If (Not String.IsNullOrWhiteSpace(xmlConfigText)) Then
                     Dim xmlConfig As New System.Xml.XmlDocument
                     xmlConfig.LoadXml(xmlConfigText)
@@ -175,11 +175,11 @@ Namespace Models
                             Select Case LCase(node.Name)
                                 Case "defaultwrapper"
                                     result.defaultWrapper = New ConfigWrapper() With {
-                                        .guid = GenericController.getAttribute(cp, node, "guid")
+                                        .guid = DashboardIconController.getAttribute(cp, node, "guid")
                                     }
                                 Case "node"
                                     Dim addonArgList As New List(Of NameValueModel)
-                                    Dim optionString = Controllers.GenericController.getAttribute(cp, node, "optionstring")
+                                    Dim optionString = Controllers.DashboardIconController.getAttribute(cp, node, "optionstring")
                                     If (Not String.IsNullOrWhiteSpace(optionString)) Then
                                         For Each namevalue As String In optionString.Split("&"c)
                                             If (namevalue.IndexOf("="c) > 0) Then
@@ -193,19 +193,19 @@ Namespace Models
                                     End If
                                     Dim nodeKey As String = "node" & nodeKeySuffix
                                     Dim nodeState As ConfigNodeState
-                                    [Enum].TryParse(Controllers.GenericController.getAttribute(cp, node, "state"), nodeState)
+                                    [Enum].TryParse(Controllers.DashboardIconController.getAttribute(cp, node, "state"), nodeState)
                                     result.nodeList.Add(nodeKey, New ConfigNodeModel() With {
                                         .key = nodeKey,
                                         .addonArgList = addonArgList,
-                                        .addonGUID = GenericController.getAttribute(cp, node, "addonGUID"),
-                                        .contentGUID = GenericController.getAttribute(cp, node, "contentGUID"),
-                                        .contentName = GenericController.getAttribute(cp, node, "contentName"),
-                                        .sizex = cp.Utils.EncodeInteger(Controllers.GenericController.getAttribute(cp, node, "sizex")),
-                                        .sizey = cp.Utils.EncodeInteger(GenericController.getAttribute(cp, node, "sizey")),
+                                        .addonGUID = DashboardIconController.getAttribute(cp, node, "addonGUID"),
+                                        .contentGUID = DashboardIconController.getAttribute(cp, node, "contentGUID"),
+                                        .contentName = DashboardIconController.getAttribute(cp, node, "contentName"),
+                                        .sizex = cp.Utils.EncodeInteger(Controllers.DashboardIconController.getAttribute(cp, node, "sizex")),
+                                        .sizey = cp.Utils.EncodeInteger(DashboardIconController.getAttribute(cp, node, "sizey")),
                                         .state = nodeState,
-                                        .title = Controllers.GenericController.getAttribute(cp, node, "title"),
-                                        .x = cp.Utils.EncodeInteger(GenericController.getAttribute(cp, node, "x")),
-                                        .y = cp.Utils.EncodeInteger(GenericController.getAttribute(cp, node, "y"))
+                                        .title = Controllers.DashboardIconController.getAttribute(cp, node, "title"),
+                                        .x = cp.Utils.EncodeInteger(DashboardIconController.getAttribute(cp, node, "x")),
+                                        .y = cp.Utils.EncodeInteger(DashboardIconController.getAttribute(cp, node, "y"))
                                     })
                             End Select
                             nodeKeySuffix += 1

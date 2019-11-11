@@ -332,7 +332,7 @@ aoDashboard
  <param name="cp"></param>
  <returns></returns>
 </member>
-<member name="M:Contensive.Addons.Dashboard.Controllers.GenericController.getAddonIconImg(System.String,System.Int64,System.Int64,System.Int64,System.Boolean,System.String,System.String,System.String,System.String,System.String,System.String,System.Int64)">
+<member name="M:Contensive.Addons.Dashboard.Controllers.DashboardIconController.getDashboardIconHtml(System.String,System.Int64,System.Int64,System.Int64,System.Boolean,System.String,System.String,System.String,System.String,System.String,System.String,System.Int64,System.String)">
  <summary>
  create addon icon
  </summary>
@@ -350,7 +350,7 @@ aoDashboard
  <param name="IconSpriteColumn"></param>
  <returns></returns>
 </member>
-<member name="M:Contensive.Addons.Dashboard.Controllers.GenericController.getIconSprite(System.String,System.Int64,System.String,System.Int64,System.Int64,System.String,System.String,System.String,System.Boolean,System.String)">
+<member name="M:Contensive.Addons.Dashboard.Controllers.DashboardIconController.getIconSprite(System.String,System.Int64,System.String,System.Int64,System.Int64,System.String,System.String,System.String,System.Boolean,System.String)">
  <summary>
  create an icon as a 4 image sprite
  </summary>
@@ -366,7 +366,7 @@ aoDashboard
  <param name="ACInstanceID"></param>
  <returns></returns>
 </member>
-<member name="M:Contensive.Addons.Dashboard.Controllers.GenericController.getAttribute(Contensive.BaseClasses.CPBaseClass,System.Xml.XmlNode,System.String)">
+<member name="M:Contensive.Addons.Dashboard.Controllers.DashboardIconController.getAttribute(Contensive.BaseClasses.CPBaseClass,System.Xml.XmlNode,System.String)">
  <summary>
  get xml attribute
  </summary>
