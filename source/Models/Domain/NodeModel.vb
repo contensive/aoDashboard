@@ -107,6 +107,7 @@ Namespace Models
                         ' -- this node is not valid
                         Return String.Empty
                     End If
+                    IconHtml = content.iconHtml
                     IconFileName = content.IconLink
                     IconWidth = content.IconWidth
                     IconHeight = content.IconHeight
