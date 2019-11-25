@@ -28,7 +28,7 @@ Namespace Controllers
         ''' <param name="IconSpriteColumn"></param>
         ''' <returns></returns>
         Public Shared Function getDashboardIconHtml(AdminURL As String, IconWidth As Long, IconHeight As Long, IconSprites As Long, IconIsInline As Boolean, IconImgID As String, IconFilename As String, serverFilePath As String, IconAlt As String, IconTitle As String, ACInstanceID As String, IconSpriteColumn As Long, iconHtml As String) As String
-
+            Dim result As String = ""
             '
             If IconAlt = "" Then
                 IconAlt = "Add-on"
@@ -74,7 +74,7 @@ Namespace Controllers
                 '
                 ' just the icon
                 '
-                getDashboardIconHtml = "<img" _
+                result = "<img" _
                     & " border=0" _
                     & " id=""" & IconImgID & """" _
                     & " onDblClick=""window.parent.OpenAddonPropertyWindow(this,'" & AdminURL & "');""" _
@@ -88,25 +88,25 @@ Namespace Controllers
                 '    & " title=""" & IconTitle & """" _
                 '    & " src=""" & IconFilename & """"
                 If IconWidth <> 0 Then
-                    getDashboardIconHtml = getDashboardIconHtml & " width=""" & IconWidth & "px"""
+                    result = result & " width=""" & IconWidth & "px"""
                 End If
                 If IconHeight <> 0 Then
-                    getDashboardIconHtml = getDashboardIconHtml & " height=""" & IconHeight & "px"""
+                    result = result & " height=""" & IconHeight & "px"""
                 End If
                 If IconIsInline Then
-                    getDashboardIconHtml = getDashboardIconHtml & " style=""vertical-align:middle;display:inline;"" "
+                    result = result & " style=""vertical-align:middle;display:inline;"" "
                 Else
-                    getDashboardIconHtml = getDashboardIconHtml & " style=""display:block"" "
+                    result = result & " style=""display:block"" "
                 End If
                 If ACInstanceID <> "" Then
-                    getDashboardIconHtml = getDashboardIconHtml & " ACInstanceID=""" & ACInstanceID & """"
+                    result = result & " ACInstanceID=""" & ACInstanceID & """"
                 End If
-                getDashboardIconHtml = getDashboardIconHtml & ">"
+                Return result & ">"
             Else
                 '
                 ' Sprite Icon
                 '
-                getDashboardIconHtml = getIconSprite(IconImgID, IconSpriteColumn, IconFilename, IconWidth, IconHeight, IconAlt, IconTitle, "window.parent.OpenAddonPropertyWindow(this,'" & AdminURL & "');", IconIsInline, ACInstanceID)
+                Return getIconSprite(IconImgID, IconSpriteColumn, IconFilename, IconWidth, IconHeight, IconAlt, IconTitle, "window.parent.OpenAddonPropertyWindow(this,'" & AdminURL & "');", IconIsInline, ACInstanceID)
             End If
         End Function
         '
@@ -137,7 +137,7 @@ Namespace Controllers
             & " onDblClick=""" & onDblClick & """" _
             & " alt=""" & IconAlt & """" _
             & " title=""" & IconTitle & """" _
-            & " src=""/ccLib/images/spacer.gif"""
+            & " src=""https://s3.amazonaws.com/cdn.contensive.com/assets/20191111/images/spacer.gif"""
             ImgStyle = "background:url(" & IconSrc & ") " & (-1 * SpriteColumn * IconWidth) & "px 0px no-repeat;"
             ImgStyle = ImgStyle & "width:" & IconWidth & "px;"
             ImgStyle = ImgStyle & "height:" & IconHeight & "px;"

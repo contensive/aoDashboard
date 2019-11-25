@@ -4,6 +4,7 @@ Option Strict On
 
 Imports System
 Imports System.Collections.Generic
+Imports System.Net
 Imports System.Text
 Imports System.Xml
 Imports Contensive.BaseClasses
@@ -69,6 +70,16 @@ Namespace Models
                         IconHeight = cp.Utils.EncodeInteger(addon.iconHeight)
                         IconSprites = cp.Utils.EncodeInteger(addon.iconSprites)
                         IconHtml = addon.iconHtml
+                        If (String.IsNullOrWhiteSpace(IconHtml)) Then
+                            '
+                            ' -- lots of server hits
+                            Dim http As New WebClient()
+                            IconHtml = http.DownloadString("https://support.contensive.com/GetAddonIcon?guid=" & cp.Utils.EncodeUrl(addon.ccguid))
+                            If (Not String.IsNullOrWhiteSpace(IconHtml)) Then
+                                addon.iconHtml = IconHtml
+                                addon.save(cp)
+                            End If
+                        End If
                         ShortcutHref = If(String.IsNullOrWhiteSpace(nodeConfig.link), "?addonid=" & addon.id, nodeConfig.link)
                         'ToolBar += "<a alt=""Run In window"" title=""Run In Window"" href=""#"" onClick=""dashOpenNode('" & nodeConfig.key & "','" & nodeConfig.key & "');return false;""><i title=""restore"" class=""fas fa-window-restore"" style=""color:#222""></i></a>"
                         ToolBar += "<a alt=""Remove from dashboard"" title=""Remove from dashboard"" href=""#"" onClick=""dashDeleteNode('" & nodeConfig.key & "','" & nodeConfig.key & "');return false;""><i title=""close"" class=""fas fa-window-close"" style=""color:#222""></i></a>"
@@ -108,10 +119,20 @@ Namespace Models
                         Return String.Empty
                     End If
                     IconHtml = content.iconHtml
-                    IconFileName = content.IconLink
-                    IconWidth = content.IconWidth
-                    IconHeight = content.IconHeight
-                    IconSprites = content.IconSprites
+                    If (String.IsNullOrWhiteSpace(IconHtml)) Then
+                        '
+                        ' -- lots of server hits
+                        Dim http As New WebClient()
+                        IconHtml = http.DownloadString("https://support.contensive.com/GetContentIcon?guid=" & cp.Utils.EncodeUrl(content.ccguid))
+                        If (Not String.IsNullOrWhiteSpace(IconHtml)) Then
+                            content.iconHtml = IconHtml
+                            content.save(cp)
+                        End If
+                    End If
+                    IconFileName = content.iconLink
+                    IconWidth = content.iconWidth
+                    IconHeight = content.iconHeight
+                    IconSprites = content.iconSprites
                     ShortcutHref = If(String.IsNullOrWhiteSpace(nodeConfig.link), "?cid=" & content.id, nodeConfig.link)
                     DroppableHoverClass = ""
                     content.id = 0
