@@ -25,7 +25,7 @@
 		<!-- deprecated --><JSBodyScriptSrc></JSBodyScriptSrc>
 		<!-- deprecated --><JavascriptBodyEnd></JavascriptBodyEnd>
 		<!-- deprecated --><JavascriptOnLoad></JavascriptOnLoad>
-		<Content>Yes</Content>
+		<Content>No</Content>
 		<Template>Yes</Template>
 		<Email>No</Email>
 		<Admin>No</Admin>
