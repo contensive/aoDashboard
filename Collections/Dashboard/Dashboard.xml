@@ -26,7 +26,7 @@
 		<!-- deprecated --><JavascriptBodyEnd></JavascriptBodyEnd>
 		<!-- deprecated --><JavascriptOnLoad></JavascriptOnLoad>
 		<Content>No</Content>
-		<Template>Yes</Template>
+		<Template>no</Template>
 		<Email>No</Email>
 		<Admin>No</Admin>
 		<OnPageEndEvent>No</OnPageEndEvent>
@@ -56,7 +56,7 @@
 		<HelpLink></HelpLink>
 		<Icon Link="/upload/dashboard/trashcan.png" width="0" height="0" sprites="0" />
 		<InIframe>No</InIframe>
-		<BlockEditTools>No</BlockEditTools>
+		<BlockEditTools>yes</BlockEditTools>
 		<FormXML></FormXML>
 		<IsInline>No</IsInline>
 		<JavascriptInHead></JavascriptInHead>
@@ -354,7 +354,7 @@
 		<OnBodyStart>No</OnBodyStart>
 		<OnBodyEnd>No</OnBodyEnd>
 		<RemoteMethod>No</RemoteMethod>
-		<ProcessRunOnce>Yes</ProcessRunOnce>
+		<ProcessRunOnce>no</ProcessRunOnce>
 		<ProcessInterval>0</ProcessInterval>
 		<MetaDescription></MetaDescription>
 		<OtherHeadTags></OtherHeadTags>
