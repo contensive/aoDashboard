@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="windows-1252"?>
-<Collection name="Dashboard" guid="{b470c25f-ddbc-4593-8161-1a2fd4a35690}" system="No" updatable="No" blockNavigatorNode="No" onInstallAddonGuid="{361DB5F8-8C00-40E6-8407-E54A09A35F8C}">
+<Collection name="Dashboard" guid="{b470c25f-ddbc-4593-8161-1a2fd4a35690}" system="No" updatable="Yes" blockNavigatorNode="No" onInstallAddonGuid="{361DB5F8-8C00-40E6-8407-E54A09A35F8C}">
 	<HelpLink></HelpLink>
 	<Help></Help>
 	<Addon name="Dashboard" guid="{4BA7B4A2-ED6C-46C5-9C7B-8CE251FC8FF5}" type="Add-on">
