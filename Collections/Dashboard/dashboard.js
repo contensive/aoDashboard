@@ -4,12 +4,10 @@ function getUniqueID() {return new Date().valueOf();}
 //
 // -- event to resize dash
 function dashResize() {
-	console.log("dashResize");
 	var i,n,nodeTop,nodeBottom,desktopBottom=0;
 	jQuery(".dashNode").each(function(){
 		n=document.getElementById(this.id)
 		if(n){
-			console.log("dashResize, initialize node["+this.id+"]");
 			nodeTop=n.style.top;
 			nodeTop=parseInt(nodeTop.replace("px",""));
 			nodeBottom=nodeTop+n.scrollHeight;
@@ -113,19 +111,15 @@ function navDropCallback(response,iconId){
 	dashResize();
 }
 function navDrop(id,x,y){
-	console.log("navDrop, id ["+id+"], x ["+x+"], y ["+y+"]");
 	var iconId="dashhelper"+getUniqueID();
-	console.log("navDrop, iconId ["+iconId+"]");
 	var w=document.getElementById("dashBoardWrapper");
 	var e=document.createElement("div");
 	var posX=(x-getPageOffsetLeft(w));
 	var posY=(y-37-getPageOffsetTop(w));
-	console.log("navDrop, posX ["+posX+"], posY ["+posY+"]");
 	e.setAttribute("id",iconId);
 	e.setAttribute("style","position:absolute;top:0;left:0;");
 	w.appendChild(e);
 	var qs = "id="+id+"&x="+posX+"&y="+posY;
-	console.log("navDrop, qs ["+qs+"]");
 	cj.ajax.addonCallback("dashboardnavdrop",qs,navDropCallback,iconId);
 }
 /*
@@ -136,7 +130,6 @@ function dashBindNodes() {
 		jQuery(this).draggable({
 			stop: function(event, ui){
 				var qs="key="+this.id+"&x="+this.style.left+"&y="+this.style.top;
-				console.log("draggable:stop, qs ["+qs+"]");
 				cj.ajax.addonCallback("dashboarddragstop",qs,dashResize);
 			}
 			,start: function(event, ui){
