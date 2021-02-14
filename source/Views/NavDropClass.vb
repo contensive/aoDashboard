@@ -1,11 +1,4 @@
-Option Explicit On
-Option Strict On
 
-Imports System
-Imports System.Collections.Generic
-Imports System.Text
-Imports System.Xml
-Imports Contensive.Addons.Dashboard.Controllers
 Imports Contensive.BaseClasses
 Imports Contensive.Models.Db
 
@@ -59,8 +52,8 @@ Namespace Views
                                 '
                                 ' -- Add this add-on to the config and return the Icon
                                 Dim nodeKey As String = "addon" & addon.id & "-" & Guid.NewGuid().ToString().Replace("{", "").Replace("}", "").Replace("-", "")
-                                Dim newNode As New Models.ConfigModel.ConfigNodeModel() With {
-                                    .addonArgList = New List(Of Models.ConfigModel.NameValueModel),
+                                Dim newNode As New Models.ConfigNodeModel() With {
+                                    .addonArgList = New List(Of Models.NameValueModel),
                                     .addonGUID = addon.ccguid,
                                     .contentGUID = "",
                                     .contentName = "",
@@ -68,7 +61,7 @@ Namespace Views
                                     .key = nodeKey,
                                     .sizex = 200,
                                     .sizey = 300,
-                                    .state = Models.ConfigModel.ConfigNodeState.closed,
+                                    .state = Models.ConfigNodeState.closed,
                                     .title = addon.name,
                                     .wrapperId = If(wrapper Is Nothing, 0, wrapper.id),
                                     .x = request.x,
@@ -99,8 +92,8 @@ Namespace Views
                                 '
                                 ' Add this add-on to the config and return the Icon
                                 Dim nodeKey As String = "content" & content.id & "-" & Guid.NewGuid().ToString().Replace("{", "").Replace("}", "").Replace("-", "")
-                                Dim newNode As New Models.ConfigModel.ConfigNodeModel() With {
-                                    .addonArgList = New List(Of Models.ConfigModel.NameValueModel),
+                                Dim newNode As New Models.ConfigNodeModel() With {
+                                    .addonArgList = New List(Of Models.NameValueModel),
                                     .addonGUID = "",
                                     .contentGUID = content.ccguid,
                                     .contentName = content.name,
@@ -108,7 +101,7 @@ Namespace Views
                                     .key = nodeKey,
                                     .sizex = 77,
                                     .sizey = 77,
-                                    .state = Models.ConfigModel.ConfigNodeState.closed,
+                                    .state = Models.ConfigNodeState.closed,
                                     .title = content.name,
                                     .wrapperId = If(wrapper Is Nothing, 0, wrapper.id),
                                     .x = request.x,
@@ -130,8 +123,8 @@ Namespace Views
                                 '
                                 ' Add this add-on to the config and return the Icon
                                 Dim nodeKey As String = "nav" & navigatorEntry.id & "-" & Guid.NewGuid().ToString().Replace("{", "").Replace("}", "").Replace("-", "")
-                                Dim newNode As New Models.ConfigModel.ConfigNodeModel() With {
-                                    .addonArgList = New List(Of Models.ConfigModel.NameValueModel),
+                                Dim newNode As New Models.ConfigNodeModel() With {
+                                    .addonArgList = New List(Of Models.NameValueModel),
                                     .addonGUID = "",
                                     .contentGUID = "",
                                     .contentName = "",
@@ -139,7 +132,7 @@ Namespace Views
                                     .key = nodeKey,
                                     .sizex = 77,
                                     .sizey = 77,
-                                    .state = Models.ConfigModel.ConfigNodeState.closed,
+                                    .state = Models.ConfigNodeState.closed,
                                     .title = navigatorEntry.name,
                                     .wrapperId = If(wrapper Is Nothing, 0, wrapper.id),
                                     .x = request.x,

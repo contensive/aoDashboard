@@ -1,11 +1,4 @@
 
-Option Explicit On
-Option Strict On
-
-Imports System
-Imports System.Collections.Generic
-Imports System.Text
-Imports System.Xml
 Imports Contensive.BaseClasses
 
 Namespace Views
@@ -24,8 +17,8 @@ Namespace Views
                     Dim config As Models.ConfigModel = Models.ConfigModel.create(CP, CP.User.Id)
                     If (config IsNot Nothing) Then
                         If (config.nodeList.ContainsKey(request.key)) Then
-                            Dim configNode As Models.ConfigModel.ConfigNodeModel = config.nodeList(request.key)
-                            configNode.state = Models.ConfigModel.ConfigNodeState.open
+                            Dim configNode As Models.ConfigNodeModel = config.nodeList(request.key)
+                            configNode.state = Models.ConfigNodeState.open
                             config.save(CP)
                             result = Models.NodeModel.getNodeHtml(CP, configNode)
                         End If

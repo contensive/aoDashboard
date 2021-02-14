@@ -1,10 +1,4 @@
 ﻿
-Option Explicit On
-Option Strict On
-
-Imports System
-Imports System.Collections.Generic
-Imports System.Text
 Imports System.Xml
 Imports Contensive.Addons.Dashboard.Controllers
 Imports Contensive.BaseClasses
@@ -13,79 +7,6 @@ Namespace Models
     Public Class ConfigModel
         Public defaultWrapper As ConfigWrapper
         Public nodeList As Dictionary(Of String, ConfigNodeModel)
-
-        '
-        Public Class ConfigWrapper
-            Public guid As String
-        End Class
-        '
-        Public Class NameValueModel
-            Public name As String
-            Public value As String
-        End Class
-        '
-        Public Enum ConfigNodeState
-            closed = 1
-            open = 2
-        End Enum
-        '
-        Public Class ConfigNodeModel
-            ''' <summary>
-            ''' The htmlId of the node. 
-            ''' Also the key into the dictionary of these objects.
-            ''' Also the prefix for other html structions: 
-            ''' </summary>
-            Public key As String
-            ''' <summary>
-            ''' optional, if provided this icon will link to the content list page
-            ''' </summary>
-            Public contentName As String
-            Public contentGUID As String
-            ''' <summary>
-            ''' opional, if provided this icon will link to the execution of this addon
-            ''' </summary>
-            Public addonGUID As String
-            ''' <summary>
-            ''' title for this node
-            ''' </summary>
-            Public title As String
-            ''' <summary>
-            ''' open, closed, etc - convert to an enumeration
-            ''' </summary>
-            Public state As ConfigNodeState
-            ''' <summary>
-            ''' the width
-            ''' </summary>
-            Public sizex As Integer
-            ''' <summary>
-            ''' the height
-            ''' </summary>
-            Public sizey As Integer
-            ''' <summary>
-            ''' if node is for an addon, set these request properties first
-            ''' </summary>
-            Public addonArgList As List(Of NameValueModel)
-            ''' <summary>
-            ''' The style top for the object
-            ''' </summary>
-            Public x As Integer
-            ''' <summary>
-            ''' the style left for the object
-            ''' </summary>
-            Public y As Integer
-            ''' <summary>
-            ''' The html style z index for this object
-            ''' </summary>
-            Public z As Integer
-            ''' <summary>
-            ''' If not empty, this link will be used for the dashboard icon. Use for navigator entries setup as links.
-            ''' </summary>
-            Public link As String
-            ''' <summary>
-            ''' currently not used. The id of the wrapper object
-            ''' </summary>
-            Public wrapperId As Integer
-        End Class
         '
         '====================================================================================================
         ''' <summary>
@@ -95,27 +16,35 @@ Namespace Models
         ''' <param name="userId"></param>
         ''' <returns></returns>
         Public Shared Function create(cp As CPBaseClass, userId As Integer) As ConfigModel
-            Dim result As ConfigModel = load(cp, userId)
-            If (result Is Nothing) Then
-                '
-                ' -- try legacy config
-                result = createFromLegacyXmlData(cp, userId)
+            Try
+                Dim result As ConfigModel = load(cp, userId)
                 If (result Is Nothing) Then
                     '
-                    ' -- load default
-                    result = load(cp, 0)
+                    ' -- try legacy config
+                    result = createFromLegacyXmlData(cp, userId)
                     If (result Is Nothing) Then
                         '
-                        ' -- load legacy default and create current default
-                        result = createFromLegacyXmlData(cp, 0)
-                        '
-                        ' -- create default
-                        result.save(cp, 0)
+                        ' -- load default
+                        result = load(cp, 0)
+                        If (result Is Nothing) Then
+                            '
+                            ' -- load legacy default and create current default
+                            result = createFromLegacyXmlData(cp, 0)
+                            If (result Is Nothing) Then
+                                result = Newtonsoft.Json.JsonConvert.DeserializeObject(Of ConfigModel)(My.Resources.defaultConfigJson)
+                            End If
+                            '
+                            ' -- create default
+                            result.save(cp, 0)
+                        End If
                     End If
+                    result.save(cp, userId)
                 End If
-                result.save(cp, userId)
-            End If
-            Return result
+                Return result
+            Catch ex As Exception
+                cp.Site.ErrorReport(ex)
+                Throw
+            End Try
         End Function
         '
         '====================================================================================================
@@ -217,5 +146,78 @@ Namespace Models
             End Try
             Return result
         End Function
+    End Class
+
+    '
+    Public Class ConfigWrapper
+        Public guid As String
+    End Class
+    '
+    Public Class NameValueModel
+        Public name As String
+        Public value As String
+    End Class
+    '
+    Public Enum ConfigNodeState
+        closed = 1
+        open = 2
+    End Enum
+    '
+    Public Class ConfigNodeModel
+        ''' <summary>
+        ''' The htmlId of the node. 
+        ''' Also the key into the dictionary of these objects.
+        ''' Also the prefix for other html structions: 
+        ''' </summary>
+        Public key As String
+        ''' <summary>
+        ''' optional, if provided this icon will link to the content list page
+        ''' </summary>
+        Public contentName As String
+        Public contentGUID As String
+        ''' <summary>
+        ''' opional, if provided this icon will link to the execution of this addon
+        ''' </summary>
+        Public addonGUID As String
+        ''' <summary>
+        ''' title for this node
+        ''' </summary>
+        Public title As String
+        ''' <summary>
+        ''' open, closed, etc - convert to an enumeration
+        ''' </summary>
+        Public state As ConfigNodeState
+        ''' <summary>
+        ''' the width
+        ''' </summary>
+        Public sizex As Integer
+        ''' <summary>
+        ''' the height
+        ''' </summary>
+        Public sizey As Integer
+        ''' <summary>
+        ''' if node is for an addon, set these request properties first
+        ''' </summary>
+        Public addonArgList As List(Of NameValueModel)
+        ''' <summary>
+        ''' The style top for the object
+        ''' </summary>
+        Public x As Integer
+        ''' <summary>
+        ''' the style left for the object
+        ''' </summary>
+        Public y As Integer
+        ''' <summary>
+        ''' The html style z index for this object
+        ''' </summary>
+        Public z As Integer
+        ''' <summary>
+        ''' If not empty, this link will be used for the dashboard icon. Use for navigator entries setup as links.
+        ''' </summary>
+        Public link As String
+        ''' <summary>
+        ''' currently not used. The id of the wrapper object
+        ''' </summary>
+        Public wrapperId As Integer
     End Class
 End Namespace

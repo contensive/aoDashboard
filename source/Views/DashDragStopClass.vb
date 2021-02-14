@@ -1,6 +1,4 @@
 
-Option Explicit On
-Option Strict On
 
 Imports Contensive.BaseClasses
 
@@ -20,7 +18,7 @@ Namespace Views
                     Dim config As Models.ConfigModel = Models.ConfigModel.create(CP, CP.User.Id)
                     If (config IsNot Nothing) Then
                         If (config.nodeList.ContainsKey(request.key)) Then
-                            Dim configNode As Models.ConfigModel.ConfigNodeModel = config.nodeList(request.key)
+                            Dim configNode As Models.ConfigNodeModel = config.nodeList(request.key)
                             configNode.x = request.x
                             configNode.y = request.y
                             config.save(CP)

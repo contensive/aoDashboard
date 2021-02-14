@@ -1,12 +1,5 @@
 ﻿
-Option Explicit On
-Option Strict On
-
-Imports System
-Imports System.Collections.Generic
 Imports System.Net
-Imports System.Text
-Imports System.Xml
 Imports Contensive.BaseClasses
 Imports Contensive.Models.Db
 
@@ -24,7 +17,7 @@ Namespace Models
         ''' <param name="cp"></param>
         ''' <param name="nodeConfig"></param>
         ''' <returns></returns>
-        Public Shared Function getNodeHtml(cp As CPBaseClass, nodeConfig As Models.ConfigModel.ConfigNodeModel) As String
+        Public Shared Function getNodeHtml(cp As CPBaseClass, nodeConfig As Models.ConfigNodeModel) As String
             Dim result As String = ""
             Try
                 Dim AddonOptions As String = ""
@@ -60,7 +53,7 @@ Namespace Models
                         Return String.Empty
                     End If
                     title = addon.name
-                    If (nodeConfig.state = ConfigModel.ConfigNodeState.closed) Then
+                    If (nodeConfig.state = ConfigNodeState.closed) Then
                         '
                         ' Addon is just an icon
                         ItemHTMLClass = "dashNode iconNode"
@@ -137,7 +130,7 @@ Namespace Models
                     DroppableHoverClass = ""
                     content.id = 0
                     AddonOptions = ""
-                    nodeConfig.state = ConfigModel.ConfigNodeState.closed
+                    nodeConfig.state = ConfigNodeState.closed
                     title = content.name
                     ToolBar = "" _
                         & "<a href=""#"" onClick=""dashDeleteNode('" & nodeConfig.key & "','" & nodeConfig.key & "');return false;""><i title=""close"" class=""fas fa-window-close"" style=""color:#222""></i></a>" _
@@ -159,7 +152,7 @@ Namespace Models
                     IconSprites = 4
                     ShortcutHref = nodeConfig.link
                     DroppableHoverClass = ""
-                    nodeConfig.state = ConfigModel.ConfigNodeState.closed
+                    nodeConfig.state = ConfigNodeState.closed
                     title = nodeConfig.title
                     ToolBar = "" _
                         & "<a href=""#"" onClick=""dashDeleteNode('" & nodeConfig.key & "','" & nodeConfig.key & "');return false;""><i title=""close"" class=""fas fa-window-close"" style=""color:#222""></i></a>" _
@@ -168,7 +161,7 @@ Namespace Models
                 '
                 ' -- Build inner content of icon or addon
                 Dim DoDadContent As String = ""
-                If (nodeConfig.state = ConfigModel.ConfigNodeState.closed) Then
+                If (nodeConfig.state = ConfigNodeState.closed) Then
                     '
                     ' Icon Shortcut (Content or Addon)
                     If (String.IsNullOrWhiteSpace(IconHtml)) Then

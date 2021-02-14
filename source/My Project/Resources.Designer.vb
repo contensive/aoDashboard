@@ -22,7 +22,7 @@ Namespace My.Resources
     '''<summary>
     '''  A strongly-typed resource class, for looking up localized strings, etc.
     '''</summary>
-    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0"),  _
+    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0"),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute(),  _
      Global.Microsoft.VisualBasic.HideModuleNameAttribute()>  _
@@ -58,6 +58,37 @@ Namespace My.Resources
             Set
                 resourceCulture = value
             End Set
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to {
+        '''  &quot;defaultWrapper&quot;: {
+        '''    &quot;guid&quot;: &quot;{9182DCA4-F88B-4593-A5A0-D9151A7FF342}&quot;
+        '''  },
+        '''  &quot;nodeList&quot;: {
+        '''    &quot;node1&quot;: {
+        '''      &quot;key&quot;: &quot;node1&quot;,
+        '''      &quot;contentName&quot;: &quot;&quot;,
+        '''      &quot;contentGUID&quot;: &quot;&quot;,
+        '''      &quot;addonGUID&quot;: &quot;{9A7A1567-CC4A-4AF8-B828-2AD7F9389D25}&quot;,
+        '''      &quot;title&quot;: &quot;Current Activity&quot;,
+        '''      &quot;state&quot;: 2,
+        '''      &quot;sizex&quot;: 231,
+        '''      &quot;sizey&quot;: 308,
+        '''      &quot;addonArgList&quot;: [],
+        '''      &quot;x&quot;: 20,
+        '''      &quot;y&quot;: 20,
+        '''      &quot;z&quot;: 0,
+        '''      &quot;wrapperId&quot;: 0
+        '''    },
+        '''    &quot;node4&quot;: {
+        '''      &quot;key&quot;: &quot;node4&quot;,
+        '''      &quot;contentNa [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property defaultConfigJson() As String
+            Get
+                Return ResourceManager.GetString("defaultConfigJson", resourceCulture)
+            End Get
         End Property
     End Module
 End Namespace
