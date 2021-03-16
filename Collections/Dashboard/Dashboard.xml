@@ -448,7 +448,6 @@
 	<ImportCollection name="JQuery">{A435BF70-041B-43D1-8A8D-5D9D59A7FCD0}</ImportCollection>
 	<ImportCollection name="Whos Online">{F7A1CB55-369B-462A-B5D9-6C1A57EFE4BF}</ImportCollection>
 	<ImportCollection name="Twitter">{EADB8DAF-CC49-404E-AEDE-71AEE9C9BFEC}</ImportCollection>
-	<ImportCollection name="Site Usage">{BB12E536-21FC-4C86-97A0-7579405EB173}</ImportCollection>
 	<Resource name="container.png" type="www" path="dashboard" />
 	<Resource name="container_01.png" type="www" path="dashboard" />
 	<Resource name="container_02.png" type="www" path="dashboard" />
