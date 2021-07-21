@@ -174,7 +174,7 @@ Namespace Models
                 ElseIf (addon IsNot Nothing) Then
                     '
                     ' -- execute the addon
-                    DoDadContent = cp.Utils.ExecuteAddon(addon.ccguid)
+                    DoDadContent = cp.Addon.Execute(addon.ccguid)
                 End If
                 '
                 ' -- add wrapper (deprecated)
@@ -262,6 +262,7 @@ Namespace Models
             Try
                 '
                 ' -- if there is a support site error, this throws an exception that we need to swallow
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls11 Or SecurityProtocolType.Tls12
                 Dim http As New WebClient()
                 Return http.DownloadString("https://support.contensive.com/" & supportSiteRemoteMethod & "?guid=" & cp.Utils.EncodeUrl(sourceGuid))
             Catch ex As Exception
