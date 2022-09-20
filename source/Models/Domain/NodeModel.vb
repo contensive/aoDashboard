@@ -169,7 +169,7 @@ Namespace Models
                         End If
                     End If
                     DoDadContent = "" _
-                        & vbCrLf & vbTab & vbTab & "<a class=""shortcut"" href=""" & ShortcutHref & """>" & IconHtml & "<br>" & title & "</a>" _
+                        & vbCrLf & vbTab & vbTab & "<a class=""shortcut"" href=""" & ShortcutHref & """>" & IconHtml & "<div>" & title & "</div></a>" _
                         & ""
                 ElseIf (addon IsNot Nothing) Then
                     '
