@@ -39,13 +39,13 @@ Namespace Models
                 Dim title As String = ""
                 Dim addon As AddonModel = Nothing
                 Dim IconHtml As String = ""
-                If (nodeConfig.addonGUID <> "") And (nodeConfig.addonGUID <> "0") Then
+                If (Not String.IsNullOrEmpty(nodeConfig.addonGUID)) AndAlso (nodeConfig.addonGUID <> "0") Then
                     '
-                    ' -- render addon
+                    ' -- render addon (addonGuid legacy is id)
                     If IsNumeric(nodeConfig.addonGUID) And Len(nodeConfig.addonGUID) < 10 Then
-                        addon = AddonModel.create(Of AddonModel)(cp, CInt(nodeConfig.addonGUID))
+                        addon = DbBaseModel.create(Of AddonModel)(cp, CInt(nodeConfig.addonGUID))
                     Else
-                        addon = AddonModel.create(Of AddonModel)(cp, nodeConfig.addonGUID)
+                        addon = DbBaseModel.create(Of AddonModel)(cp, nodeConfig.addonGUID)
                     End If
                     If (addon Is Nothing) Then
                         '
@@ -63,12 +63,12 @@ Namespace Models
                         IconHeight = cp.Utils.EncodeInteger(addon.iconHeight)
                         IconSprites = cp.Utils.EncodeInteger(addon.iconSprites)
                         IconHtml = addon.iconHtml
-                        If (String.IsNullOrWhiteSpace(IconHtml)) Then
-                            '
-                            ' -- lots of server hits
-                            addon.iconHtml = getHtmlIcon(cp, addon.ccguid, "getAddonIcon")
-                            addon.save(cp)
-                        End If
+                        'If (String.IsNullOrWhiteSpace(IconHtml)) Then
+                        '    '
+                        '    ' -- lots of server hits
+                        '    addon.iconHtml = getHtmlIcon(cp, addon.ccguid, "getAddonIcon")
+                        '    addon.save(cp)
+                        'End If
                         ShortcutHref = If(String.IsNullOrWhiteSpace(nodeConfig.link), "?addonid=" & addon.id, nodeConfig.link)
                         ToolBar += "<a alt=""Remove from dashboard"" title=""Remove from dashboard"" href=""#"" onClick=""dashDeleteNode('" & nodeConfig.key & "','" & nodeConfig.key & "');return false;""><i title=""close"" class=""fas fa-window-close"" style=""color:#222""></i></a>"
                     Else
@@ -107,12 +107,12 @@ Namespace Models
                         Return String.Empty
                     End If
                     IconHtml = content.iconHtml
-                    If (String.IsNullOrWhiteSpace(IconHtml)) Then
-                        '
-                        ' -- lots of server hits
-                        content.iconHtml = getHtmlIcon(cp, content.ccguid, "getContentIcon")
-                        content.save(cp)
-                    End If
+                    'If (String.IsNullOrWhiteSpace(IconHtml)) Then
+                    '    '
+                    '    ' -- lots of server hits
+                    '    content.iconHtml = getHtmlIcon(cp, content.ccguid, "getContentIcon")
+                    '    content.save(cp)
+                    'End If
                     IconFileName = content.iconLink
                     IconWidth = content.iconWidth
                     IconHeight = content.iconHeight
@@ -250,25 +250,25 @@ Namespace Models
             End Try
             Return result
         End Function
-        '
-        '=====================================================================================
-        ''' <summary>
-        ''' Fetch the addon's html icon and swallow errors from http fetch
-        ''' </summary>
-        ''' <param name="cp"></param>
-        ''' <param name="sourceGuid"></param>
-        ''' <returns></returns>
-        Public Shared Function getHtmlIcon(cp As CPBaseClass, sourceGuid As String, supportSiteRemoteMethod As String) As String
-            Try
-                '
-                ' -- if there is a support site error, this throws an exception that we need to swallow
-                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls11 Or SecurityProtocolType.Tls12
-                Dim http As New WebClient()
-                Return http.DownloadString("https://support.contensive.com/" & supportSiteRemoteMethod & "?guid=" & cp.Utils.EncodeUrl(sourceGuid))
-            Catch ex As Exception
-                cp.Site.ErrorReport(ex, "exception fetching an addon iconHtml from https://support.contensive.com/" & supportSiteRemoteMethod & "?guid=" & cp.Utils.EncodeUrl(sourceGuid))
-                Return ""
-            End Try
-        End Function
+        ''
+        ''=====================================================================================
+        '''' <summary>
+        '''' Fetch the addon's html icon and swallow errors from http fetch
+        '''' </summary>
+        '''' <param name="cp"></param>
+        '''' <param name="sourceGuid"></param>
+        '''' <returns></returns>
+        'Public Shared Function getHtmlIcon(cp As CPBaseClass, sourceGuid As String, supportSiteRemoteMethod As String) As String
+        '    Try
+        '        '
+        '        ' -- if there is a support site error, this throws an exception that we need to swallow
+        '        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls11 Or SecurityProtocolType.Tls12
+        '        Dim http As New WebClient()
+        '        Return http.DownloadString("https://support.contensive.com/" & supportSiteRemoteMethod & "?guid=" & cp.Utils.EncodeUrl(sourceGuid))
+        '    Catch ex As Exception
+        '        cp.Site.ErrorReport(ex, "exception fetching an addon iconHtml from https://support.contensive.com/" & supportSiteRemoteMethod & "?guid=" & cp.Utils.EncodeUrl(sourceGuid))
+        '        Return ""
+        '    End Try
+        'End Function
     End Class
 End Namespace

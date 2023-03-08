@@ -9,7 +9,18 @@ rem
 rem Setup deployment folder
 rem
 
-call env.cmd
+
+rem all paths are relative to the git scripts folder
+
+set majorVersion=5
+set minorVersion=1
+set collectionName=dashboard
+set collectionPath=..\collections\dashboard\
+set solutionName=aoDashboard.sln
+set binPath=..\source\bin\debug\
+set msbuildLocation=C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\
+set deploymentFolderRoot=C:\Deployments\aoDashboard\Dev\
+
 set deploymentNumber=%1
 set year=%date:~12,4%
 set month=%date:~4,2%
@@ -67,3 +78,6 @@ del "%collectionName%.zip" /Q
 "c:\program files\7-zip\7z.exe" a "%collectionName%.zip"
 xcopy "%collectionName%.zip" "%deploymentFolderRoot%%deploymentNumber%" /Y
 cd ..\..\scripts
+
+
+pause
