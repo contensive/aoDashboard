@@ -251,3 +251,9 @@ paket-files/
 .idea/
 *.sln.iml
 WebDeploymentPackage/Setup.msi
+
+# User ignores
+/source/CliSetup.out.txt
+/source/Cli.Installer/componentsGenerated.wxs
+WebDeploymentPackage/
+etc/TestApps/TestApps/TestApps.zip

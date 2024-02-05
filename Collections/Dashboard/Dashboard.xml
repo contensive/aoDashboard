@@ -5,7 +5,6 @@
 	<Addon name="Dashboard" guid="{4BA7B4A2-ED6C-46C5-9C7B-8CE251FC8FF5}" type="Add-on">
 		<Copy></Copy>
 		<CopyText></CopyText>
-		<ActiveXProgramID></ActiveXProgramID>
 		<DotNetClass><![CDATA[Contensive.Addons.Dashboard.Views.DashboardClass]]></DotNetClass>
 		<ArgumentList></ArgumentList>
 		<AsAjax>No</AsAjax>
@@ -47,7 +46,6 @@
 	<Addon name="Dashboard Trashcan" guid="{0E879FC7-87C8-42E9-831A-22B263F229DF}" type="Add-on">
 		<Copy></Copy>
 		<CopyText></CopyText>
-		<ActiveXProgramID></ActiveXProgramID>
 		<DotNetClass></DotNetClass>
 		<ArgumentList></ArgumentList>
 		<AsAjax>No</AsAjax>
@@ -87,7 +85,6 @@
 	<Addon name="dashboardclosenode" guid="{6DEC632B-C8DF-44EB-ABCB-12B362660708}" type="Add-on">
 		<Copy></Copy>
 		<CopyText></CopyText>
-		<ActiveXProgramID></ActiveXProgramID>
 		<DotNetClass><![CDATA[Contensive.Addons.Dashboard.Views.closeNodeClass]]></DotNetClass>
 		<ArgumentList></ArgumentList>
 		<AsAjax>No</AsAjax>
@@ -127,7 +124,6 @@
 	<Addon name="DashboardDelNode" guid="{058EAF9D-6347-43D9-82B1-ACF56A3C23E0}" type="Add-on">
 		<Copy></Copy>
 		<CopyText></CopyText>
-		<ActiveXProgramID></ActiveXProgramID>
 		<DotNetClass><![CDATA[Contensive.Addons.Dashboard.Views.delNodeClass]]></DotNetClass>
 		<ArgumentList></ArgumentList>
 		<AsAjax>No</AsAjax>
@@ -167,7 +163,6 @@
 	<Addon name="DashboardDragStop" guid="{E6334477-2772-4C5B-87ED-144E8A7DD009}" type="Add-on">
 		<Copy></Copy>
 		<CopyText></CopyText>
-		<ActiveXProgramID></ActiveXProgramID>
 		<DotNetClass><![CDATA[Contensive.Addons.Dashboard.Views.dashDragStopClass]]></DotNetClass>
 		<ArgumentList></ArgumentList>
 		<AsAjax>No</AsAjax>
@@ -207,7 +202,6 @@
 	<Addon name="DashboardNavDrop" guid="{C9141C65-32E7-45D4-9EBB-D312F3754BC8}" type="Add-on">
 		<Copy></Copy>
 		<CopyText></CopyText>
-		<ActiveXProgramID></ActiveXProgramID>
 		<DotNetClass><![CDATA[Contensive.Addons.Dashboard.Views.navDropClass]]></DotNetClass>
 		<ArgumentList></ArgumentList>
 		<AsAjax>No</AsAjax>
@@ -247,7 +241,6 @@
 	<Addon name="DashboardOpenNode" guid="{CF0D4F7A-BE09-4DA4-9036-C7CBD2D01E28}" type="Add-on">
 		<Copy></Copy>
 		<CopyText></CopyText>
-		<ActiveXProgramID></ActiveXProgramID>
 		<DotNetClass><![CDATA[Contensive.Addons.Dashboard.Views.openNodeClass]]></DotNetClass>
 		<ArgumentList></ArgumentList>
 		<AsAjax>No</AsAjax>
@@ -287,7 +280,6 @@
 	<Addon name="DashboardResize" guid="{4E220430-213A-45FF-988D-6D1C30CBDC0D}" type="Add-on">
 		<Copy></Copy>
 		<CopyText></CopyText>
-		<ActiveXProgramID></ActiveXProgramID>
 		<DotNetClass><![CDATA[Contensive.Addons.Dashboard.Views.ResizeClass]]></DotNetClass>
 		<ArgumentList></ArgumentList>
 		<AsAjax>No</AsAjax>
@@ -327,7 +319,6 @@
 	<Addon name="DashboardRunOnInstall" guid="{361DB5F8-8C00-40E6-8407-E54A09A35F8C}" type="Add-on">
 		<Copy></Copy>
 		<CopyText></CopyText>
-		<ActiveXProgramID></ActiveXProgramID>
 		<DotNetClass></DotNetClass>
 		<ArgumentList></ArgumentList>
 		<AsAjax>No</AsAjax>
@@ -367,7 +358,6 @@
 	<Addon name="deleteme-jquery.scale9grid" guid="{8878898c-037e-4d48-afee-e47c8ba7da06}" type="Add-on">
 		<Copy></Copy>
 		<CopyText></CopyText>
-		<ActiveXProgramID></ActiveXProgramID>
 		<DotNetClass></DotNetClass>
 		<ArgumentList></ArgumentList>
 		<AsAjax>No</AsAjax>
@@ -407,7 +397,6 @@
 	<Addon name="jquery.scale9grid.js" guid="{b722c07f-f858-4cb8-b9bb-f4242fcc59e7}" type="Add-on">
 		<Copy></Copy>
 		<CopyText></CopyText>
-		<ActiveXProgramID></ActiveXProgramID>
 		<DotNetClass></DotNetClass>
 		<ArgumentList></ArgumentList>
 		<AsAjax>No</AsAjax>
