@@ -107,7 +107,7 @@ function navMakeHelper( iconId ) {
 function navDropCallback(response,iconId){
 	var e=document.getElementById(iconId);
 	e.innerHTML=response;
-	dashBindNodes();
+	dashBindDashNodes();
 	dashResize();
 }
 function navDrop(id,x,y){
@@ -123,12 +123,13 @@ function navDrop(id,x,y){
 	cj.ajax.addonCallback("dashboardnavdrop",qs,navDropCallback,iconId);
 }
 /*
-*	bind nodes
+*	bind draggable for icons on the dash
 */
-function dashBindNodes() {
+function dashBindDashNodes() {
 	jQuery(".dashNode").each(function(){
 		jQuery(this).draggable({
 			stop: function(event, ui){
+				ui.helper.removeClass('dashDragClass');
 				var qs="key="+this.id+"&x="+this.style.left+"&y="+this.style.top;
 				cj.ajax.addonCallback("dashboarddragstop",qs,dashResize);
 			}
@@ -142,6 +143,9 @@ function dashBindNodes() {
 			,opacity: 0.50
 			/* ,handle: "#toolBar"+this.id */
 			,cursor: "move"
+			,drag: function(event,ui){
+				ui.helper.addClass('dashDragClass');
+			}
 		});
 	});	
 	/*
@@ -158,7 +162,29 @@ function dashBindNodes() {
 		});
 	});	
 }
-
+/*
+*	bind to anything that can be dragged onto dashboard, add class navDrag
+*/
+function dashBindNavNodes() {
+	jQuery(".navDrag").each(function(){
+		jQuery(this).draggable({
+			stop: function(event, ui){
+				ui.helper.removeClass('dashDragClass');
+				console.log("dash.dashBindNavNodes draggable:stop");
+				navDrop(this.id,ui.offset.left,ui.offset.top);
+			}
+			,helper: "clone"
+			,revert: "invalid"
+			,zIndex: 0
+			,hoverClass: "droppableHover"
+			,opacity: 0.50
+			,cursor: "move"
+			,drag: function(event,ui){
+				ui.helper.addClass('dashDragClass');
+			}
+		});
+	});	
+}
 /*
 * OnReady
 */
@@ -168,11 +194,15 @@ jQuery( document ).ready(function(){
 	*/	
 	jQuery("#desktop").droppable({tolerance: "fit"});
 	/*
-	* bind to icon nodes
+	* bind nav elements that can be dragged to dashboard
 	*/
-	dashBindNodes();
+	dashBindNavNodes();
 	/*
-	* Initialize
+	* bind dashboard elements to move them around
+	*/
+	dashBindDashNodes();
+	/*
+	* repaint dash
 	*/
 	dashResize();
 });

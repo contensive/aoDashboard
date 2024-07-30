@@ -30,8 +30,8 @@ Namespace Models
                             '
                             ' -- load legacy default and create current default
                             result = createFromLegacyXmlData(cp, 0)
-                            If (result Is Nothing) Then
-                                result = Newtonsoft.Json.JsonConvert.DeserializeObject(Of ConfigModel)(My.Resources.defaultConfigJson)
+                            If result Is Nothing Then
+                                result = cp.JSON.Deserialize(Of ConfigModel)(My.Resources.defaultConfigJson)
                             End If
                             '
                             ' -- create default
@@ -59,7 +59,7 @@ Namespace Models
             Dim userConfigFilename As String = "dashboard\dashconfig." & userId & ".json"
             Dim jsonConfigText As String = cp.CdnFiles.Read(userConfigFilename)
             If (Not String.IsNullOrWhiteSpace(jsonConfigText)) Then
-                result = Newtonsoft.Json.JsonConvert.DeserializeObject(Of ConfigModel)(jsonConfigText)
+                result = cp.JSON.Deserialize(Of ConfigModel)(jsonConfigText)
             End If
             Return result
         End Function
@@ -71,7 +71,7 @@ Namespace Models
         ''' <param name="cp"></param>
         ''' <param name="userId"></param>
         Public Sub save(cp As CPBaseClass, userId As Integer)
-            cp.CdnFiles.Save("dashboard\dashconfig." & userId & ".json", Newtonsoft.Json.JsonConvert.SerializeObject(Me))
+            cp.CdnFiles.Save("dashboard\dashconfig." & userId & ".json", cp.JSON.Serialize(Me))
         End Sub
         '
         '====================================================================================================

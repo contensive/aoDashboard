@@ -347,4 +347,7 @@
 	border:1px solid red;
 	background-color:white;
 }
+.dashDragClass {
+	max-width: 240px;
+}
 

@@ -1,4 +1,5 @@
 
+Imports System
 Imports Contensive.BaseClasses
 Imports Contensive.Models.Db
 
@@ -16,6 +17,8 @@ Namespace Views
                 '
                 '
                 Dim request As New Models.RequestModel(CP)
+                If (request?.id Is Nothing) Then Return result
+                '
                 Dim config As Models.ConfigModel = Models.ConfigModel.create(CP, CP.User.Id)
                 Dim wrapper As Models.WrapperModel = Models.WrapperModel.create(CP, config.defaultWrapper.guid)
                 Select Case request.id.ToLower().Substring(0, 1)

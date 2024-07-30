@@ -1,7 +1,7 @@
 
 rem all paths are relative to the git scripts folder
 
-set appName=app210629
+set appName=menucrmapp
 
 call build.cmd
 
