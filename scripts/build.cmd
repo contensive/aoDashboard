@@ -26,7 +26,7 @@ rem			-- etc
 rem				(all misc files)
 
 rem -- release or debug
-set DebugRelease=Release
+set DebugRelease=Debug
 
 rem -- name of the collection on the site (should NOT include ao prefix). This is the name as it appears on the navigator
 set collectionName=Dashboard
@@ -75,7 +75,7 @@ goto tryagain
 :makefolder
 md "%deploymentFolderRoot%%versionNumber%"
 
-pause
+rem pause
 
 rem ==============================================================
 rem
@@ -84,7 +84,7 @@ rem
 rd /S /Q "..\server\bin"
 rd /S /Q "..\server\obj"
 
-pause
+rem pause
 
 rem ==============================================================
 rem
@@ -95,7 +95,7 @@ cd %collectionPath%
 del *.zip
 cd ..\..\scripts
 
-pause
+rem pause
 
 rem ==============================================================
 rem
@@ -116,7 +116,7 @@ rem copy default article and articles for the  Help Pages collection
 "c:\program files\7-zip\7z.exe" a "%collectionPath%HelpFiles.zip" 
 cd ..\scripts
 
-pause
+rem pause
 
 
 rem ==============================================================
@@ -129,7 +129,7 @@ copy "..\ui\*.js" "%collectionpath%"
 copy "..\ui\*.jpg" "%collectionpath%"
 copy "..\ui\*.png" "%collectionpath%"
 
-pause
+rem pause
 
 rem ==============================================================
 rem
@@ -146,7 +146,7 @@ if errorlevel 1 (
 )
 cd ..\scripts
 
-pause
+rem pause
 
 cd ..\scripts
 
@@ -169,7 +169,7 @@ cd %collectionPath%
 xcopy "%collectionName%.zip" "%deploymentFolderRoot%%versionNumber%" /Y
 cd ..\..\scripts
 
-pause
+rem pause
 
 rem ==============================================================
 rem
@@ -190,4 +190,4 @@ del "help.zip"
 
 cd ..\..\scripts
 
-pause
+rem pause
