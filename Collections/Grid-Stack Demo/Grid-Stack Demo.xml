@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<Collection name="Grid-Stack Demo" guid="{141797ad-e798-4838-b2e8-2abecfbb0b6a}" system="No" updatable="Yes" blockNavigatorNode="No" onInstallAddonGuid="">
+	<HelpLink></HelpLink>
+	<Help></Help>
+	<Addon name="GridStack Demo" guid="{b146d928-f1f1-4e8c-bdfb-0abfc21bccbe}" type="Add-on">
+		<Copy></Copy>
+		<CopyText><![CDATA[<!--<div class="grid-stack"></div>-->
+<div class="grid-stack">
+  <div class="grid-stack-item" gs-w="2" gs-h="2">
+    <div class="grid-stack-item-content bg-white rounded-2 p-2 border border-2">Item 1</div>
+  </div>
+  <div class="grid-stack-item" gs-w="2" gs-h="2">
+    <div class="grid-stack-item-content bg-white rounded-2 p-2 border border-2">Item 2 wider</div>
+  </div>
+</div>]]></CopyText>
+		<DotNetClass></DotNetClass>
+		<ArgumentList></ArgumentList>
+		<instanceSettingPrimaryContentId></instanceSettingPrimaryContentId>
+		<AsAjax>No</AsAjax>
+		<Filter>No</Filter>
+		<Help></Help>
+		<HelpLink></HelpLink>
+		<Icon Link="" width="50" height="50" sprites="0" />
+		<InIframe>No</InIframe>
+		<BlockEditTools>Yes</BlockEditTools>
+		<AliasList></AliasList>
+		<FormXML></FormXML>
+		<IsInline>No</IsInline>
+		<JavascriptInHead><![CDATA[// dynamically create content
+//var grid = GridStack.init();
+//grid.addWidget({w: 2, content: 'item 1'});
+
+// using serialize data instead of .addWidget()
+//const serializedData = [
+//  {x: 0, y: 0, w: 2, h: 2},
+//  {x: 2, y: 3, w: 3, content: 'item 2'},
+//  {x: 1, y: 3}
+//];
+//var grid = GridStack.init();
+//grid.load(serializedData);
+
+// ...in your script
+GridStack.init();]]></JavascriptInHead>
+		<javascriptForceHead>No</javascriptForceHead>
+		<JSHeadScriptSrc></JSHeadScriptSrc>
+		<JSHeadScriptPlatform5Src></JSHeadScriptPlatform5Src>
+		<!-- deprecated --><JSBodyScriptSrc></JSBodyScriptSrc>
+		<!-- deprecated --><JavascriptBodyEnd></JavascriptBodyEnd>
+		<!-- deprecated --><JavascriptOnLoad></JavascriptOnLoad>
+		<Content>No</Content>
+		<Template>No</Template>
+		<Email>No</Email>
+		<Admin>No</Admin>
+		<OnPageEndEvent>No</OnPageEndEvent>
+		<OnPageStartEvent>No</OnPageStartEvent>
+		<OnBodyStart>No</OnBodyStart>
+		<OnBodyEnd>No</OnBodyEnd>
+		<RemoteMethod>No</RemoteMethod>
+		<Diagnostic>No</Diagnostic>
+		<Category></Category>
+		<ProcessRunOnce>No</ProcessRunOnce>
+		<ProcessInterval>0</ProcessInterval>
+		<MetaDescription></MetaDescription>
+		<OtherHeadTags><![CDATA[<link href="node_modules/gridstack/dist/gridstack.min.css" rel="stylesheet"/>
+<script src="node_modules/gridstack/dist/gridstack-all.js"></script>]]></OtherHeadTags>
+		<PageTitle></PageTitle>
+		<RemoteAssetLink></RemoteAssetLink>
+		<Styles></Styles>
+		<styleslinkhref></styleslinkhref>
+		<StylesLinkPlatform5Href></StylesLinkPlatform5Href>
+		<Scripting Language="" EntryPoint="" Timeout="5000"/>
+	</Addon>
+</Collection>

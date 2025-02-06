@@ -2,6 +2,45 @@
 <Collection name="Dashboard" guid="{b470c25f-ddbc-4593-8161-1a2fd4a35690}" system="No" updatable="Yes" blockNavigatorNode="yes" onInstallAddonGuid="{361DB5F8-8C00-40E6-8407-E54A09A35F8C}">
 	<HelpLink></HelpLink>
 	<Help></Help>
+	<Addon name="DashboardRunOnInstall" guid="{361DB5F8-8C00-40E6-8407-E54A09A35F8C}" type="Add-on">
+		<Copy></Copy>
+		<CopyText></CopyText>
+		<DotNetClass></DotNetClass>
+		<ArgumentList></ArgumentList>
+		<AsAjax>No</AsAjax>
+		<Filter>No</Filter>
+		<Help></Help>
+		<HelpLink></HelpLink>
+		<Icon Link="" width="0" height="0" sprites="0" />
+		<InIframe>No</InIframe>
+		<BlockEditTools>No</BlockEditTools>
+		<FormXML></FormXML>
+		<IsInline>No</IsInline>
+		<JavascriptInHead></JavascriptInHead>
+		<javascriptForceHead>No</javascriptForceHead>
+		<JSHeadScriptSrc></JSHeadScriptSrc>
+		<!-- deprecated --><JSBodyScriptSrc></JSBodyScriptSrc>
+		<!-- deprecated --><JavascriptBodyEnd></JavascriptBodyEnd>
+		<!-- deprecated --><JavascriptOnLoad></JavascriptOnLoad>
+		<Content>No</Content>
+		<Template>No</Template>
+		<Email>No</Email>
+		<Admin>No</Admin>
+		<OnPageEndEvent>No</OnPageEndEvent>
+		<OnPageStartEvent>No</OnPageStartEvent>
+		<OnBodyStart>No</OnBodyStart>
+		<OnBodyEnd>No</OnBodyEnd>
+		<RemoteMethod>No</RemoteMethod>
+		<ProcessRunOnce>no</ProcessRunOnce>
+		<ProcessInterval>0</ProcessInterval>
+		<MetaDescription></MetaDescription>
+		<OtherHeadTags></OtherHeadTags>
+		<PageTitle></PageTitle>
+		<RemoteAssetLink></RemoteAssetLink>
+		<Styles></Styles>
+		<styleslinkhref></styleslinkhref>
+		<Scripting Language="VBScript" EntryPoint="" Timeout="5000"/>
+	</Addon>
 	<Addon name="Admin Dashboard" guid="{4BA7B4A2-ED6C-46C5-9C7B-8CE251FC8FF5}" type="Add-on">
 		<Copy></Copy>
 		<CopyText></CopyText>
@@ -316,45 +355,6 @@
 		<styleslinkhref></styleslinkhref>
 		<Scripting Language="VBScript" EntryPoint="" Timeout="5000"/>
 	</Addon>
-	<Addon name="DashboardRunOnInstall" guid="{361DB5F8-8C00-40E6-8407-E54A09A35F8C}" type="Add-on">
-		<Copy></Copy>
-		<CopyText></CopyText>
-		<DotNetClass></DotNetClass>
-		<ArgumentList></ArgumentList>
-		<AsAjax>No</AsAjax>
-		<Filter>No</Filter>
-		<Help></Help>
-		<HelpLink></HelpLink>
-		<Icon Link="" width="0" height="0" sprites="0" />
-		<InIframe>No</InIframe>
-		<BlockEditTools>No</BlockEditTools>
-		<FormXML></FormXML>
-		<IsInline>No</IsInline>
-		<JavascriptInHead></JavascriptInHead>
-		<javascriptForceHead>No</javascriptForceHead>
-		<JSHeadScriptSrc></JSHeadScriptSrc>
-		<!-- deprecated --><JSBodyScriptSrc></JSBodyScriptSrc>
-		<!-- deprecated --><JavascriptBodyEnd></JavascriptBodyEnd>
-		<!-- deprecated --><JavascriptOnLoad></JavascriptOnLoad>
-		<Content>No</Content>
-		<Template>No</Template>
-		<Email>No</Email>
-		<Admin>No</Admin>
-		<OnPageEndEvent>No</OnPageEndEvent>
-		<OnPageStartEvent>No</OnPageStartEvent>
-		<OnBodyStart>No</OnBodyStart>
-		<OnBodyEnd>No</OnBodyEnd>
-		<RemoteMethod>No</RemoteMethod>
-		<ProcessRunOnce>no</ProcessRunOnce>
-		<ProcessInterval>0</ProcessInterval>
-		<MetaDescription></MetaDescription>
-		<OtherHeadTags></OtherHeadTags>
-		<PageTitle></PageTitle>
-		<RemoteAssetLink></RemoteAssetLink>
-		<Styles></Styles>
-		<styleslinkhref></styleslinkhref>
-		<Scripting Language="VBScript" EntryPoint="" Timeout="5000"/>
-	</Addon>
 	<Addon name="deleteme-jquery.scale9grid" guid="{8878898c-037e-4d48-afee-e47c8ba7da06}" type="Add-on">
 		<Copy></Copy>
 		<CopyText></CopyText>
@@ -437,29 +437,7 @@
 	<ImportCollection name="JQuery">{A435BF70-041B-43D1-8A8D-5D9D59A7FCD0}</ImportCollection>
 	<ImportCollection name="Whos Online">{F7A1CB55-369B-462A-B5D9-6C1A57EFE4BF}</ImportCollection>
 	<ImportCollection name="Twitter">{EADB8DAF-CC49-404E-AEDE-71AEE9C9BFEC}</ImportCollection>
-	<Resource name="container.png" type="www" path="dashboard" />
-	<Resource name="container_01.png" type="www" path="dashboard" />
-	<Resource name="container_02.png" type="www" path="dashboard" />
-	<Resource name="container_03.png" type="www" path="dashboard" />
-	<Resource name="container_04.png" type="www" path="dashboard" />
-	<Resource name="container_05.png" type="www" path="dashboard" />
-	<Resource name="container_06.png" type="www" path="dashboard" />
-	<Resource name="container_07.png" type="www" path="dashboard" />
-	<Resource name="container_08.png" type="www" path="dashboard" />
-	<Resource name="container_09.png" type="www" path="dashboard" />
-	<Resource name="desktoplogo.gif" type="www" path="dashboard" />
-	<Resource name="grid.gif" type="www" path="dashboard" />
-	<Resource name="iconclient.png" type="www" path="dashboard" />
-	<Resource name="icondashboard.png" type="www" path="dashboard" />
-	<Resource name="icongoogle.png" type="www" path="dashboard" />
-	<Resource name="jquery.scale9grid.js" type="www" path="dashboard" />
-	<Resource name="trashcan.png" type="www" path="dashboard" />
-	<Resource name="whosonline.png" type="www" path="dashboard" />
-	<Resource name="dashboard.js" type="www" path="dashboard" />
-	<Resource name="dashboard.css" type="www" path="dashboard" />
-	<Resource name="addon.png" type="www" path="dashboard" />
-	<Resource name="content.png" type="www" path="dashboard" />
-	<Resource name="spacer.gif" type="www" path="cclib/images" />
-	<Resource name="dashconfig.0.json" type="content" path="dashboard" />
-	<Resource name="aoDashboard.dll" type="executable" path="" />
+	<Resource name="uiDashboard.zip" type="www" path="dashboard" />
+	<Resource name="helpfiles.zip" type="private" path="helpfiles" />
+
 </Collection>

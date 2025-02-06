@@ -29,13 +29,13 @@ rem -- release or debug
 set DebugRelease=Debug
 
 rem -- name of the collection on the site (should NOT include ao prefix). This is the name as it appears on the navigator
-set collectionName=Dashboard
+set collectionName=WidgetDashboard
 
 rem -- name of the collection folder, (should NOT include ao prefix)
-set collectionPath=..\collections\Dashboard\
+set collectionPath=..\collections\WidgetDashboard\
 
 rem -- name of the solution. SHOULD include ao prefix
-set solutionName=aoDashboard.sln
+set solutionName=WidgetDashboard.sln
 
 rem -- name of the solution. SHOULD include ao prefix
 set binPath=..\server\bin\%DebugRelease%\
@@ -44,7 +44,7 @@ rem -- name of the solution. SHOULD include ao prefix
 set msbuildLocation=C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\
 
 rem -- name of the solution. SHOULD include ao prefix
-set deploymentFolderRoot=C:\Deployments\aoDashboard\Dev\
+set deploymentFolderRoot=C:\Deployments\aoWidgetDashboard\Dev\
 
 rem -- folder where nuget packages are copied
 set NuGetLocalPackagesFolder=C:\NuGetLocalPackages\
@@ -121,13 +121,13 @@ rem pause
 
 rem ==============================================================
 rem
-echo copy ui
-rem
-copy "..\ui\*.html" "%collectionpath%"
-copy "..\ui\*.css" "%collectionpath%"
-copy "..\ui\*.js" "%collectionpath%"
-copy "..\ui\*.jpg" "%collectionpath%"
-copy "..\ui\*.png" "%collectionpath%"
+rem install ui as zip file
+rem layouts are developed in a folder with a subfolder for assets, named catalogassets, etc.
+rem when deployed, they are saved in the root folder so the asset subfolder is off the root, to make the html src consistent
+
+cd ..\ui\WidgetDashboard
+"c:\program files\7-zip\7z.exe" a "..\..\collections\dashboard\uiWidgetDashboard.zip" 
+cd ..\..\scripts
 
 rem pause
 
@@ -159,7 +159,6 @@ c:
 del "%collectionPath%%collectionName%.zip" /Q
 del "%collectionPath%*.dll" /Q
 
-rem copy bin folder assemblies to collection folder
 copy "%binPath%*.dll" "%collectionPath%"
 
 rem create new collection zip file
@@ -180,13 +179,13 @@ cd %collectionPath%
 
 del *.dll
 del *.dll.config
-
 del "*.html"
 del "*.css"
 del "*.js"
 del "*.jpg"
 del "*.png"
-del "help.zip"
+del "helpFiles.zip"
+del "uiWidgetDashboard.zip"
 
 cd ..\..\scripts
 
