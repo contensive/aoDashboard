@@ -38,7 +38,7 @@ rem -- name of the solution. SHOULD include ao prefix
 set solutionName=WidgetDashboard.sln
 
 rem -- name of the solution. SHOULD include ao prefix
-set binPath=..\server\bin\%DebugRelease%\
+set binPath=..\server\aoWidgetDashboard\bin\%DebugRelease%\net472\
 
 rem -- name of the solution. SHOULD include ao prefix
 set msbuildLocation=C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\
@@ -126,7 +126,7 @@ rem layouts are developed in a folder with a subfolder for assets, named catalog
 rem when deployed, they are saved in the root folder so the asset subfolder is off the root, to make the html src consistent
 
 cd ..\ui\WidgetDashboard
-"c:\program files\7-zip\7z.exe" a "..\..\collections\dashboard\uiWidgetDashboard.zip" 
+"c:\program files\7-zip\7z.exe" a "..\..\collections\WidgetDashboard\uiWidgetDashboard.zip" 
 cd ..\..\scripts
 
 rem pause
@@ -136,15 +136,17 @@ rem
 echo build 
 rem
 
-
 cd ..\server
-"%msbuildLocation%msbuild.exe" %solutionName% /p:Configuration=%DebugRelease%
+
+
+dotnet clean %solutionName%
+
+dotnet build aoWidgetDashboard/aoWidgetDashboard.csproj --configuration %DebugRelease% --no-dependencies /property:Version=%versionNumber% /property:AssemblyVersion=%versionNumber% /property:FileVersion=%versionNumber%
 if errorlevel 1 (
-   echo failure building
+   echo failure building DesignBlockBase
    pause
    exit /b %errorlevel%
 )
-cd ..\scripts
 
 rem pause
 
@@ -161,6 +163,8 @@ del "%collectionPath%*.dll" /Q
 
 copy "%binPath%*.dll" "%collectionPath%"
 
+ rem pause
+
 rem create new collection zip file
 c:
 cd %collectionPath%
@@ -168,7 +172,7 @@ cd %collectionPath%
 xcopy "%collectionName%.zip" "%deploymentFolderRoot%%versionNumber%" /Y
 cd ..\..\scripts
 
-rem pause
+ rem pause
 
 rem ==============================================================
 rem
@@ -189,4 +193,4 @@ del "uiWidgetDashboard.zip"
 
 cd ..\..\scripts
 
-rem pause
+ rem pause

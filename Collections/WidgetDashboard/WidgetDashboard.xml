@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<Collection name="Widget Dashboard" guid="{12B9936A-5C0B-4154-AE1F-037D1C2CD29D}" system="No" updatable="Yes" blockNavigatorNode="yes" onInstallAddonGuid="{970E1192-851E-4C62-AE70-5E9BC3A7FF88}">
+	<HelpLink></HelpLink>
+	<Help></Help>
+	<Addon name="WidgetDashboardOnInstall" guid="{970E1192-851E-4C62-AE70-5E9BC3A7FF88}" type="Add-on">
+		<DotNetClass>Contensive.WidgetDashboard.Addons.OnInstallTask</DotNetClass>
+	</Addon>
+	<Addon name="Widget Dashboard" guid="{b146d928-f1f1-4e8c-bdfb-0abfc21bccbe}" type="Add-on">
+		<DotNetClass><![CDATA[Contensive.WidgetDashboard.Addons.WidgetDashboardAddon]]></DotNetClass>
+		<BlockEditTools>Yes</BlockEditTools>
+		<IncludeAddon name="JQuery" guid="{9C882078-0DAC-48E3-AD4B-CF2AA230DF80} "/>
+		<IncludeAddon name="Bootstrap" guid="{EF1FD66C-D62F-4BD2-BF07-38F47996EBB3}"/>
+		<JSHeadScriptSrc><![CDATA[/dashboard/dashboard.js]]></JSHeadScriptSrc>
+		<styleslinkhref><![CDATA[/dashboard/dashboard.css]]></styleslinkhref>
+	</Addon>
+	<ImportCollection name="JQuery">{A435BF70-041B-43D1-8A8D-5D9D59A7FCD0}</ImportCollection>
+	<ImportCollection name="Bootstrap">{2d3f9a21-9602-4549-b5df-5e09a9dae57e}</ImportCollection>
+	<Resource name="uiWidgetDashboard.zip" type="www" path="dashboard" />
+	<Resource name="uiWidgetDashboard.zip" type="files" path="dashboard" />
+	<Resource name="helpfiles.zip" type="private" path="helpfiles" />
+</Collection>
