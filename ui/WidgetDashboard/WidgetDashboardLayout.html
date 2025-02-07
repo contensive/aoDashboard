@@ -5,9 +5,16 @@
 <style type="text/css">
     .grid-stack { background: #FAFAD2; }
     .grid-stack-item-content { background-color: #18BC9C; }
-  </style>
+</style>
   
-  <div class="grid-stack"></div>
+<div class="grid-stack">
+  <div class="grid-stack-item" gs-w="2" gs-h="2">
+    <div class="grid-stack-item-content bg-white rounded-2 p-2 border border-2">Item 1</div>
+  </div>
+  <div class="grid-stack-item" gs-w="2" gs-h="2">
+    <div class="grid-stack-item-content bg-white rounded-2 p-2 border border-2">Item 2 wider</div>
+  </div>
+</div>  
   
   <script type="text/javascript">
     var items = [
