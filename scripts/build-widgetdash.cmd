@@ -41,7 +41,7 @@ rem -- name of the solution. SHOULD include ao prefix
 set binPath=..\server\aoWidgetDashboard\bin\%DebugRelease%\net472\
 
 rem -- name of the solution. SHOULD include ao prefix
-set msbuildLocation=C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\
+set msbuildLocation=C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\
 
 rem -- name of the solution. SHOULD include ao prefix
 set deploymentFolderRoot=C:\Deployments\aoWidgetDashboard\Dev\

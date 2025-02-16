@@ -3,24 +3,83 @@
 <link href="node_modules/gridstack/dist/gridstack.min.css" rel="stylesheet"/>
 
 <style type="text/css">
+    .card-header { cursor: grab; }
     .grid-stack { background: #FAFAD2; }
     .grid-stack-item-content { background-color: #18BC9C; }
 </style>
   
 <div class="grid-stack">
-  <div class="grid-stack-item" gs-w="2" gs-h="2">
-    <div class="grid-stack-item-content bg-white rounded-2 p-2 border border-2">Item 1</div>
-  </div>
-  <div class="grid-stack-item" gs-w="2" gs-h="2">
-    <div class="grid-stack-item-content bg-white rounded-2 p-2 border border-2">Item 2 wider</div>
-  </div>
+  {{#widgets}}
+    <div class="grid-stack-item" id="{{key}}" gs-w="{{width}}" gs-h="{{height}}" gs-x="{{x}}" gs-y="{{y}}">
+      <div class="grid-stack-item-content bg-white rounded-2 p-2 border border-2">
+        <div class="card-header">- Drag here -</div>
+        <div class="card">{{content}}</div>
+      </div>      
+    </div>
+    {{#link}}
+      <script>
+        jquery('#{{key}}').on('click',function(){window.location.href='{{link}}';}
+      </script>
+    {{/link}}
+  {{/widgets}}
 </div>  
   
   <script type="text/javascript">
-    var items = [
-      {content: 'my first widget'}, // will default to location (0,0) and 1x1
-      {w: 2, content: 'another longer widget!'} // will be placed next at (1,0) and 2x1
-    ];
-    var grid = GridStack.init();
-    grid.load(items);
+    // https://github.com/gridstack/gridstack.js/tree/master/doc#changeevent-items
+    var grid = GridStack.init({ 
+      handle: '.card-header' 
+    });
+    grid.on('added', function(event, items ) {
+      console.log('added');
+    });
+    grid.on('change', function(event, items ) {
+      console.log('change');
+      postData = [];
+      items.forEach(function(item) {
+        console.log('change-item: el.id:'+item.el.id+' _id:'+item._id+' x:'+item.x + ' y:'+item.y + ' w:'+item.w + ' h:'+item.h);
+        postData.push({key: item.el.id, x: item.x, y: item.y, w: item.w, h: item.h});
+      });
+      $.ajax({
+        type: 'POST',
+        url: "/widgetDashboardSave",
+        contentType: "application/json",
+        data: JSON.stringify(postData),
+        success: function(result){
+          console.log('widgetDashboardSave success');
+        }, 
+        error: function(result){
+          console.log('widgetDashboardSave error');
+        }
+      }); 
+    });
+    grid.on('disable', function(event, items ) {
+      console.log('disable');
+    });
+    grid.on('dragstart', function(event, items ) {
+      console.log('dragstart');
+    });
+    grid.on('drag', function(event, items ) {
+      console.log('drag');
+    });
+    grid.on('dragstop', function(event, items ) {
+      console.log('dragstop');
+    });
+    grid.on('dropped', function(event, items ) {
+      console.log('dropped');
+    });
+    grid.on('enable', function(event, items ) {
+      console.log('enable');
+    });
+    grid.on('removed', function(event, items ) {
+      console.log('removed');
+    });
+    grid.on('resizestart', function(event, items ) {
+      console.log('resizestart');
+    });
+    grid.on('resize', function(event, items ) {
+      console.log('resize');
+    });
+    grid.on('resizestop', function(event, items ) {
+      console.log('resizestop');
+    });
   </script>

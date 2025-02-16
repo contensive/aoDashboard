@@ -37,7 +37,6 @@
 	<ItemGroup>
 	  <Folder Include="Controllers\" />
 	  <Folder Include="Models\Db\" />
-	  <Folder Include="Models\View\" />
 	  <Folder Include="Views\" />
 	</ItemGroup>
 </Project>
