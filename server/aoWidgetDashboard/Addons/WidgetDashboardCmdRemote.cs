@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 
 namespace Contensive.WidgetDashboard.Addons {
-    public class WidgetDashboardSaveRemote : Contensive.BaseClasses.AddonBaseClass {
+    public class WidgetDashboardCmdRemote : Contensive.BaseClasses.AddonBaseClass {
         public override object Execute(CPBaseClass cp) {
             try {
                 string requestJson = cp.Request.Body;
@@ -18,10 +18,17 @@ namespace Contensive.WidgetDashboard.Addons {
                     var userConfigWidget = userConfig.widgets.Find(row => row.key == widget.key);
                     if (userConfigWidget is null) { continue; }
                     //
-                    userConfigWidget.x = widget.x;
-                    userConfigWidget.y = widget.y;
-                    userConfigWidget.width = widget.w;
-                    userConfigWidget.height = widget.h;
+                    if(widget.cmd == "delete") {
+                        userConfig.widgets.Remove(userConfigWidget);
+                        continue;
+                    }
+                    if (widget.cmd == "save") {
+                        userConfigWidget.x = widget.x;
+                        userConfigWidget.y = widget.y;
+                        userConfigWidget.width = widget.w;
+                        userConfigWidget.height = widget.h;
+                        continue;
+                    }
                 }
                 userConfig.save(cp);
                 return "";
@@ -33,6 +40,11 @@ namespace Contensive.WidgetDashboard.Addons {
     }
     //
     public class WDS_Request_Widget {
+        //
+        /// <summary>
+        /// the command to perform on this widget: save, delete
+        /// </summary>
+        public string cmd { get; set; }
         public int x { get; set; }
         public int y { get; set; }
         public int h { get; set; }

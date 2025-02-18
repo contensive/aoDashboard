@@ -13,8 +13,8 @@
 		<JSHeadScriptSrc><![CDATA[/dashboard/dashboard.js]]></JSHeadScriptSrc>
 		<styleslinkhref><![CDATA[/dashboard/dashboard.css]]></styleslinkhref>
 	</Addon>
-	<Addon name="WidgetDashboardSave" guid="{E4EFE94E-DFCE-42B5-A54E-9ABF97250249}" type="Add-on">
-		<DotNetClass><![CDATA[Contensive.WidgetDashboard.Addons.WidgetDashboardSaveRemote]]></DotNetClass>
+	<Addon name="widgetDashboardCmd" guid="{E4EFE94E-DFCE-42B5-A54E-9ABF97250249}" type="Add-on">
+		<DotNetClass><![CDATA[Contensive.WidgetDashboard.Addons.WidgetDashboardCmdRemote]]></DotNetClass>
 		<RemoteMethod>yes</RemoteMethod>
 	</Addon>
 	<ImportCollection name="JQuery">{A435BF70-041B-43D1-8A8D-5D9D59A7FCD0}</ImportCollection>

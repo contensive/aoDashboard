@@ -3,22 +3,39 @@
 <link href="node_modules/gridstack/dist/gridstack.min.css" rel="stylesheet"/>
 
 <style type="text/css">
-    .card-header { cursor: grab; }
-    .grid-stack { background: #FAFAD2; }
-    .grid-stack-item-content { background-color: #18BC9C; }
+    .card-tool { 
+      position: absolute;
+      z-index: 1;
+      background-color: #fff;
+      right: 0;
+      top: 0;
+    }
+    .card-grab { 
+      float:right;
+      cursor: grab; 
+    }
+    .card-close { 
+      float:right;
+      cursor: pointer; 
+    }
+    .grid-stack { /*background: #FAFAD2;*/ }
+    .grid-stack-item-content { /*background-color: #18BC9C;*/ }
 </style>
   
-<div class="grid-stack">
+<div class="grid-stack h-100">
   {{#widgets}}
-    <div class="grid-stack-item" id="{{key}}" gs-w="{{width}}" gs-h="{{height}}" gs-x="{{x}}" gs-y="{{y}}">
-      <div class="grid-stack-item-content bg-white rounded-2 p-2 border border-2">
-        <div class="card-header">- Drag here -</div>
-        <div class="card">{{content}}</div>
+    <div class="grid-stack-item overflow-hidden" id="{{key}}" gs-w="{{width}}" gs-h="{{height}}" gs-x="{{x}}" gs-y="{{y}}">
+      <div class="grid-stack-item-content bg-white rounded-2 p-2 border border-2 overflow-hidden">
+        <div class="card-tool">
+          <div class="card-grab pe-1"><i class="fa-solid fa-grip-vertical"></i></div>
+          <div class="card-close pe-1"><i class="fa-solid fa-square-xmark"></i></div>
+          </div>
+        <div class="card h-100">{{{content}}}</div>
       </div>      
     </div>
     {{#link}}
       <script>
-        jquery('#{{key}}').on('click',function(){window.location.href='{{link}}';}
+        jquery('#{{key}}').on('click', function() { window.location.href='{{link}}'; });
       </script>
     {{/link}}
   {{/widgets}}
@@ -26,31 +43,58 @@
   
   <script type="text/javascript">
     // https://github.com/gridstack/gridstack.js/tree/master/doc#changeevent-items
-    var grid = GridStack.init({ 
-      handle: '.card-header' 
+    //
+    // -- bind
+    document.addEventListener('DOMContentLoaded', function(event) {
+      //
+      // -- close
+      $('.card-close').on('click', function() {
+        console.log('card-close click');
+        var el = $(this).closest('.grid-stack-item');
+        grid.removeWidget(el.get(0));
+      });
+      //
+      // -- drop
+
+
+
+
     });
+    //
+    // -- init grid
+    var grid = GridStack.init({ 
+      handle: '.card-grab' 
+    });
+    //
+    // -- server command
+    function widgetDashboardCmd(cmd, items) { 
+      console.log('saveItems');       
+      postData = [];
+      items.forEach(function(item) {
+        console.log('change-item: el.id:'+item.el.id+' _id:'+item._id+' x:'+item.x + ' y:'+item.y + ' w:'+item.w + ' h:'+item.h);
+        postData.push({cmd: cmd, key: item.el.id, x: item.x, y: item.y, w: item.w, h: item.h});
+      });
+      $.ajax({
+        type: 'POST',
+        url: "/widgetDashboardCmd",
+        contentType: "application/json",
+        data: JSON.stringify(postData),
+        success: function(result){
+          console.log('widgetDashboardCmd success');
+        }, 
+        error: function(result){
+          console.log('widgetDashboardCmd error');
+        }
+      }); 
+    }
+    //
+    // -- event handlers
     grid.on('added', function(event, items ) {
       console.log('added');
     });
     grid.on('change', function(event, items ) {
       console.log('change');
-      postData = [];
-      items.forEach(function(item) {
-        console.log('change-item: el.id:'+item.el.id+' _id:'+item._id+' x:'+item.x + ' y:'+item.y + ' w:'+item.w + ' h:'+item.h);
-        postData.push({key: item.el.id, x: item.x, y: item.y, w: item.w, h: item.h});
-      });
-      $.ajax({
-        type: 'POST',
-        url: "/widgetDashboardSave",
-        contentType: "application/json",
-        data: JSON.stringify(postData),
-        success: function(result){
-          console.log('widgetDashboardSave success');
-        }, 
-        error: function(result){
-          console.log('widgetDashboardSave error');
-        }
-      }); 
+      widgetDashboardCmd('save', items);
     });
     grid.on('disable', function(event, items ) {
       console.log('disable');
@@ -72,6 +116,7 @@
     });
     grid.on('removed', function(event, items ) {
       console.log('removed');
+      widgetDashboardCmd('delete', items);
     });
     grid.on('resizestart', function(event, items ) {
       console.log('resizestart');

@@ -23,7 +23,16 @@ namespace Contensive.WidgetDashboard.Models.View {
                 //
                 result = new DashboardViewModel() {
                     widgets = [
-                        new DashboardViewModel_Widgets() { x=0,y=0, width = 2, height = 2, content = "Widget 1", key="{E9285C2A-9A53-4170-A630-D520566F192A}", link="https://www.contensive.com" },
+                        new DashboardViewModel_Widgets() { 
+                            x=0,
+                            y=0, 
+                            width = 2, 
+                            height = 2, 
+                            content = cp.CdnFiles.Read("dashboard\\sampleWidget.html"), 
+                            key="{E9285C2A-9A53-4170-A630-D520566F192A}", 
+                            link="https://www.contensive.com",
+                            addonGuid = "{E9285C2A-9A53-4170-A630-D520566F192A}"
+                        },
                         new DashboardViewModel_Widgets() { x=2,y=0, width = 2, height = 2, content = "Widget 2", key="{6E528FC4-077F-4E4B-8294-DB8FF6BE818C}", link="https://www.contensive.com" },
                         new DashboardViewModel_Widgets() { x=4,y=0, width = 1, height = 1, content = "Widget 3", key="{D5129330-C2DA-41EA-AD02-B35CC8C26CF9}", link="https://www.contensive.com" },
                         new DashboardViewModel_Widgets() { x=4,y=1, width = 1, height = 1, content = "Widget 4", key="{03807CCD-3CA0-4EEE-B6E0-A16B62B14A4E}", link="https://www.contensive.com" },
@@ -72,5 +81,6 @@ namespace Contensive.WidgetDashboard.Models.View {
         public int height { get; set; }
         public string content { get; set; }
         public string link { get; set; }
+        public string addonGuid { get; set; }
     }
 }

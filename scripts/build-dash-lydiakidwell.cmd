@@ -3,7 +3,7 @@ rem all paths are relative to the git scripts folder
 
 set appName=lydiakidwell
 
-call build.cmd
+call build-dash.cmd
 
 rem upload to contensive application
 c:
