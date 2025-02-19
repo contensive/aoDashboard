@@ -19,8 +19,9 @@ namespace Contensive.WidgetDashboard.Models.View {
         public static DashboardViewModel create(CPBaseClass cp) {
             try {
                 DashboardViewModel result = load(cp);
-                if (result != null) { return result; }
+                if (result?.widgets != null && result.widgets.Count > 0) { return result; }
                 //
+                // -- iniitalize with default widgets
                 result = new DashboardViewModel() {
                     widgets = [
                         new DashboardViewModel_Widgets() { 
@@ -29,14 +30,14 @@ namespace Contensive.WidgetDashboard.Models.View {
                             width = 2, 
                             height = 2, 
                             content = cp.CdnFiles.Read("dashboard\\sampleWidget.html"), 
-                            key="{E9285C2A-9A53-4170-A630-D520566F192A}", 
+                            key="E928", 
                             link="https://www.contensive.com",
                             addonGuid = "{E9285C2A-9A53-4170-A630-D520566F192A}"
                         },
-                        new DashboardViewModel_Widgets() { x=2,y=0, width = 2, height = 2, content = "Widget 2", key="{6E528FC4-077F-4E4B-8294-DB8FF6BE818C}", link="https://www.contensive.com" },
-                        new DashboardViewModel_Widgets() { x=4,y=0, width = 1, height = 1, content = "Widget 3", key="{D5129330-C2DA-41EA-AD02-B35CC8C26CF9}", link="https://www.contensive.com" },
-                        new DashboardViewModel_Widgets() { x=4,y=1, width = 1, height = 1, content = "Widget 4", key="{03807CCD-3CA0-4EEE-B6E0-A16B62B14A4E}", link="https://www.contensive.com" },
-                        new DashboardViewModel_Widgets() { x=5,y=0, width = 2, height = 2, content = "Widget 5", key="{AC5568C2-1D5F-4D76-AFDC-7DAFC56FE71E}", link="https://www.contensive.com" }
+                        new DashboardViewModel_Widgets() { x=2,y=0, width = 2, height = 2, content = "Widget 2", key="6E52", link="https://www.contensive.com" },
+                        new DashboardViewModel_Widgets() { x=4,y=0, width = 1, height = 1, content = "Widget 3", key="D512", link="https://www.contensive.com" },
+                        new DashboardViewModel_Widgets() { x=4,y=1, width = 1, height = 1, content = "Widget 4", key="0380", link="https://www.contensive.com" },
+                        new DashboardViewModel_Widgets() { x=5,y=0, width = 2, height = 2, content = "Widget 5", key="AC55", link="https://www.contensive.com" }
                     ]
                 };
                 result.save(cp);
@@ -73,7 +74,7 @@ namespace Contensive.WidgetDashboard.Models.View {
             cp.PrivateFiles.Save(@"dashboard\widgetdashconfig." + cp.User.Id + ".json", cp.JSON.Serialize(this));
         }
     }
-    internal class DashboardViewModel_Widgets {
+    public class DashboardViewModel_Widgets {
         public string key { get; set; }
         public int x { get; set; }
         public int y { get; set; }

@@ -16,13 +16,19 @@ namespace Contensive.WidgetDashboard.Addons {
                 //
                 foreach (WDS_Request_Widget widget in widgets) {
                     var userConfigWidget = userConfig.widgets.Find(row => row.key == widget.key);
-                    if (userConfigWidget is null) { continue; }
                     //
                     if(widget.cmd == "delete") {
+                        if (userConfigWidget is null) { continue; }
                         userConfig.widgets.Remove(userConfigWidget);
                         continue;
                     }
                     if (widget.cmd == "save") {
+                        if (userConfigWidget is null) {
+                            userConfigWidget = new DashboardViewModel_Widgets {
+                                key = widget.key
+                            };
+                            userConfig.widgets.Add(userConfigWidget);
+                        }
                         userConfigWidget.x = widget.x;
                         userConfigWidget.y = widget.y;
                         userConfigWidget.width = widget.w;

@@ -21,30 +21,43 @@
     .grid-stack { /*background: #FAFAD2;*/ }
     .grid-stack-item-content { /*background-color: #18BC9C;*/ }
 </style>
-  
-<div class="grid-stack h-100">
+<div id="dashboard" class="grid-stack h-100">
+  <button id="add-widget-btn">Add Widget</button>
   {{#widgets}}
     <div class="grid-stack-item overflow-hidden" id="{{key}}" gs-w="{{width}}" gs-h="{{height}}" gs-x="{{x}}" gs-y="{{y}}">
       <div class="grid-stack-item-content bg-white rounded-2 p-2 border border-2 overflow-hidden">
         <div class="card-tool">
           <div class="card-grab pe-1"><i class="fa-solid fa-grip-vertical"></i></div>
           <div class="card-close pe-1"><i class="fa-solid fa-square-xmark"></i></div>
-          </div>
+        </div>
         <div class="card h-100">{{{content}}}</div>
       </div>      
     </div>
     {{#link}}
       <script>
-        jquery('#{{key}}').on('click', function() { window.location.href='{{link}}'; });
+        document.addEventListener('DOMContentLoaded', function(event) {
+          jQuery('#{{key}} .card').on('click', function() { window.location.href='{{link}}'; });
+        });
       </script>
     {{/link}}
   {{/widgets}}
 </div>  
+<div id="newWidgetHtmlId" style="display:none;">
+  <div class="grid-stack-item overflow-hidden" id="idPlaceholder">
+    <div class="grid-stack-item-content bg-white rounded-2 p-2 border border-2 overflow-hidden">
+      <div class="card-tool">
+        <div class="card-grab pe-1"><i class="fa-solid fa-grip-vertical"></i></div>
+        <div class="card-close pe-1"><i class="fa-solid fa-square-xmark"></i></div>
+      </div>
+      <div class="card h-100">1234 1234 1234</div>
+    </div>      
+  </div>
+</div>
   
   <script type="text/javascript">
     // https://github.com/gridstack/gridstack.js/tree/master/doc#changeevent-items
     //
-    // -- bind
+    // -- on-ready
     document.addEventListener('DOMContentLoaded', function(event) {
       //
       // -- close
@@ -54,21 +67,49 @@
         grid.removeWidget(el.get(0));
       });
       //
-      // -- drop
-
-
-
-
+      // -- add
+      document.getElementById('add-widget-btn').addEventListener('click', function() {
+        let newWidgetHtml = document.getElementById('newWidgetHtmlId').innerHTML;
+        newWidgetHtml = newWidgetHtml.replace('idPlaceholder', generateKey());
+        let newWidget = grid.addWidget(newWidgetHtml,{
+          // x: 0, // initial x position
+          // y: 0, // initial y position
+          width: 2, // width of the widget
+          height: 2, // height of the widget
+          //content: 'New Widget', // content of the widget
+          //id: 'new-widget-' + Math.random().toString(36).substr(2, 9), // unique id for the widget
+          handle: true, // make the widget draggable
+        });
+        //
+       /*  let itemHtmlCollection = document.getElementsByClassName('grid-stack-item');
+        let itemHtmlArray = Array.from(itemHtmlCollection);
+        let items = [];
+        itemHtmlArray.forEach(element => {
+          console.log(element);        
+          if(element==null) { return; }
+          items.push(createGridStackWidgetFromElement(element));  
+        });    */     
+        widgetDashboardCmd('save', new Array(newWidget.gridstackNode));
+      });
     });
     //
     // -- init grid
     var grid = GridStack.init({ 
-      handle: '.card-grab' 
+      handle: '.card-grab',
+      container: '#dashboard',
+      width: 12,
+      height: 10,
+      margin: 10,
+      float: true   
     });
     //
     // -- server command
     function widgetDashboardCmd(cmd, items) { 
-      console.log('saveItems');       
+      console.log('saveItems'); 
+      if(!Array.isArray(items)) {
+        console.error("items is not an array");
+        return;
+      }   
       postData = [];
       items.forEach(function(item) {
         console.log('change-item: el.id:'+item.el.id+' _id:'+item._id+' x:'+item.x + ' y:'+item.y + ' w:'+item.w + ' h:'+item.h);
@@ -127,4 +168,34 @@
     grid.on('resizestop', function(event, items ) {
       console.log('resizestop');
     });
+    //
+    // Function to create GridStackWidget object from HTML element
+    function createGridStackWidgetFromElement(element) {
+      if(element==null) { return null; }
+      // Extract data attributes
+      const x = parseInt(element.getAttribute('gs-x')) || 0;
+      const y = parseInt(element.getAttribute('gs-y')) || 0;
+      const w = parseInt(element.getAttribute('gs-w')) || 1;
+      const h = parseInt(element.getAttribute('gs-h')) || 1;
+      //
+      // Create GridStackWidget object
+      const widget = {
+          x: x,
+          y: y,
+          w: w,
+          h: h,
+          el: element // Attach the HTML element
+      };
+      return widget;
+    }
+    //
+    // -- create non-secure guid
+    function generateKey() {
+      return 'xxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0,
+            v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
+
   </script>
