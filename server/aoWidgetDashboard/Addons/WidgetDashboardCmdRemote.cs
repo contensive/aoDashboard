@@ -33,6 +33,7 @@ namespace Contensive.WidgetDashboard.Addons {
                         userConfigWidget.y = widget.y;
                         userConfigWidget.width = widget.w;
                         userConfigWidget.height = widget.h;
+                        userConfigWidget.addonGuid = widget.addonGuid;
                         continue;
                     }
                 }
@@ -56,5 +57,6 @@ namespace Contensive.WidgetDashboard.Addons {
         public int h { get; set; }
         public int w { get; set; }
         public string key { get; set; }
+        public string addonGuid { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Contensive.BaseClasses;
+using Contensive.WidgetDashboard.Models.Domain;
 using Microsoft.VisualBasic.ApplicationServices;
 using System;
 using System.Collections.Generic;
@@ -18,11 +19,13 @@ namespace Contensive.WidgetDashboard.Models.View {
         /// <returns></returns>
         public static DashboardViewModel create(CPBaseClass cp) {
             try {
-                DashboardViewModel result = load(cp);
-                if (result?.widgets != null && result.widgets.Count > 0) { return result; }
+                DashboardViewModel viewModel = load(cp);
+                if (viewModel?.widgets != null && viewModel.widgets.Count > 0) { 
+                    return renderViewAddons( cp,  viewModel ); 
+                }
                 //
                 // -- iniitalize with default widgets
-                result = new DashboardViewModel() {
+                viewModel = new DashboardViewModel() {
                     widgets = [
                         new DashboardViewModel_Widgets() { 
                             x=0,
@@ -32,7 +35,7 @@ namespace Contensive.WidgetDashboard.Models.View {
                             content = cp.CdnFiles.Read("dashboard\\sampleWidget.html"), 
                             key="E928", 
                             link="https://www.contensive.com",
-                            addonGuid = "{E9285C2A-9A53-4170-A630-D520566F192A}"
+                            addonGuid = Constants.sampleDashboardWidgetGuid
                         },
                         new DashboardViewModel_Widgets() { x=2,y=0, width = 2, height = 2, content = "Widget 2", key="6E52", link="https://www.contensive.com" },
                         new DashboardViewModel_Widgets() { x=4,y=0, width = 1, height = 1, content = "Widget 3", key="D512", link="https://www.contensive.com" },
@@ -40,12 +43,43 @@ namespace Contensive.WidgetDashboard.Models.View {
                         new DashboardViewModel_Widgets() { x=5,y=0, width = 2, height = 2, content = "Widget 5", key="AC55", link="https://www.contensive.com" }
                     ]
                 };
-                result.save(cp);
-                return result;
+                viewModel.save(cp);
+                DashboardViewModel layout = renderViewAddons(cp, viewModel);
+                return layout;
             } catch (Exception ex) {
                 cp.Site.ErrorReport(ex);
                 throw;
             }
+        }
+        //
+        // ====================================================================================================
+        /// <summary>
+        /// render all the addons in the view model
+        /// </summary>
+        /// <param name="cp"></param>
+        /// <param name="viewModel"></param>
+        /// <returns></returns>
+        public static DashboardViewModel renderViewAddons(CPBaseClass cp, DashboardViewModel viewModel) {
+            foreach (var widget in viewModel.widgets) {
+                if (string.IsNullOrWhiteSpace(widget.addonGuid)) { continue; }
+                //
+                string dashWidgetJson = cp.Addon.Execute(widget.addonGuid);
+                if (string.IsNullOrEmpty(dashWidgetJson)) { continue; }
+                //
+                DashWidgetHtmlContentModel DashWidgetData = null;
+                try {
+                    DashWidgetData = cp.JSON.Deserialize<DashWidgetHtmlContentModel>(dashWidgetJson);
+                } catch (Exception) {
+                    cp.Site.ErrorReport($"Error deserializing widget data for widget {widget.addonGuid}");
+                    continue;
+                }
+                if (DashWidgetData == null) { continue; }
+                //
+                widget.content = DashWidgetData.htmlContent;
+                widget.width = (widget.width > DashWidgetData.minWidth ) ? widget.width : DashWidgetData.minWidth;
+                widget.height = (widget.height > DashWidgetData.minHeight ) ? widget.height : DashWidgetData.minHeight;
+            }
+            return viewModel;
         }
         //
         // ====================================================================================================

@@ -3,28 +3,26 @@
 <link href="node_modules/gridstack/dist/gridstack.min.css" rel="stylesheet"/>
 
 <style type="text/css">
-    .card-tool { 
-      position: absolute;
-      z-index: 1;
-      background-color: #fff;
-      right: 0;
-      top: 0;
-    }
-    .card-grab { 
-      float:right;
-      cursor: grab; 
-    }
-    .card-close { 
-      float:right;
-      cursor: pointer; 
-    }
-    .grid-stack { /*background: #FAFAD2;*/ }
-    .grid-stack-item-content { /*background-color: #18BC9C;*/ }
+  .card-tool { 
+    position: absolute;
+    z-index: 1;
+    background-color: #fff;
+    right: 0;
+    top: 0;
+  }
+  .card-grab { 
+    float:right;
+    cursor: grab; 
+  }
+  .card-close { 
+    float:right;
+    cursor: pointer; 
+  }
 </style>
 <div id="dashboard" class="grid-stack h-100">
   <button id="add-widget-btn">Add Widget</button>
   {{#widgets}}
-    <div class="grid-stack-item overflow-hidden" id="{{key}}" gs-w="{{width}}" gs-h="{{height}}" gs-x="{{x}}" gs-y="{{y}}">
+    <div class="grid-stack-item overflow-hidden" id="{{key}}" gs-w="{{width}}" gs-h="{{height}}" gs-x="{{x}}" gs-y="{{y}}" data-addonGuid="{{addonGuid}}">
       <div class="grid-stack-item-content bg-white rounded-2 p-2 border border-2 overflow-hidden">
         <div class="card-tool">
           <div class="card-grab pe-1"><i class="fa-solid fa-grip-vertical"></i></div>
@@ -43,13 +41,13 @@
   {{/widgets}}
 </div>  
 <div id="newWidgetHtmlId" style="display:none;">
-  <div class="grid-stack-item overflow-hidden" id="idPlaceholder">
+  <div class="grid-stack-item overflow-hidden" id="idPlaceholder" data-addonGuid="{13A4BBF7-738B-4DDF-BD1A-D048FBE51E45}">
     <div class="grid-stack-item-content bg-white rounded-2 p-2 border border-2 overflow-hidden">
       <div class="card-tool">
         <div class="card-grab pe-1"><i class="fa-solid fa-grip-vertical"></i></div>
         <div class="card-close pe-1"><i class="fa-solid fa-square-xmark"></i></div>
       </div>
-      <div class="card h-100">1234 1234 1234</div>
+      <div class="dashWidgetContent card h-100"></div>
     </div>      
   </div>
 </div>
@@ -71,24 +69,7 @@
       document.getElementById('add-widget-btn').addEventListener('click', function() {
         let newWidgetHtml = document.getElementById('newWidgetHtmlId').innerHTML;
         newWidgetHtml = newWidgetHtml.replace('idPlaceholder', generateKey());
-        let newWidget = grid.addWidget(newWidgetHtml,{
-          // x: 0, // initial x position
-          // y: 0, // initial y position
-          width: 2, // width of the widget
-          height: 2, // height of the widget
-          //content: 'New Widget', // content of the widget
-          //id: 'new-widget-' + Math.random().toString(36).substr(2, 9), // unique id for the widget
-          handle: true, // make the widget draggable
-        });
-        //
-       /*  let itemHtmlCollection = document.getElementsByClassName('grid-stack-item');
-        let itemHtmlArray = Array.from(itemHtmlCollection);
-        let items = [];
-        itemHtmlArray.forEach(element => {
-          console.log(element);        
-          if(element==null) { return; }
-          items.push(createGridStackWidgetFromElement(element));  
-        });    */     
+        let newWidget = grid.addWidget(newWidgetHtml,{});
         widgetDashboardCmd('save', new Array(newWidget.gridstackNode));
       });
     });
@@ -103,17 +84,17 @@
       float: true   
     });
     //
-    // -- server command
+    // -- execute server command
     function widgetDashboardCmd(cmd, items) { 
       console.log('saveItems'); 
       if(!Array.isArray(items)) {
-        console.error("items is not an array");
+        console.error("widgetDashboardCmd, items is not an array");
         return;
       }   
       postData = [];
       items.forEach(function(item) {
-        console.log('change-item: el.id:'+item.el.id+' _id:'+item._id+' x:'+item.x + ' y:'+item.y + ' w:'+item.w + ' h:'+item.h);
-        postData.push({cmd: cmd, key: item.el.id, x: item.x, y: item.y, w: item.w, h: item.h});
+        console.log('widgetDashboardCmd, el.id:'+item.el.id+' _id:'+item._id+' x:'+item.x + ' y:'+item.y + ' w:'+item.w + ' h:'+item.h);
+        postData.push({cmd: cmd, key: item.el.id, x: item.x, y: item.y, w: item.w, h: item.h, addonGuid: item.el.getAttribute('data-addonGuid')});
       });
       $.ajax({
         type: 'POST',
@@ -169,10 +150,9 @@
       console.log('resizestop');
     });
     //
-    // Function to create GridStackWidget object from HTML element
+    // create GridStackWidget object from HTML element
     function createGridStackWidgetFromElement(element) {
       if(element==null) { return null; }
-      // Extract data attributes
       const x = parseInt(element.getAttribute('gs-x')) || 0;
       const y = parseInt(element.getAttribute('gs-y')) || 0;
       const w = parseInt(element.getAttribute('gs-w')) || 1;
@@ -197,5 +177,4 @@
         return v.toString(16);
     });
 }
-
-  </script>
+</script>

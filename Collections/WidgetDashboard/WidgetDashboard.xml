@@ -10,8 +10,10 @@
 		<BlockEditTools>Yes</BlockEditTools>
 		<IncludeAddon name="JQuery" guid="{9C882078-0DAC-48E3-AD4B-CF2AA230DF80} "/>
 		<IncludeAddon name="Bootstrap" guid="{EF1FD66C-D62F-4BD2-BF07-38F47996EBB3}"/>
-		<JSHeadScriptSrc><![CDATA[/dashboard/dashboard.js]]></JSHeadScriptSrc>
-		<styleslinkhref><![CDATA[/dashboard/dashboard.css]]></styleslinkhref>
+	</Addon>
+	<Addon name="Sample Dashboard Widget" guid="{13A4BBF7-738B-4DDF-BD1A-D048FBE51E45}" type="Add-on">
+		<DotNetClass><![CDATA[Contensive.WidgetDashboard.Addons.SampleDashWidget]]></DotNetClass>
+		<BlockEditTools>Yes</BlockEditTools>
 	</Addon>
 	<Addon name="widgetDashboardCmd" guid="{E4EFE94E-DFCE-42B5-A54E-9ABF97250249}" type="Add-on">
 		<DotNetClass><![CDATA[Contensive.WidgetDashboard.Addons.WidgetDashboardCmdRemote]]></DotNetClass>
