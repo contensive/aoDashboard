@@ -153,17 +153,13 @@
     // create GridStackWidget object from HTML element
     function createGridStackWidgetFromElement(element) {
       if(element==null) { return null; }
-      const x = parseInt(element.getAttribute('gs-x')) || 0;
-      const y = parseInt(element.getAttribute('gs-y')) || 0;
-      const w = parseInt(element.getAttribute('gs-w')) || 1;
-      const h = parseInt(element.getAttribute('gs-h')) || 1;
       //
       // Create GridStackWidget object
       const widget = {
-          x: x,
-          y: y,
-          w: w,
-          h: h,
+          x: parseInt(element.getAttribute('gs-x')) || 0,
+          y: parseInt(element.getAttribute('gs-y')) || 0,
+          w: parseInt(element.getAttribute('gs-w')) || 1,
+          h: parseInt(element.getAttribute('gs-h')) || 1,
           el: element // Attach the HTML element
       };
       return widget;
