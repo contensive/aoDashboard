@@ -8,7 +8,7 @@ namespace Contensive.WidgetDashboard.Models.View {
     internal class DashboardViewModel {
         //
         private CPBaseClass cp;
-        public List<DashboardViewModel_Widgets> widgets { get; set; }
+        public List<DashboardViewModel_Widget> widgets { get; set; }
         // 
         // ====================================================================================================
         /// <summary>
@@ -20,31 +20,31 @@ namespace Contensive.WidgetDashboard.Models.View {
         public static DashboardViewModel create(CPBaseClass cp) {
             try {
                 DashboardViewModel viewModel = load(cp);
-                if (viewModel?.widgets != null && viewModel.widgets.Count > 0) { 
-                    return renderViewAddons( cp,  viewModel ); 
+                if (viewModel?.widgets != null && viewModel.widgets.Count > 0) {
+                    return renderWidgets(cp, viewModel );
                 }
                 //
                 // -- iniitalize with default widgets
                 viewModel = new DashboardViewModel() {
                     widgets = [
-                        new DashboardViewModel_Widgets() { 
+                        new DashboardViewModel_Widget() {
                             x=0,
-                            y=0, 
-                            width = 2, 
-                            height = 2, 
-                            content = cp.CdnFiles.Read("dashboard\\sampleWidget.html"), 
-                            key="E928", 
+                            y=0,
+                            width = 2,
+                            height = 2,
+                            htmlContent = cp.CdnFiles.Read("dashboard\\sampleWidget.html"),
+                            key="E928",
                             link="https://www.contensive.com",
                             addonGuid = Constants.sampleDashboardWidgetGuid
                         },
-                        new DashboardViewModel_Widgets() { x=2,y=0, width = 2, height = 2, content = "Widget 2", key="6E52", link="https://www.contensive.com" },
-                        new DashboardViewModel_Widgets() { x=4,y=0, width = 1, height = 1, content = "Widget 3", key="D512", link="https://www.contensive.com" },
-                        new DashboardViewModel_Widgets() { x=4,y=1, width = 1, height = 1, content = "Widget 4", key="0380", link="https://www.contensive.com" },
-                        new DashboardViewModel_Widgets() { x=5,y=0, width = 2, height = 2, content = "Widget 5", key="AC55", link="https://www.contensive.com" }
+                        new DashboardViewModel_Widget() { x=2,y=0, width = 2, height = 2, htmlContent = "Widget 2", key="6E52", link="https://www.contensive.com" },
+                        new DashboardViewModel_Widget() { x=4,y=0, width = 1, height = 1, htmlContent = "Widget 3", key="D512", link="https://www.contensive.com" },
+                        new DashboardViewModel_Widget() { x=4,y=1, width = 1, height = 1, htmlContent = "Widget 4", key="0380", link="https://www.contensive.com" },
+                        new DashboardViewModel_Widget() { x=5,y=0, width = 2, height = 2, htmlContent = "Widget 5", key="AC55", link="https://www.contensive.com" }
                     ]
                 };
                 viewModel.save(cp);
-                DashboardViewModel layout = renderViewAddons(cp, viewModel);
+                DashboardViewModel layout = renderWidgets(cp, viewModel);
                 return layout;
             } catch (Exception ex) {
                 cp.Site.ErrorReport(ex);
@@ -59,27 +59,43 @@ namespace Contensive.WidgetDashboard.Models.View {
         /// <param name="cp"></param>
         /// <param name="viewModel"></param>
         /// <returns></returns>
-        public static DashboardViewModel renderViewAddons(CPBaseClass cp, DashboardViewModel viewModel) {
+        public static DashboardViewModel renderWidgets(CPBaseClass cp, DashboardViewModel viewModel ) {
+            DashboardViewModel result = new();
+            result.cp = cp;
+            result.widgets = [];
             foreach (var widget in viewModel.widgets) {
-                if (string.IsNullOrWhiteSpace(widget.addonGuid)) { continue; }
-                //
-                string dashWidgetJson = cp.Addon.Execute(widget.addonGuid);
-                if (string.IsNullOrEmpty(dashWidgetJson)) { continue; }
-                //
-                DashWidgetHtmlContentModel DashWidgetData = null;
-                try {
-                    DashWidgetData = cp.JSON.Deserialize<DashWidgetHtmlContentModel>(dashWidgetJson);
-                } catch (Exception) {
-                    cp.Site.ErrorReport($"Error deserializing widget data for widget {widget.addonGuid}");
-                    continue;
-                }
-                if (DashWidgetData == null) { continue; }
-                //
-                widget.content = DashWidgetData.htmlContent;
-                widget.width = (widget.width > DashWidgetData.minWidth ) ? widget.width : DashWidgetData.minWidth;
-                widget.height = (widget.height > DashWidgetData.minHeight ) ? widget.height : DashWidgetData.minHeight;
+                //if (keyFilter.Count > 0 && !keyFilter.Contains(widget.key)) { continue; }
+                result.widgets.Add(renderWidget(cp, widget));
             }
-            return viewModel;
+            return result;
+        }
+        //
+        // ====================================================================================================
+        /// <summary>
+        /// render the addon for the widget
+        /// </summary>
+        /// <param name="cp"></param>
+        /// <param name="widget"></param>
+        /// <returns></returns>
+        public static DashboardViewModel_Widget renderWidget(CPBaseClass cp, DashboardViewModel_Widget widget) {
+            if (string.IsNullOrWhiteSpace(widget.addonGuid)) { return widget; }
+            //
+            string dashWidgetAddonResultJson = cp.Addon.Execute(widget.addonGuid);
+            if (string.IsNullOrEmpty(dashWidgetAddonResultJson)) { return widget; }
+            //
+            DashWidgetAddonResultModel DashWidgetAddonResult = null;
+            try {
+                DashWidgetAddonResult = cp.JSON.Deserialize<DashWidgetAddonResultModel>(dashWidgetAddonResultJson);
+            } catch (Exception) {
+                cp.Site.ErrorReport($"Error deserializing widget data for widget {widget.addonGuid}");
+                return widget;
+            }
+            if (DashWidgetAddonResult == null) { return widget; }
+            //
+            widget.htmlContent = DashWidgetAddonResult.htmlContent;
+            widget.width = (widget.width > DashWidgetAddonResult.minWidth) ? widget.width : DashWidgetAddonResult.minWidth;
+            widget.height = (widget.height > DashWidgetAddonResult.minHeight) ? widget.height : DashWidgetAddonResult.minHeight;
+            return widget;
         }
         //
         // ====================================================================================================
@@ -108,13 +124,13 @@ namespace Contensive.WidgetDashboard.Models.View {
             cp.PrivateFiles.Save(@"dashboard\widgetdashconfig." + cp.User.Id + ".json", cp.JSON.Serialize(this));
         }
     }
-    public class DashboardViewModel_Widgets {
+    public class DashboardViewModel_Widget {
         public string key { get; set; }
         public int x { get; set; }
         public int y { get; set; }
         public int width { get; set; }
         public int height { get; set; }
-        public string content { get; set; }
+        public string htmlContent { get; set; }
         public string link { get; set; }
         public string addonGuid { get; set; }
     }

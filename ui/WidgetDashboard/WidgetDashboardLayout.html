@@ -28,7 +28,7 @@
           <div class="card-grab pe-1"><i class="fa-solid fa-grip-vertical"></i></div>
           <div class="card-close pe-1"><i class="fa-solid fa-square-xmark"></i></div>
         </div>
-        <div class="card h-100">{{{content}}}</div>
+        <div class="card h-100">{{{htmlContent}}}</div>
       </div>      
     </div>
     {{#link}}
@@ -69,7 +69,7 @@
       document.getElementById('add-widget-btn').addEventListener('click', function() {
         let newWidgetHtml = document.getElementById('newWidgetHtmlId').innerHTML;
         newWidgetHtml = newWidgetHtml.replace('idPlaceholder', generateKey());
-        let newWidget = grid.addWidget(newWidgetHtml,{});
+        let newWidget = grid.addWidget(newWidgetHtml,{h:2,w:2});
         widgetDashboardCmd('save', new Array(newWidget.gridstackNode));
       });
     });
@@ -101,9 +101,23 @@
         url: "/widgetDashboardCmd",
         contentType: "application/json",
         data: JSON.stringify(postData),
-        success: function(result){
+        success: function(resultJson){
           console.log('widgetDashboardCmd success');
-        }, 
+          let result = JSON.parse(resultJson);
+          if(result){
+            result.forEach(function(widget) {
+            items.forEach(function(item) {
+              if(item.el.id==widget.key) {
+                document.querySelector('#'+item.el.id+' .card').innerHTML = widget.htmlContent;
+                if(widget.link) {
+                  let script = document.createElement('script');
+                  script.innerHTML = "document.addEventListener('DOMContentLoaded', function(event) { jQuery('#"+widget.key+" .card').on('click', function() { window.location.href='"+widget.link+"'; }); });";
+                  document.body.appendChild(script);
+                }
+            }}); 
+          });
+          };
+        },
         error: function(result){
           console.log('widgetDashboardCmd error');
         }
@@ -167,7 +181,7 @@
     //
     // -- create non-secure guid
     function generateKey() {
-      return 'xxxx'.replace(/[xy]/g, function(c) {
+      return '_xxxxxxxx'.replace(/[xy]/g, function(c) {
         var r = Math.random() * 16 | 0,
             v = c == 'x' ? r : (r & 0x3 | 0x8);
         return v.toString(16);

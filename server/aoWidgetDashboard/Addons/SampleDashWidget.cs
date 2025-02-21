@@ -7,7 +7,7 @@ namespace Contensive.WidgetDashboard.Addons {
     public class SampleDashWidget : Contensive.BaseClasses.AddonBaseClass {
         public override object Execute(CPBaseClass cp) {
             try {
-                Contensive.WidgetDashboard.Models.Domain.DashWidgetHtmlContentModel result = new() {
+                Contensive.WidgetDashboard.Models.Domain.DashWidgetAddonResultModel result = new() {
                     minWidth = 2,
                     minHeight = 2,
                     htmlContent = "" +

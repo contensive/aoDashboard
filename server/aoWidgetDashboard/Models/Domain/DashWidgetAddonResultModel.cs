@@ -8,7 +8,7 @@ namespace Contensive.WidgetDashboard.Models.Domain {
     /// <summary>
     /// This dash widget simple returns html for the content
     /// </summary>
-    public class DashWidgetHtmlContentModel : DashWidgetBaseModel {
+    public class DashWidgetAddonResultModel : DashWidgetBaseModel {
         /// <summary>
         /// The html with css and javascript to render the widget
         /// </summary>

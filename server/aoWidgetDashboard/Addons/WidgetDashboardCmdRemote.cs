@@ -2,43 +2,71 @@
 using Contensive.WidgetDashboard.Models.View;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 
 namespace Contensive.WidgetDashboard.Addons {
+    /// <summary>
+    /// Remote Method called from the dashboard with commands
+    /// </summary>
     public class WidgetDashboardCmdRemote : Contensive.BaseClasses.AddonBaseClass {
+        /// <summary>
+        /// addon interface
+        /// all commands return a result as type DashboardViewModel, with a widget list that needs to be updated on the UI. 
+        /// It may be empty if nothing needs to be updated.
+        /// see DashboardViewModel
+        /// 
+        /// </summary>
+        /// <param name="cp"></param>
+        /// <returns></returns>
         public override object Execute(CPBaseClass cp) {
             try {
                 string requestJson = cp.Request.Body;
-                List<WDS_Request_Widget> widgets = cp.JSON.Deserialize<List<WDS_Request_Widget>>(requestJson);
-                if (widgets.Count == 0) { return ""; }
+                List<WDS_Request_Widget> requestWidgets = cp.JSON.Deserialize<List<WDS_Request_Widget>>(requestJson);
+                if (requestWidgets.Count == 0) { return ""; }
                 //
-                DashboardViewModel userConfig = DashboardViewModel.create(cp);
-                if (userConfig is null) { return ""; }
+                DashboardViewModel userDashboardConfig = DashboardViewModel.create(cp);
+                if (userDashboardConfig is null) { return ""; }
                 //
-                foreach (WDS_Request_Widget widget in widgets) {
-                    var userConfigWidget = userConfig.widgets.Find(row => row.key == widget.key);
+                List<WDS_Response> result = [];
+                foreach (WDS_Request_Widget requestWidget in requestWidgets) {
+                    var userDashboardConfigWidget = userDashboardConfig.widgets.Find(row => row.key == requestWidget.key);
                     //
-                    if(widget.cmd == "delete") {
-                        if (userConfigWidget is null) { continue; }
-                        userConfig.widgets.Remove(userConfigWidget);
+                    if (requestWidget.cmd == "delete") {
+                        if (userDashboardConfigWidget is null) { continue; }
+                        userDashboardConfig.widgets.Remove(userDashboardConfigWidget);
                         continue;
                     }
-                    if (widget.cmd == "save") {
-                        if (userConfigWidget is null) {
-                            userConfigWidget = new DashboardViewModel_Widgets {
-                                key = widget.key
+                    //
+                    if (requestWidget.cmd == "refresh") {
+                        if (userDashboardConfigWidget is null) { continue; }
+                        result.Add(new WDS_Response { 
+                            key = requestWidget.key, 
+                            htmlContent = DashboardViewModel.renderWidget(cp, userDashboardConfigWidget).htmlContent
+                        });
+                        continue;
+                    }
+                    if (requestWidget.cmd == "save") {
+                        if (userDashboardConfigWidget is null) {
+                            userDashboardConfigWidget = new DashboardViewModel_Widget {
+                                key = requestWidget.key
                             };
-                            userConfig.widgets.Add(userConfigWidget);
+                            userDashboardConfig.widgets.Add(userDashboardConfigWidget);
                         }
-                        userConfigWidget.x = widget.x;
-                        userConfigWidget.y = widget.y;
-                        userConfigWidget.width = widget.w;
-                        userConfigWidget.height = widget.h;
-                        userConfigWidget.addonGuid = widget.addonGuid;
+                        userDashboardConfigWidget.x = requestWidget.x;
+                        userDashboardConfigWidget.y = requestWidget.y;
+                        userDashboardConfigWidget.width = requestWidget.w;
+                        userDashboardConfigWidget.height = requestWidget.h;
+                        userDashboardConfigWidget.addonGuid = requestWidget.addonGuid;
+                        result.Add(new WDS_Response {
+                            key = requestWidget.key,
+                            htmlContent = DashboardViewModel.renderWidget(cp, userDashboardConfigWidget).htmlContent,
+                            link = userDashboardConfigWidget.link
+                        });
                         continue;
                     }
                 }
-                userConfig.save(cp);
-                return "";
+                userDashboardConfig.save(cp);
+                return result;
             } catch (Exception ex) {
                 cp.Site.ErrorReport(ex);
                 throw;
@@ -58,5 +86,14 @@ namespace Contensive.WidgetDashboard.Addons {
         public int w { get; set; }
         public string key { get; set; }
         public string addonGuid { get; set; }
+    }
+    //
+    public class WDS_Response {
+        //
+        public string key { get; set; }
+        //
+        public string htmlContent { get; set; }
+        //
+        public string link { get; set; }
     }
 }
