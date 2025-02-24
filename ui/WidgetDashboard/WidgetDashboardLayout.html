@@ -20,7 +20,8 @@
   }
 </style>
 <div id="dashboard" class="grid-stack h-100">
-  <button id="add-widget-btn">Add Widget</button>
+  <button id="add-sample-widget-btn">Add Sample Widget</button>
+  <button id="add-number-widget-btn">Add Number Widget</button>
   {{#widgets}}
     <div class="grid-stack-item overflow-hidden" id="{{key}}" gs-w="{{width}}" gs-h="{{height}}" gs-x="{{x}}" gs-y="{{y}}" data-addonGuid="{{addonGuid}}">
       <div class="grid-stack-item-content bg-white rounded-2 p-2 border border-2 overflow-hidden">
@@ -41,7 +42,7 @@
   {{/widgets}}
 </div>  
 <div id="newWidgetHtmlId" style="display:none;">
-  <div class="grid-stack-item overflow-hidden" id="idPlaceholder" data-addonGuid="{13A4BBF7-738B-4DDF-BD1A-D048FBE51E45}">
+  <div class="grid-stack-item overflow-hidden" id="idPlaceholder" data-addonGuid="guidPlaceholder">
     <div class="grid-stack-item-content bg-white rounded-2 p-2 border border-2 overflow-hidden">
       <div class="card-tool">
         <div class="card-grab pe-1"><i class="fa-solid fa-grip-vertical"></i></div>
@@ -50,8 +51,7 @@
       <div class="dashWidgetContent card h-100"></div>
     </div>      
   </div>
-</div>
-  
+</div>  
   <script type="text/javascript">
     // https://github.com/gridstack/gridstack.js/tree/master/doc#changeevent-items
     //
@@ -65,10 +65,20 @@
         grid.removeWidget(el.get(0));
       });
       //
-      // -- add
-      document.getElementById('add-widget-btn').addEventListener('click', function() {
+      // -- add sample widget
+      document.getElementById('add-sample-widget-btn').addEventListener('click', function() {
         let newWidgetHtml = document.getElementById('newWidgetHtmlId').innerHTML;
         newWidgetHtml = newWidgetHtml.replace('idPlaceholder', generateKey());
+        newWidgetHtml = newWidgetHtml.replace('guidPlaceholder', '{13A4BBF7-738B-4DDF-BD1A-D048FBE51E45}');
+        let newWidget = grid.addWidget(newWidgetHtml,{h:2,w:2});
+        widgetDashboardCmd('save', new Array(newWidget.gridstackNode));
+      });
+      //
+      // -- add number widget
+      document.getElementById('add-number-widget-btn').addEventListener('click', function() {
+        let newWidgetHtml = document.getElementById('newWidgetHtmlId').innerHTML;
+        newWidgetHtml = newWidgetHtml.replace('idPlaceholder', generateKey());
+        newWidgetHtml = newWidgetHtml.replace('guidPlaceholder', '{224E4CE6-4D3A-41A8-A501-1C2DBD456EE9}');
         let newWidget = grid.addWidget(newWidgetHtml,{h:2,w:2});
         widgetDashboardCmd('save', new Array(newWidget.gridstackNode));
       });

@@ -47,7 +47,7 @@ namespace Contensive.WidgetDashboard.Addons {
                     }
                     if (requestWidget.cmd == "save") {
                         if (userDashboardConfigWidget is null) {
-                            userDashboardConfigWidget = new DashboardViewModel_Widget {
+                            userDashboardConfigWidget = new DashboardWidgetViewModel {
                                 key = requestWidget.key
                             };
                             userDashboardConfig.widgets.Add(userDashboardConfigWidget);
@@ -59,7 +59,7 @@ namespace Contensive.WidgetDashboard.Addons {
                         userDashboardConfigWidget.addonGuid = requestWidget.addonGuid;
                         result.Add(new WDS_Response {
                             key = requestWidget.key,
-                            htmlContent = DashboardViewModel.renderWidget(cp, userDashboardConfigWidget).htmlContent,
+                            htmlContent = DashboardViewModel.renderWidget(cp, userDashboardConfigWidget),
                             link = userDashboardConfigWidget.link
                         });
                         continue;

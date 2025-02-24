@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Contensive.WidgetDashboard.Models.Domain {
     /// <summary>
-    /// This is the data model returned by addons used for dashboard widgets.
-    /// Addons are rendered in two ways.
-    /// 1) during the dashboard render, it can be rendered server-side
-    /// 2) in the UI, the dashboard can ajax back to a dashboard remote method to return an array of these models for each widget
+    /// This is the data base model returned by addons used for dashboard widgets.
+    /// There are mulitple types an addon can return, but they all must inherit from this base class.
+    /// Widgets are rendered with the WidgetRenderController, which populates the htmlContent property from 
+    /// the return of the addon, combined with the layout determined to be associated with the addon return data.
     /// </summary>
-    public class DashWidgetBaseModel {
+    public class WidgetBaseModel {
         /// <summary>
         /// The minimum width of the widget in gridStack units, 12 units is full width
         /// </summary>
