@@ -1,4 +1,5 @@
 ﻿using Contensive.BaseClasses;
+using Contensive.WidgetDashboard.Controllers;
 using Contensive.WidgetDashboard.Models.View;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace Contensive.WidgetDashboard.Addons {
                 List<WDS_Request_Widget> requestWidgets = cp.JSON.Deserialize<List<WDS_Request_Widget>>(requestJson);
                 if (requestWidgets.Count == 0) { return ""; }
                 //
-                DashboardViewModel userDashboardConfig = DashboardViewModel.create(cp);
+                ConfigModel userDashboardConfig = ConfigModel.create(cp);
                 if (userDashboardConfig is null) { return ""; }
                 //
                 List<WDS_Response> result = [];
@@ -41,13 +42,14 @@ namespace Contensive.WidgetDashboard.Addons {
                         if (userDashboardConfigWidget is null) { continue; }
                         result.Add(new WDS_Response { 
                             key = requestWidget.key, 
-                            htmlContent = DashboardViewModel.renderWidget(cp, userDashboardConfigWidget).htmlContent
+                            htmlContent = WidgetRenderController.renderWidget(cp, userDashboardConfigWidget).htmlContent,
+                            link = userDashboardConfigWidget.link
                         });
                         continue;
                     }
                     if (requestWidget.cmd == "save") {
                         if (userDashboardConfigWidget is null) {
-                            userDashboardConfigWidget = new DashboardWidgetViewModel {
+                            userDashboardConfigWidget = new ConfigWidgetModel {
                                 key = requestWidget.key
                             };
                             userDashboardConfig.widgets.Add(userDashboardConfigWidget);
@@ -59,7 +61,7 @@ namespace Contensive.WidgetDashboard.Addons {
                         userDashboardConfigWidget.addonGuid = requestWidget.addonGuid;
                         result.Add(new WDS_Response {
                             key = requestWidget.key,
-                            htmlContent = DashboardViewModel.renderWidget(cp, userDashboardConfigWidget),
+                            htmlContent = WidgetRenderController.renderWidget(cp, userDashboardConfigWidget).htmlContent,
                             link = userDashboardConfigWidget.link
                         });
                         continue;

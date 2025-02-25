@@ -11,7 +11,7 @@ namespace Contensive.WidgetDashboard.Addons {
                     minWidth = 2,
                     minHeight = 2,
                     htmlContent = "" +
-                        "<div class=\"d-flex justify-content-center align-items-center\" style=\"height: 100vh;\">" +
+                        "<div class=\"d-flex justify-content-center align-items-center\">" +
                             "<h4 class=\"text-center\">" +
                                 "Sample" +
                                 "<br>Widget" +

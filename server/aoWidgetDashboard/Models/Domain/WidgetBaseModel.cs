@@ -13,6 +13,12 @@ namespace Contensive.WidgetDashboard.Models.Domain {
     /// </summary>
     public class WidgetBaseModel {
         /// <summary>
+        /// see WidgetTypeEnum, 
+        /// 1=htmlContent, 
+        /// 2=Number
+        /// </summary>
+        public WidgetTypeEnum widgetType { get; set; }
+        /// <summary>
         /// The minimum width of the widget in gridStack units, 12 units is full width
         /// </summary>
         public int minWidth { get; set; }
@@ -25,5 +31,9 @@ namespace Contensive.WidgetDashboard.Models.Domain {
         /// </summary>
         public int refreshSeconds { get; set; }
 
+    }
+    public enum WidgetTypeEnum {
+        htmlContent = 1,
+        number = 2
     }
 }

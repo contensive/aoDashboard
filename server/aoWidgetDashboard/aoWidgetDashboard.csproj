@@ -23,6 +23,7 @@
 		<PackageReference Include="Contensive.CPBaseClass" Version="25.2.3.3" />
 		<PackageReference Include="Contensive.DbModels" Version="25.2.3.3" />
 		<PackageReference Include="Contensive.DesignBlockBase" Version="25.1.30.1" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	</ItemGroup>
 	<ItemGroup>
 		<Reference Include="System" />

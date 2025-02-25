@@ -2,32 +2,33 @@
 using Contensive.WidgetDashboard.Models.Domain;
 using Contensive.WidgetDashboard.Models.View;
 using System;
+using System.Data;
 
 namespace Contensive.WidgetDashboard.Addons {
     public class WhoIsOnlineNumberWidget : Contensive.BaseClasses.AddonBaseClass {
         public override object Execute(CPBaseClass cp) {
             try {
-                Contensive.WidgetDashboard.Models.Domain.WidgetNumberModel data = new() {
+                return new WidgetNumberModel() {
                     minWidth = 2,
                     minHeight = 2,
-                    number = "100",
-                    subhead = "Online Users",
-                    description = "Number of users currently online. A user ",
+                    number = getUsersOnline(cp).ToString(),
+                    subhead = "Users Online",
+                    description = "The number of users online over the past 30 minutes",
                     refreshSeconds = 0
                 };
-                return data;
-                //string layout = cp.Layout.GetLayout(Constants.numberDashWidgetLayoutGuid, Constants.numberDashWidgetLayoutName, Constants.numberDashWidgetLayoutPathFilename);
-                //return new WidgetHtmlContentModel {
-                //    htmlContent = cp.Mustache.Render(layout, data),
-                //    refreshSeconds = data.refreshSeconds,
-                //    minWidth = data.minWidth,
-                //    minHeight = data.minHeight
-                //};
             } catch (Exception ex) {
                 cp.Site.ErrorReport(ex);
                 throw;
             }
 
+        }
+        //
+        public static int getUsersOnline(CPBaseClass cp) {
+            using DataTable dt = cp.Db.ExecuteQuery("select count(*) as cnt from ccvisits where (lastVisitTime > " + cp.Db.EncodeSQLDate(DateTime.Now.AddMinutes(-30)) + ")");
+            if(dt?.Rows != null  ) {
+                return cp.Utils.EncodeInteger(dt.Rows[0]["cnt"]);
+            }
+            return 0;
         }
     }
 }

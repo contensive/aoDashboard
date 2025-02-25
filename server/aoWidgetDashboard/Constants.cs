@@ -7,15 +7,21 @@ namespace Contensive.WidgetDashboard {
         // 
         // -- Number Widget
         // 
-        public const string numberDashWidgetLayoutGuid = "{89c19056-8823-4355-a189-bdcd6183e873}";
-        public const string numberDashWidgetLayoutName = "Number Widget Layout";
-        public const string numberDashWidgetLayoutPathFilename = @"dashboard\WidgetNumberLayout.html";
+        public const string dashboardWidgetNumberLayoutGuid = "{89c19056-8823-4355-a189-bdcd6183e873}";
+        public const string dashboardWidgetNumberLayoutName = "Dashboard Widget Number Layout";
+        public const string dashboardWidgetNumberLayoutPathFilename = @"dashboard\DashboardWidgetNumberLayout.html";
+        // 
+        // -- Number Widget
+        // 
+        public const string dashboardWidgetHtmlContentLayoutGuid = "{1a9cad1e-b1ea-4099-a387-4943e71b9e9e}";
+        public const string dashboardWidgetHtmlContentLayoutName = "Dashboard Widget Html Content Layout";
+        public const string dashboardWidgetHtmlContentLayoutPathFilename = @"dashboard\DashboardWidgetHtmlContentLayout.html";
         // 
         // -- Dashboard Layout
         // 
-        public const string widgetDashboardLayoutGuid = "{e4796a0e-ed80-4ffb-8de9-52d7bb4984d8}";
-        public const string widgetDashboardLayoutName = "Widget Dashboard Layout";
-        public const string widgetDashboardLayoutPathFilename = @"dashboard\WidgetDashboardLayout.html";
+        public const string dashboardLayoutGuid = "{e4796a0e-ed80-4ffb-8de9-52d7bb4984d8}";
+        public const string dashboardLayoutName = "Dashboard Layout";
+        public const string dashboardLayoutPathFilename = @"dashboard\DashboardLayout.html";
         // 
    }
 }

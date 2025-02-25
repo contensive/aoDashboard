@@ -2,10 +2,6 @@
 using Contensive.WidgetDashboard.Models.Domain;
 using Contensive.WidgetDashboard.Models.View;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Contensive.WidgetDashboard.Controllers {
     internal class WidgetRenderController {
@@ -17,8 +13,8 @@ namespace Contensive.WidgetDashboard.Controllers {
         /// <param name="cp"></param>
         /// <param name="viewModel"></param>
         /// <returns></returns>
-        public static DashboardViewModel renderWidgets(CPBaseClass cp, DashboardViewModel viewModel) {
-            DashboardViewModel result = new() {
+        public static ConfigModel renderWidgets(CPBaseClass cp, ConfigModel viewModel) {
+            ConfigModel result = new() {
                 widgets = []
             };
             foreach (var widget in viewModel.widgets) {
@@ -34,25 +30,53 @@ namespace Contensive.WidgetDashboard.Controllers {
         /// <param name="cp"></param>
         /// <param name="widget"></param>
         /// <returns></returns>
-        public static DashboardWidgetViewModel renderWidget(CPBaseClass cp, DashboardWidgetViewModel widget) {
+        public static ConfigWidgetModel renderWidget(CPBaseClass cp, ConfigWidgetModel widget) {
             if (string.IsNullOrWhiteSpace(widget.addonGuid)) { return widget; }
             //
-            string dashWidgetAddonResultJson = cp.Addon.Execute(widget.addonGuid);
-            if (string.IsNullOrEmpty(dashWidgetAddonResultJson)) { return widget; }
+            string addonWidgetJson = cp.Addon.Execute(widget.addonGuid);
+            if (string.IsNullOrEmpty(addonWidgetJson)) { return widget; }
             //
-            WidgetHtmlContentModel DashWidgetAddonResult = null;
+            WidgetBaseModel addonBaseWidget = null;
             try {
-                DashWidgetAddonResult = cp.JSON.Deserialize<WidgetHtmlContentModel>(dashWidgetAddonResultJson);
+                addonBaseWidget = cp.JSON.Deserialize<WidgetBaseModel>(addonWidgetJson);
+                widget.width = (widget.width > addonBaseWidget.minWidth) ? widget.width : addonBaseWidget.minWidth;
+                widget.height = (widget.height > addonBaseWidget.minHeight) ? widget.height : addonBaseWidget.minHeight;
+                widget.refreshSeconds = addonBaseWidget.refreshSeconds;
+                // Check the type
+                if (addonBaseWidget.widgetType == WidgetTypeEnum.htmlContent) {
+                    WidgetHtmlContentModel widgetData = cp.JSON.Deserialize<WidgetHtmlContentModel>(addonWidgetJson);
+                    var layout = cp.Layout.GetLayout(Constants.dashboardWidgetHtmlContentLayoutGuid, Constants.dashboardWidgetHtmlContentLayoutName, Constants.dashboardWidgetHtmlContentLayoutPathFilename);
+                    widget.htmlContent = cp.Mustache.Render(layout, widgetData);
+                } else if (addonBaseWidget.widgetType == WidgetTypeEnum.number) {
+                    WidgetNumberModel widgetData = cp.JSON.Deserialize<WidgetNumberModel>(addonWidgetJson);
+                    var layout = cp.Layout.GetLayout(Constants.dashboardWidgetNumberLayoutGuid, Constants.dashboardWidgetNumberLayoutName, Constants.dashboardWidgetNumberLayoutPathFilename);
+                    widget.htmlContent = cp.Mustache.Render(layout, widgetData);
+                } else {
+                    widget.htmlContent = "";
+                }
+
+
+
+                //if (addonBaseWidget.widgetType == WidgetTypeEnum.htmlContent) {
+                //    //
+                //    // --  html content Widget
+                //    WidgetHtmlContentModel widgetData = (WidgetHtmlContentModel)addonBaseWidget;
+                //    var layout = cp.Layout.GetLayout(Constants.dashboardWidgetHtmlContentLayoutGuid, Constants.dashboardWidgetHtmlContentLayoutName, Constants.dashboardWidgetHtmlContentLayoutPathFilename);
+                //    widget.htmlContent= cp.Mustache.Render(layout, widgetData); 
+                //} else if (addonBaseWidget.widgetType == WidgetTypeEnum.number) {
+                //    //
+                //    // -- number Widget
+                //    WidgetNumberModel htmlContentWidget = (WidgetNumberModel)addonBaseWidget;
+                //    var layout = cp.Layout.GetLayout(Constants.dashboardWidgetNumberLayoutGuid, Constants.dashboardWidgetNumberLayoutName, Constants.dashboardWidgetNumberLayoutPathFilename);
+                //    widget.htmlContent = cp.Mustache.Render(layout, htmlContentWidget);
+                //} else {
+                //    widget.htmlContent = "";
+                //}
+                return widget;
             } catch (Exception) {
                 cp.Site.ErrorReport($"Error deserializing widget data for widget {widget.addonGuid}");
                 return widget;
             }
-            if (DashWidgetAddonResult == null) { return widget; }
-            //
-            widget.htmlContent = DashWidgetAddonResult.htmlContent;
-            widget.width = (widget.width > DashWidgetAddonResult.minWidth) ? widget.width : DashWidgetAddonResult.minWidth;
-            widget.height = (widget.height > DashWidgetAddonResult.minHeight) ? widget.height : DashWidgetAddonResult.minHeight;
-            return widget;
         }
     }
 }

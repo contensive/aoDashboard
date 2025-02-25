@@ -13,7 +13,9 @@ namespace Contensive.WidgetDashboard.Addons {
                 }
                 //
                 // -- udpate layout(s)
-                CP.Layout.updateLayout(Constants.widgetDashboardLayoutGuid, Constants.widgetDashboardLayoutName, Constants.widgetDashboardLayoutPathFilename);
+                CP.Layout.updateLayout(Constants.dashboardLayoutGuid, Constants.dashboardLayoutName, Constants.dashboardLayoutPathFilename);
+                CP.Layout.updateLayout(Constants.dashboardWidgetNumberLayoutGuid, Constants.dashboardWidgetNumberLayoutName, Constants.dashboardWidgetNumberLayoutPathFilename);
+                CP.Layout.updateLayout(Constants.dashboardWidgetHtmlContentLayoutGuid, Constants.dashboardWidgetHtmlContentLayoutName, Constants.dashboardWidgetHtmlContentLayoutPathFilename);
                 // 
                 CP.Site.SetProperty("Widget Dashboard Version Installed", version.ToString());
                 return string.Empty;

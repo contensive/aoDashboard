@@ -6,10 +6,10 @@ using System;
 using System.Collections.Generic;
 
 namespace Contensive.WidgetDashboard.Models.View {
-    internal class DashboardViewModel {
+    internal class ConfigModel {
         //
         private CPBaseClass cp;
-        public List<DashboardWidgetViewModel> widgets { get; set; }
+        public List<ConfigWidgetModel> widgets { get; set; }
         // 
         // ====================================================================================================
         /// <summary>
@@ -18,19 +18,19 @@ namespace Contensive.WidgetDashboard.Models.View {
         /// <param name="cp"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public static DashboardViewModel create(CPBaseClass cp) {
+        public static ConfigModel create(CPBaseClass cp) {
             try {
-                DashboardViewModel viewModel = load(cp);
-                if (viewModel?.widgets != null && viewModel.widgets.Count > 0) {
+                ConfigModel config = load(cp);
+                if (config?.widgets != null && config.widgets.Count > 0) {
                     //
                     // -- render the htmlcontent and reutrn
-                    return WidgetRenderController.renderWidgets(cp, viewModel);
+                    return WidgetRenderController.renderWidgets(cp, config);
                 }
                 //
                 // -- iniitalize with default widgets
-                viewModel = new DashboardViewModel() {
+                config = new ConfigModel() {
                     widgets = [
-                        new DashboardWidgetViewModel() {
+                        new ConfigWidgetModel() {
                             x=0,
                             y=0,
                             width = 2,
@@ -40,19 +40,19 @@ namespace Contensive.WidgetDashboard.Models.View {
                             link="https://www.contensive.com",
                             addonGuid = Constants.sampleDashboardWidgetGuid
                         },
-                        new DashboardWidgetViewModel() { x=2,y=0, width = 2, height = 2, htmlContent = "Widget 2", key="6E52", link="https://www.contensive.com" },
-                        new DashboardWidgetViewModel() { x=4,y=0, width = 1, height = 1, htmlContent = "Widget 3", key="D512", link="https://www.contensive.com" },
-                        new DashboardWidgetViewModel() { x=4,y=1, width = 1, height = 1, htmlContent = "Widget 4", key="0380", link="https://www.contensive.com" },
-                        new DashboardWidgetViewModel() { x=5,y=0, width = 2, height = 2, htmlContent = "Widget 5", key="AC55", link="https://www.contensive.com" }
+                        new ConfigWidgetModel() { x=2,y=0, width = 2, height = 2, htmlContent = "Widget 2", key="6E52", link="https://www.contensive.com" },
+                        new ConfigWidgetModel() { x=4,y=0, width = 1, height = 1, htmlContent = "Widget 3", key="D512", link="https://www.contensive.com" },
+                        new ConfigWidgetModel() { x=4,y=1, width = 1, height = 1, htmlContent = "Widget 4", key="0380", link="https://www.contensive.com" },
+                        new ConfigWidgetModel() { x=5,y=0, width = 2, height = 2, htmlContent = "Widget 5", key="AC55", link="https://www.contensive.com" }
                     ]
                 };
                 //
                 // -- save the new view model before rendering the htmlcontent
-                viewModel.save(cp);
+                config.save(cp);
                 //
                 // -- after save, render the htmlContent
-                DashboardViewModel layout = WidgetRenderController.renderWidgets(cp, viewModel);
-                return layout;
+                ConfigModel result = WidgetRenderController.renderWidgets(cp, config);
+                return result;
             } catch (Exception ex) {
                 cp.Site.ErrorReport(ex);
                 throw;
@@ -66,12 +66,12 @@ namespace Contensive.WidgetDashboard.Models.View {
         /// <param name="cp"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        private static DashboardViewModel load(CPBaseClass cp) {
-            DashboardViewModel result = null;
+        private static ConfigModel load(CPBaseClass cp) {
+            ConfigModel result = null;
             string userConfigFilename = @"dashboard\widgetdashconfig." + cp.User.Id + ".json";
             string jsonConfigText = cp.PrivateFiles.Read(userConfigFilename);
             if (!string.IsNullOrWhiteSpace(jsonConfigText)) {
-                result = cp.JSON.Deserialize<DashboardViewModel>(jsonConfigText);
+                result = cp.JSON.Deserialize<ConfigModel>(jsonConfigText);
             }
             return result;
         }
