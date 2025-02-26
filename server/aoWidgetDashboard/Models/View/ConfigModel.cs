@@ -66,9 +66,9 @@ namespace Contensive.WidgetDashboard.Models.View {
 
         private static void buildAddWidgetList(CPBaseClass cp, ConfigModel result) {
             //
-            if (cp.Db.IsTableField("ccAggregateFunctions", "adminWidget")) {
+            if (cp.Db.IsTableField("ccAggregateFunctions", "dashboardWidget")) {
                 result.addWidgetList = new List<addWidget>();
-                using (DataTable dt = cp.Db.ExecuteQuery("select name,ccguid from ccAggregateFunctions where adminWidget>0 order by name")) {
+                using (DataTable dt = cp.Db.ExecuteQuery("select name,ccguid from ccAggregateFunctions where dashboardWidget>0 order by name")) {
                     if (dt.Rows.Count > 0) {
                         result.addWidgetList = new List<addWidget>();
                         foreach (DataRow row in dt.Rows) {
