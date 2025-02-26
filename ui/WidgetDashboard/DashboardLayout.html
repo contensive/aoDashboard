@@ -18,10 +18,21 @@
     float:right;
     cursor: pointer; 
   }
+  .dropdown-toggle.no-caret::after {
+      display: none;
+  }
 </style>
-<div id="dashboard" class="grid-stack h-100">
-  <button id="add-sample-widget-btn">Add Sample Widget</button>
-  <button id="add-number-widget-btn">Add Number Widget</button>
+<div id="dashboard" class="d-flex grid-stack h-100">
+  <div class="me-4 ms-auto dropdown">
+    <button class="btn btn-secondary dropdown-toggle no-caret" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="fa-regular fa-square-plus"></i>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+      {{#addWidgetList}}
+        <li><a class="dropdown-item add-widget" href="#" data-guid="{{guid}}">{{name}}</a></li>
+      {{/addWidgetList}}
+    </ul>
+  </div>
   {{#widgets}}
     <div class="grid-stack-item overflow-hidden" id="{{key}}" gs-w="{{width}}" gs-h="{{height}}" gs-x="{{x}}" gs-y="{{y}}" data-addonGuid="{{addonGuid}}">
       <div class="grid-stack-item-content bg-white rounded-2 p-2 border border-2 overflow-hidden">
@@ -59,10 +70,24 @@
     document.addEventListener('DOMContentLoaded', function(event) {
       //
       // -- close
-      $('.card-close').on('click', function() {
+      $('#dashboard').on('click', '.card-close', function() {
         console.log('card-close click');
         var el = $(this).closest('.grid-stack-item');
         grid.removeWidget(el.get(0));
+      });
+      //
+      // -- add widget button
+      $('#dashboard').on('click', '.add-widget', function() {
+        var element = $(this);
+        console.log('add-widget, guid:'+element.attr('data-guid')); 
+        let newWidgetHtml = document.getElementById('newWidgetHtmlId').innerHTML;
+        newWidgetHtml = newWidgetHtml.replace('idPlaceholder', generateKey());
+        newWidgetHtml = newWidgetHtml.replace('guidPlaceholder', element.attr('data-guid'));
+        let newWidget = grid.addWidget(newWidgetHtml,{h:2,w:2});
+        widgetDashboardCmd('save', new Array(newWidget.gridstackNode));
+      });
+      //
+      document.getElementsByClass('.add-widget').addEventListener('click', function() {
       });
       //
       // -- add sample widget

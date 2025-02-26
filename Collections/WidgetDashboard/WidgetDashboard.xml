@@ -12,10 +12,12 @@
 		<IncludeAddon name="Bootstrap" guid="{EF1FD66C-D62F-4BD2-BF07-38F47996EBB3}"/>
 	</Addon>
 	<Addon name="Sample Dashboard Widget" guid="{13A4BBF7-738B-4DDF-BD1A-D048FBE51E45}" type="Add-on">
+		<adminWidget>Yes</adminWidget>
 		<DotNetClass><![CDATA[Contensive.WidgetDashboard.Addons.SampleWidget]]></DotNetClass>
 		<BlockEditTools>Yes</BlockEditTools>
 	</Addon>
 	<Addon name="Who is Online Number Dashboard Widget" guid="{224E4CE6-4D3A-41A8-A501-1C2DBD456EE9}" type="Add-on">
+		<adminWidget>Yes</adminWidget>
 		<DotNetClass><![CDATA[Contensive.WidgetDashboard.Addons.WhoIsOnlineNumberWidget]]></DotNetClass>
 		<BlockEditTools>Yes</BlockEditTools>
 	</Addon>

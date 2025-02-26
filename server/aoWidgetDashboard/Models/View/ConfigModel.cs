@@ -4,11 +4,13 @@ using Contensive.WidgetDashboard.Models.Domain;
 using Microsoft.VisualBasic.ApplicationServices;
 using System;
 using System.Collections.Generic;
+using System.Data;
 
 namespace Contensive.WidgetDashboard.Models.View {
     internal class ConfigModel {
         //
         private CPBaseClass cp;
+        public List<addWidget> addWidgetList { get; set; }
         public List<ConfigWidgetModel> widgets { get; set; }
         // 
         // ====================================================================================================
@@ -24,7 +26,9 @@ namespace Contensive.WidgetDashboard.Models.View {
                 if (config?.widgets != null && config.widgets.Count > 0) {
                     //
                     // -- render the htmlcontent and reutrn
-                    return WidgetRenderController.renderWidgets(cp, config);
+                    ConfigModel result = WidgetRenderController.renderWidgets(cp, config);
+                    buildAddWidgetList(cp, result);
+                    return result;
                 }
                 //
                 // -- iniitalize with default widgets
@@ -50,14 +54,34 @@ namespace Contensive.WidgetDashboard.Models.View {
                 // -- save the new view model before rendering the htmlcontent
                 config.save(cp);
                 //
-                // -- after save, render the htmlContent
-                ConfigModel result = WidgetRenderController.renderWidgets(cp, config);
-                return result;
+                // -- after save, render the htmlContent and get the widget list
+                ConfigModel result2 = WidgetRenderController.renderWidgets(cp, config);
+                buildAddWidgetList(cp, result2);
+                return result2;
             } catch (Exception ex) {
                 cp.Site.ErrorReport(ex);
                 throw;
             }
         }
+
+        private static void buildAddWidgetList(CPBaseClass cp, ConfigModel result) {
+            //
+            if (cp.Db.IsTableField("ccAggregateFunctions", "adminWidget")) {
+                result.addWidgetList = new List<addWidget>();
+                using (DataTable dt = cp.Db.ExecuteQuery("select name,ccguid from ccAggregateFunctions where adminWidget>0 order by name")) {
+                    if (dt.Rows.Count > 0) {
+                        result.addWidgetList = new List<addWidget>();
+                        foreach (DataRow row in dt.Rows) {
+                            result.addWidgetList.Add(new addWidget() {
+                                name = cp.Utils.EncodeText(row["name"]),
+                                guid = cp.Utils.EncodeText(row["ccguid"])
+                            });
+                        }
+                    }
+                }
+            }
+        }
+
         //
         // ====================================================================================================
         /// <summary>
@@ -85,4 +109,9 @@ namespace Contensive.WidgetDashboard.Models.View {
             cp.PrivateFiles.Save(@"dashboard\widgetdashconfig." + cp.User.Id + ".json", cp.JSON.Serialize(this));
         }
     }
+    //
+    public class addWidget {
+        public string name { get; set; }
+        public string guid { get; set; }
+    }   
 }
