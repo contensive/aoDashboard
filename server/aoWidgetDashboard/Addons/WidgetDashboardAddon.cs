@@ -7,7 +7,8 @@ namespace Contensive.WidgetDashboard.Addons {
         public override object Execute(CPBaseClass cp) {
             try {
                 string layout = cp.Layout.GetLayout(Constants.dashboardLayoutGuid,Constants.dashboardLayoutName,Constants.dashboardLayoutPathFilename);
-                ConfigModel viewModel = ConfigModel.create(cp);
+                ConfigModel viewModel = ConfigModel.create(cp, "Admin Dashboard");
+                viewModel.title = "Admin Dashboard";
                 return cp.Mustache.Render(layout, viewModel); 
             } catch (Exception ex) {
                 cp.Site.ErrorReport(ex);

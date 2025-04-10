@@ -22,14 +22,14 @@ namespace Contensive.WidgetDashboard.Addons {
         public override object Execute(CPBaseClass cp) {
             try {
                 string requestJson = cp.Request.Body;
-                List<WDS_Request_Widget> requestWidgets = cp.JSON.Deserialize<List<WDS_Request_Widget>>(requestJson);
-                if (requestWidgets.Count == 0) { return ""; }
+                WDS_Request request = cp.JSON.Deserialize<WDS_Request>(requestJson);
+                if (request == null ) { return ""; }
                 //
-                ConfigModel userDashboardConfig = ConfigModel.create(cp);
+                ConfigModel userDashboardConfig = ConfigModel.create(cp,request.dashboardName);
                 if (userDashboardConfig is null) { return ""; }
                 //
                 List<WDS_Response> result = [];
-                foreach (WDS_Request_Widget requestWidget in requestWidgets) {
+                foreach (WDS_Request_Widget requestWidget in request.widgets) {
                     var userDashboardConfigWidget = userDashboardConfig.widgets.Find(row => row.key == requestWidget.key);
                     //
                     if (requestWidget.cmd == "delete") {
@@ -40,8 +40,8 @@ namespace Contensive.WidgetDashboard.Addons {
                     //
                     if (requestWidget.cmd == "refresh") {
                         if (userDashboardConfigWidget is null) { continue; }
-                        result.Add(new WDS_Response { 
-                            key = requestWidget.key, 
+                        result.Add(new WDS_Response {
+                            key = requestWidget.key,
                             htmlContent = WidgetRenderController.renderWidget(cp, userDashboardConfigWidget).htmlContent,
                             link = userDashboardConfigWidget.link
                         });
@@ -67,7 +67,7 @@ namespace Contensive.WidgetDashboard.Addons {
                         continue;
                     }
                 }
-                userDashboardConfig.save(cp);
+                userDashboardConfig.save(cp, request.dashboardName);
                 return result;
             } catch (Exception ex) {
                 cp.Site.ErrorReport(ex);
@@ -76,6 +76,16 @@ namespace Contensive.WidgetDashboard.Addons {
         }
     }
     //
+    public class WDS_Request {
+        /// <summary>
+        /// dashboard name passed from addon render execution. needed for save folder name
+        /// </summary>
+        public string dashboardName { get; set; }
+        /// <summary>
+        /// list of widgets on the dashboard
+        /// </summary>
+        public List<WDS_Request_Widget> widgets { get; set;}
+    }
     public class WDS_Request_Widget {
         //
         /// <summary>

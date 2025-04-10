@@ -5,12 +5,23 @@ using Microsoft.VisualBasic.ApplicationServices;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Text.RegularExpressions;
 
 namespace Contensive.WidgetDashboard.Models.View {
     internal class ConfigModel {
         //
         private CPBaseClass cp;
+        /// <summary>
+        /// the title that apears on the dashboard at the top.
+        /// </summary>
+        public string title { get; set; }
+        /// <summary>
+        /// the list of widgets that can be added to the dashbaord
+        /// </summary>
         public List<addWidget> addWidgetList { get; set; }
+        /// <summary>
+        /// the current list of widgets this user sees on the dashboard
+        /// </summary>
         public List<ConfigWidgetModel> widgets { get; set; }
         // 
         // ====================================================================================================
@@ -20,12 +31,12 @@ namespace Contensive.WidgetDashboard.Models.View {
         /// <param name="cp"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public static ConfigModel create(CPBaseClass cp) {
+        public static ConfigModel create(CPBaseClass cp, string dashboardName) {
             try {
-                ConfigModel config = load(cp);
+                ConfigModel config = loadUsersConfig(cp, dashboardName);
                 if (config?.widgets != null && config.widgets.Count > 0) {
                     //
-                    // -- render the htmlcontent and reutrn
+                    // -- render the htmlcontent and return
                     ConfigModel result = WidgetRenderController.renderWidgets(cp, config);
                     buildAddWidgetList(cp, result);
                     return result;
@@ -52,7 +63,7 @@ namespace Contensive.WidgetDashboard.Models.View {
                 };
                 //
                 // -- save the new view model before rendering the htmlcontent
-                config.save(cp);
+                config.save(cp, dashboardName);
                 //
                 // -- after save, render the htmlContent and get the widget list
                 ConfigModel result2 = WidgetRenderController.renderWidgets(cp, config);
@@ -89,15 +100,12 @@ namespace Contensive.WidgetDashboard.Models.View {
         /// </summary>
         /// <param name="cp"></param>
         /// <param name="userId"></param>
+        /// <param name="dashboardName">unique name of this dash. </param>
         /// <returns></returns>
-        private static ConfigModel load(CPBaseClass cp) {
-            ConfigModel result = null;
-            string userConfigFilename = @"dashboard\widgetdashconfig." + cp.User.Id + ".json";
-            string jsonConfigText = cp.PrivateFiles.Read(userConfigFilename);
-            if (!string.IsNullOrWhiteSpace(jsonConfigText)) {
-                result = cp.JSON.Deserialize<ConfigModel>(jsonConfigText);
-            }
-            return result;
+        private static ConfigModel loadUsersConfig(CPBaseClass cp, string dashboardName) {
+            string jsonConfigText = cp.PrivateFiles.Read(getConfigFilename(cp, dashboardName));
+            if (string.IsNullOrWhiteSpace(jsonConfigText)) { return null; }
+            return cp.JSON.Deserialize<ConfigModel>(jsonConfigText);
         }
         // 
         // ====================================================================================================
@@ -105,13 +113,36 @@ namespace Contensive.WidgetDashboard.Models.View {
         /// save config for the current user
         /// </summary>
         /// <param name="cp"></param>
-        public void save(CPBaseClass cp) {
-            cp.PrivateFiles.Save(@"dashboard\widgetdashconfig." + cp.User.Id + ".json", cp.JSON.Serialize(this));
+        public void save(CPBaseClass cp, string dashboardName) {
+            cp.PrivateFiles.Save(getConfigFilename(cp, dashboardName), cp.JSON.Serialize(this));
+        }
+        //
+        // ====================================================================================================
+        /// <summary>
+        /// create the config filename for the current user and this dashboard type
+        /// </summary>
+        /// <param name="cp"></param>
+        /// <param name="foldername"></param>
+        /// <returns></returns>
+        private static string getConfigFilename(CPBaseClass cp, string dashboardName) {
+            string foldername = normalizeDashboardName(dashboardName);
+            return @$"dashboard\{(string.IsNullOrEmpty(foldername) ? "" : @$"{foldername}\")}config.{cp.User.Id}.json";
+        }
+        // 
+        // ====================================================================================================
+        /// <summary>
+        /// normalize the dashboard name to a valid folder name
+        /// </summary>
+        /// <param name="dashboardName"></param>
+        /// <returns></returns>
+        private static string normalizeDashboardName(string dashboardName) {
+            string result = Regex.Replace(dashboardName.ToLower(), "[^a-zA-Z0-9]", "");
+            return result;
         }
     }
     //
     public class addWidget {
         public string name { get; set; }
         public string guid { get; set; }
-    }   
+    }
 }
