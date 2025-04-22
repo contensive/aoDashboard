@@ -5,16 +5,6 @@
 	<Addon name="WidgetDashboardOnInstall" guid="{970E1192-851E-4C62-AE70-5E9BC3A7FF88}" type="Add-on">
 		<DotNetClass>Contensive.WidgetDashboard.Addons.OnInstallTask</DotNetClass>
 	</Addon>
-	<Addon name="Sample Dashboard Widget" guid="{13A4BBF7-738B-4DDF-BD1A-D048FBE51E45}" type="Add-on">
-		<adminWidget>Yes</adminWidget>
-		<DotNetClass><![CDATA[Contensive.WidgetDashboard.Addons.SampleWidget]]></DotNetClass>
-		<BlockEditTools>Yes</BlockEditTools>
-	</Addon>
-	<Addon name="Who is Online Number Dashboard Widget" guid="{224E4CE6-4D3A-41A8-A501-1C2DBD456EE9}" type="Add-on">
-		<adminWidget>Yes</adminWidget>
-		<DotNetClass><![CDATA[Contensive.WidgetDashboard.Addons.WhoIsOnlineNumberWidget]]></DotNetClass>
-		<BlockEditTools>Yes</BlockEditTools>
-	</Addon>
 	<ImportCollection name="JQuery">{A435BF70-041B-43D1-8A8D-5D9D59A7FCD0}</ImportCollection>
 	<ImportCollection name="Bootstrap">{2d3f9a21-9602-4549-b5df-5e09a9dae57e}</ImportCollection>
 	<Resource name="uiWidgetDashboard.zip" type="www" path="dashboard" />
