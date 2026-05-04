@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="windows-1252"?>
-<Collection name="Widget Dashboard" guid="{12B9936A-5C0B-4154-AE1F-037D1C2CD29D}" system="No" updatable="Yes" blockNavigatorNode="yes" onInstallAddonGuid="{970E1192-851E-4C62-AE70-5E9BC3A7FF88}">
+<Collection name="Widget Dashboard" guid="{12B9936A-5C0B-4154-AE1F-037D1C2CD29D}" system="No" updatable="Yes" blockNavigatorNode="yes" onInstallAddonGuid="{970E1192-851E-4C62-AE70-5E9BC3A7FF88}"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="https://contensive.s3.amazonaws.com/xsd/Collection.xsd"
+>
 	<HelpLink></HelpLink>
 	<Help></Help>
 	<Addon name="WidgetDashboardOnInstall" guid="{970E1192-851E-4C62-AE70-5E9BC3A7FF88}" type="Add-on">
