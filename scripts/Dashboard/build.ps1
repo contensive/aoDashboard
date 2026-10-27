@@ -11,7 +11,7 @@ Import-Module (Join-Path $PSScriptRoot '..\..\..\Contensive5\scripts\build-addon
 $projectRoot = (Resolve-Path "$PSScriptRoot\..\..").Path
 
 # Display build info
-$version = Get-ContensiveVersion -DeploymentRoot 'C:\Deployments\aoDashboard-Dashboard'
+$version = Get-ContensiveVersion -DeploymentRoot 'C:\Deployments\aoDashboard-Dashboard' -RepoPath $projectRoot
 Write-Host ""
 Write-Host "========================================"
 Write-Host "  Dashboard Build"
